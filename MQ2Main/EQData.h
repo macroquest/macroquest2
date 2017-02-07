@@ -3768,7 +3768,8 @@ typedef struct _EVERQUEST {
 
 typedef struct _AURAINFO {
 /*0x000*/ CHAR    Name[0x40];
-/*0x040*/ BYTE    Unknown0x14[0xc];
+/*0x040*/ DWORD   SpawnID;
+/*0x044*/ BYTE    Unknown0x44[0x8];
 /*0x04c*/
 } AURAINFO, *PAURAINFO;
 

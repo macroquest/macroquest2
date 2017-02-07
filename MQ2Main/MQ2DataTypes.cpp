@@ -3941,7 +3941,6 @@ bool MQ2CharacterType::GETMEMBER()
 		{
 			if (pAura->NumAuras)
 			{
-				DataTypeTemp[0] = 0;
 				PAURAS pAuras = (PAURAS)(*pAura->pAuraInfo);
 				if (ISINDEX())
 				{
@@ -3952,27 +3951,30 @@ bool MQ2CharacterType::GETMEMBER()
 						if (n > pAura->NumAuras)
 							return false;
 						n--;
-						strcpy_s(DataTypeTemp, pAuras->Aura[n].Name);
+						Dest.Ptr = &pAuras->Aura[n];
+						Dest.HighPart = n;
+						Dest.Type = pAuraType;
+						return true;
 					}
 					else
 					{
 						for (n = 0; n < pAura->NumAuras; n++)
 						{
-							if (!_stricmp(GETFIRST(), pAuras->Aura[n].Name))
+							if (!_strnicmp(GETFIRST(), pAuras->Aura[n].Name, strlen(GETFIRST())))
 							{
-								strcpy_s(DataTypeTemp, pAuras->Aura[n].Name);
+								Dest.Ptr = &pAuras->Aura[n];
+								Dest.HighPart = n;
+								Dest.Type = pAuraType;
+								return true;
 							}
 						}
 					}
 				}
 				else
 				{
-					strcpy_s(DataTypeTemp, pAuras->Aura[0].Name);
-				}
-				if (DataTypeTemp[0])
-				{
-					Dest.Ptr = &DataTypeTemp[0];
-					Dest.Type = pStringType;
+					Dest.Ptr = &pAuras->Aura[0];
+					Dest.HighPart = 0;
+					Dest.Type = pAuraType;
 					return true;
 				}
 			}
@@ -12706,6 +12708,69 @@ bool MQ2AugType::GETMEMBER()
 	}
 	catch (...) {
 		MessageBox(NULL, "CRAP! in AugType", "An exception occured", MB_OK);
+	}
+	return false;
+}
+
+bool MQ2AuraType::GETMEMBER()
+{
+	try {
+		DWORD index = VarPtr.HighPart;
+		PAURAINFO pAura = (PAURAINFO)VarPtr.Ptr;
+		if (!pAura)
+			return false;
+
+		PMQ2TYPEMEMBER pMember = MQ2AuraType::FindMember(Member);
+		if (pMember) {
+			switch ((AuraTypeMembers)pMember->ID)
+			{
+			case ID:
+			{
+				Dest.DWord = index + 1;
+				Dest.Type = pIntType;
+				return true;
+			}
+			case Name:
+			{
+				strcpy_s(DataTypeTemp, pAura->Name);
+				Dest.Ptr = DataTypeTemp;
+				Dest.Type = pStringType;
+				return true;
+			}
+			case SpawnID:
+			{
+				Dest.DWord = pAura->SpawnID;
+				Dest.Type = pIntType;
+				return true;
+			}
+			default:
+				return false;
+			};
+		}
+
+		PMQ2TYPEMEMBER pMethod = MQ2AuraType::FindMethod(Member);
+		if (pMethod) {
+			switch ((AuraTypeMethods)pMethod->ID)
+			{
+			case Remove:
+				if (!pAuraWnd)
+					break;
+
+				if (CListWnd*clist = (CListWnd*)pAuraWnd->GetChildItem("AuraList")) {
+					if (index > clist->ItemsArray.Count)
+						break;
+
+					clist->SetCurSel(index);
+					((CXWnd*)pAuraWnd)->WndNotification((CXWnd*)clist, XWM_MENUSELECT, (PVOID)1);
+					return true;
+				}
+				break;
+			}
+			return false;
+		}
+	}
+	catch (...) {
+		MessageBox(NULL, "CRAP! in AuraType", "An exception occured", MB_OK);
 	}
 	return false;
 }
