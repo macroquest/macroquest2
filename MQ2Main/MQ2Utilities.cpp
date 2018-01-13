@@ -8504,6 +8504,179 @@ DWORD FindItemCountByName(PCHAR pName, BOOL bExact)
 #endif
 	return Count;
 }
+DWORD FindItemCountByID(DWORD itemId)
+{
+	DWORD Count = 0;
+	PCHARINFO2 pChar2 = GetCharInfo2();
+
+	//check cursor
+	if (pChar2 && pChar2->pInventoryArray && pChar2->pInventoryArray->Inventory.Cursor) {
+		if (PCONTENTS pItem = pChar2->pInventoryArray->Inventory.Cursor) {
+			if (GetItemFromContents(pItem)->ItemNumber == itemId) {
+				if ((GetItemFromContents(pItem)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pItem)->IsStackable() != 1)) {
+					Count++;
+				}
+				else {
+					Count += pItem->StackCount;
+				}
+			}
+			if (GetItemFromContents(pItem)->Type != ITEMTYPE_PACK) { // Hey it's not a pack we should check for augs
+				if (pItem->Contents.ContainedItems.pItems && pItem->Contents.ContainedItems.Size) {
+					for (unsigned long nAug = 0; nAug < pItem->Contents.ContainedItems.Size; nAug++) {
+						if (PCONTENTS pAugItem = pItem->Contents.ContainedItems.pItems->Item[nAug]) {
+							if (GetItemFromContents(pAugItem)->Type == ITEMTYPE_NORMAL && GetItemFromContents(pAugItem)->AugType) {
+								if (GetItemFromContents(pAugItem)->ItemNumber == itemId) {
+									Count++;
+								}
+							}
+						}
+					}
+				}
+			}
+			else if (pItem->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
+				PCONTENTS pPack = pItem;
+				for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+					if (PCONTENTS pItem = pPack->GetContent(nItem)) {
+						if (GetItemFromContents(pItem)->ItemNumber == itemId) {
+							if ((GetItemFromContents(pItem)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pItem)->IsStackable() != 1)) {
+								Count++;
+							}
+							else {
+								Count += pItem->StackCount;
+							}
+						}
+						// Check for augs next
+						if (pItem->Contents.ContainedItems.pItems && pItem->Contents.ContainedItems.Size) {
+							for (unsigned long nAug = 0; nAug < pItem->Contents.ContainedItems.Size; nAug++) {
+								if (PCONTENTS pAugItem = pItem->Contents.ContainedItems.pItems->Item[nAug]) {
+									if (GetItemFromContents(pAugItem)->Type == ITEMTYPE_NORMAL && GetItemFromContents(pAugItem)->AugType) {
+										if (GetItemFromContents(pAugItem)->ItemNumber == itemId) {
+											Count++;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	//check toplevel slots
+	if (pChar2 && pChar2->pInventoryArray && pChar2->pInventoryArray->InventoryArray) {
+		for (unsigned long nSlot = 0; nSlot < NUM_INV_SLOTS; nSlot++) {
+			if (PCONTENTS pItem = pChar2->pInventoryArray->InventoryArray[nSlot]) {
+				if (GetItemFromContents(pItem)->ItemNumber == itemId) {
+					if ((GetItemFromContents(pItem)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pItem)->IsStackable() != 1)) {
+						Count++;
+					}
+					else {
+						Count += pItem->StackCount;
+					}
+				}
+				// Check for augs next
+				if (pItem->Contents.ContainedItems.pItems && pItem->Contents.ContainedItems.Size) {
+					for (unsigned long nAug = 0; nAug < pItem->Contents.ContainedItems.Size; nAug++) {
+						if (PCONTENTS pAugItem = pItem->Contents.ContainedItems.pItems->Item[nAug]) {
+							if (GetItemFromContents(pAugItem)->Type == ITEMTYPE_NORMAL && GetItemFromContents(pAugItem)->AugType) {
+								if (GetItemFromContents(pAugItem)->ItemNumber == itemId) {
+									Count++;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	//check the bags
+	if (pChar2 && pChar2->pInventoryArray) {
+		for (unsigned long nPack = 0; nPack < 10; nPack++) {
+			if (PCONTENTS pPack = pChar2->pInventoryArray->Inventory.Pack[nPack]) {
+				if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && pPack->Contents.ContainedItems.pItems) {
+					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
+							if (GetItemFromContents(pItem)->ItemNumber == itemId) {
+								if ((GetItemFromContents(pItem)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pItem)->IsStackable() != 1)) {
+									Count++;
+								}
+								else {
+									Count += pItem->StackCount;
+								}
+							}
+							// We should check for augs next
+							if (pItem->Contents.ContainedItems.pItems && pItem->Contents.ContainedItems.Size) {
+								for (unsigned long nAug = 0; nAug < pItem->Contents.ContainedItems.Size; nAug++) {
+									if (PCONTENTS pAugItem = pItem->Contents.ContainedItems.pItems->Item[nAug]) {
+										if (GetItemFromContents(pAugItem)->Type == ITEMTYPE_NORMAL && GetItemFromContents(pAugItem)->AugType) {
+											if (GetItemFromContents(pAugItem)->ItemNumber) {
+												Count++;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+#ifndef EMU
+	//still not found? fine... check mount keyring
+	PCHARINFO pChar = GetCharInfo();
+	if (pChar && pChar->pMountsArray && pChar->pMountsArray->Mounts) {
+		for (unsigned long nSlot = 0; nSlot < MAX_KEYRINGITEMS; nSlot++) {
+			if (PCONTENTS pItem = pChar->pMountsArray->Mounts[nSlot]) {
+				if (GetItemFromContents(pItem)->ItemNumber == itemId) {
+					if ((GetItemFromContents(pItem)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pItem)->IsStackable() != 1)) {
+						Count++;
+					}
+					else {
+						Count += pItem->StackCount;
+					}
+				}
+			}
+		}
+	}
+
+	//still not found? fine... check illusions keyring
+	if (pChar && pChar->pIllusionsArray && pChar->pIllusionsArray->Illusions) {
+		for (unsigned long nSlot = 0; nSlot < MAX_KEYRINGITEMS; nSlot++) {
+			if (PCONTENTS pItem = pChar->pIllusionsArray->Illusions[nSlot]) {
+				if (GetItemFromContents(pItem)->ItemNumber == itemId) {
+					if ((GetItemFromContents(pItem)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pItem)->IsStackable() != 1)) {
+						Count++;
+					}
+					else {
+						Count += pItem->StackCount;
+					}
+				}
+			}
+		}
+	}
+
+	//still not found? fine... check familiars keyring
+	if (pChar && pChar->pFamiliarArray && pChar->pFamiliarArray->Familiars) {
+		for (unsigned long nSlot = 0; nSlot < MAX_KEYRINGITEMS; nSlot++) {
+			if (PCONTENTS pItem = pChar->pFamiliarArray->Familiars[nSlot]) {
+				if (GetItemFromContents(pItem)->ItemNumber == itemId) {
+					if ((GetItemFromContents(pItem)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pItem)->IsStackable() != 1)) {
+						Count++;
+					}
+					else {
+						Count += pItem->StackCount;
+					}
+				}
+			}
+		}
+	}
+#endif
+	return Count;
+}
 PCONTENTS FindBankItemByName(char *pName,BOOL bExact)
 {
 	CHAR Name[MAX_STRING] = { 0 };
@@ -8981,6 +9154,122 @@ DWORD FindBankItemCountByName(char *pName, BOOL bExact)
 		}
 	}
 
+	return Count;
+}
+DWORD FindBankItemCountById(int itemId)
+{
+	DWORD Count = 0;
+	PCHARINFO pCharInfo = GetCharInfo();
+
+	// Check bank slots
+	if (pCharInfo->pBankArray) {
+		for (unsigned long nPack = 0; nPack < NUM_BANK_SLOTS; nPack++) {
+			if (PCONTENTS pPack = pCharInfo->pBankArray->Bank[nPack]) {
+				if (GetItemFromContents(pPack)->ItemNumber == itemId) {
+					if ((GetItemFromContents(pPack)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pPack)->IsStackable() != 1)) {
+						Count++;
+					}
+					else {
+						Count += pPack->StackCount;
+					}
+				}
+				if (GetItemFromContents(pPack)->Type != ITEMTYPE_PACK) { // Hey it's not a pack we should check for augs
+					if (pPack->Contents.ContainedItems.pItems && pPack->Contents.ContainedItems.Size) {
+						for (unsigned long nAug = 0; nAug < pPack->Contents.ContainedItems.Size; nAug++) {
+							if (PCONTENTS pAugItem = pPack->Contents.ContainedItems.pItems->Item[nAug]) {
+								if (GetItemFromContents(pAugItem)->Type == ITEMTYPE_NORMAL && GetItemFromContents(pAugItem)->AugType) {
+									if (GetItemFromContents(pAugItem)->ItemNumber == itemId) {
+										Count++;
+									}
+								}
+							}
+						}
+					}
+				}
+				else if (pPack->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
+					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
+							if (GetItemFromContents(pItem)->ItemNumber == itemId) {
+								if ((GetItemFromContents(pItem)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pItem)->IsStackable() != 1)) {
+									Count++;
+								}
+								else {
+									Count += pItem->StackCount;
+								}
+							}
+							// Check for augs next
+							if (pItem->Contents.ContainedItems.pItems && pItem->Contents.ContainedItems.Size) {
+								for (unsigned long nAug = 0; nAug < pItem->Contents.ContainedItems.Size; nAug++) {
+									if (PCONTENTS pAugItem = pItem->Contents.ContainedItems.pItems->Item[nAug]) {
+										if (GetItemFromContents(pAugItem)->Type == ITEMTYPE_NORMAL && GetItemFromContents(pAugItem)->AugType) {
+											if (GetItemFromContents(pAugItem)->ItemNumber == itemId) {
+												Count++;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Check shared bank slots
+	if (pCharInfo->pSharedBankArray) {
+		for (unsigned long nPack = 0; nPack < NUM_SHAREDBANK_SLOTS; nPack++) {
+			if (PCONTENTS pPack = pCharInfo->pSharedBankArray->SharedBank[nPack]) {
+				if (GetItemFromContents(pPack)->ItemNumber == itemId) {
+					if ((GetItemFromContents(pPack)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pPack)->IsStackable() != 1)) {
+						Count++;
+					}
+					else {
+						Count += pPack->StackCount;
+					}
+				}
+				if (GetItemFromContents(pPack)->Type != ITEMTYPE_PACK) { // Hey it's not a pack we should check for augs
+					if (pPack->Contents.ContainedItems.pItems && pPack->Contents.ContainedItems.Size) {
+						for (unsigned long nAug = 0; nAug < pPack->Contents.ContainedItems.Size; nAug++) {
+							if (PCONTENTS pAugItem = pPack->Contents.ContainedItems.pItems->Item[nAug]) {
+								if (GetItemFromContents(pAugItem)->Type == ITEMTYPE_NORMAL && GetItemFromContents(pAugItem)->AugType) {
+									if (GetItemFromContents(pAugItem)->ItemNumber == itemId) {
+										Count++;
+									}
+								}
+							}
+						}
+					}
+				}
+				else if (pPack->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
+					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
+							if (GetItemFromContents(pItem)->ItemNumber == itemId) {
+								if ((GetItemFromContents(pItem)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pItem)->IsStackable() != 1)) {
+									Count++;
+								}
+								else {
+									Count += pItem->StackCount;
+								}
+							}
+							// Check for augs next
+							if (pItem->Contents.ContainedItems.pItems && pItem->Contents.ContainedItems.Size) {
+								for (unsigned long nAug = 0; nAug < pItem->Contents.ContainedItems.Size; nAug++) {
+									if (PCONTENTS pAugItem = pItem->Contents.ContainedItems.pItems->Item[nAug]) {
+										if (GetItemFromContents(pAugItem)->Type == ITEMTYPE_NORMAL && GetItemFromContents(pAugItem)->AugType) {
+											if (GetItemFromContents(pAugItem)->ItemNumber == itemId) {
+												Count++;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 	return Count;
 }
 PEQINVSLOT GetInvSlot(DWORD type, short invslot, short bagslot)

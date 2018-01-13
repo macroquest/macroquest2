@@ -19,7 +19,6 @@ GNU General Public License for more details.
 #define LoadedString "MQ2 Loaded."
 #define ToUnloadString "MQ2 Unloading..."
 #define UnloadedString "MQ2 Unloaded."
-
 #define WIN32_LEAN_AND_MEAN
 #if defined(_WIN32_WINNT)
 #undef _WIN32_WINNT
@@ -735,9 +734,11 @@ EQLIB_API PCONTENTS	  FindItemBySlot(short InvSlot, short BagSlot = -1, ItemCont
 EQLIB_API PCONTENTS	  FindItemByName(PCHAR pName, BOOL bExact = false);
 EQLIB_API PCONTENTS	  FindItemByID(int ItemID);
 EQLIB_API DWORD	      FindItemCountByName(PCHAR pName, BOOL bExact = false);
+EQLIB_API DWORD	      FindItemCountByID(DWORD itemId);
 EQLIB_API PCONTENTS   FindBankItemByName(char *pName, BOOL bExact);
 EQLIB_API PCONTENTS   FindBankItemByID(int ItemID);
 EQLIB_API DWORD       FindBankItemCountByName(char *pName, BOOL bExact);
+EQLIB_API DWORD       FindBankItemCountById(int itemId);
 EQLIB_API PEQINVSLOT  GetInvSlot(DWORD type, short Invslot, short Bagslot = -1);
 EQLIB_API BOOL		  IsItemInsideContainer(PCONTENTS pItem);
 EQLIB_API BOOL		  PickupItem(ItemContainerInstance type, PCONTENTS pItem);

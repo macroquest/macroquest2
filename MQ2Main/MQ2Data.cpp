@@ -1012,16 +1012,23 @@ TLO(dataFindItemBank)
 {
 	if (!ISINDEX())
 		return false;
-	PCHAR pName = GETFIRST();
-	BOOL bExact = false;
-
-	if (*pName == '=')
+	PCONTENTS pItem;
+	if (ISNUMBER()) 
 	{
-		bExact = true;
-		pName++;
+		pItem = FindBankItemByID(GETNUMBER());
 	}
-
-	if (PCONTENTS pItem = FindBankItemByName(pName, bExact)) {
+	else
+	{
+		PCHAR pName = GETFIRST();
+		BOOL bExact = false;
+		if (*pName == '=')
+		{
+			bExact = true;
+			pName++;
+		}
+		pItem = FindBankItemByName(pName, bExact);
+	}
+	if (pItem) {
 		Ret.Ptr = pItem;
 		Ret.Type = pItemType;
 		return true;
@@ -1033,15 +1040,23 @@ TLO(dataFindItem)
 {
 	if (!ISINDEX())
 		return false;
-	PCHAR pName = GETFIRST();
-	BOOL bExact = false;
-
-	if (*pName == '=')
+	PCONTENTS pItem;
+	if (ISNUMBER())
 	{
-		bExact = true;
-		pName++;
+		pItem = FindItemByID(GETNUMBER());
 	}
-	if (PCONTENTS pItem = FindItemByName(pName, bExact)) {
+	else
+	{
+		PCHAR pName = GETFIRST();
+		BOOL bExact = false;
+		if (*pName == '=')
+		{
+			bExact = true;
+			pName++;
+		}
+		pItem = FindItemByName(pName, bExact);
+	}
+	if (pItem) {
 		Ret.Ptr = pItem;
 		Ret.Type = pItemType;
 		return true;
@@ -1053,33 +1068,48 @@ TLO(dataFindItemCount)
 {
 	if (!ISINDEX())
 		return false;
-	PCHAR pName = GETFIRST();
-	BOOL bExact = false;
-
-	if (*pName == '=')
+	if (ISNUMBER())
 	{
-		bExact = true;
-		pName++;
+		Ret.DWord = FindItemCountByID(GETNUMBER());
+		Ret.Type = pIntType;
 	}
-	Ret.DWord = FindItemCountByName(pName, bExact);
-	Ret.Type = pIntType;
+	else
+	{
+		PCHAR pName = GETFIRST();
+		BOOL bExact = false;
+		if (*pName == '=')
+		{
+			bExact = true;
+			pName++;
+		}
+		Ret.DWord = FindItemCountByName(pName, bExact);
+		Ret.Type = pIntType;
+	}
 	return true;
 }
-
+ 
 TLO(dataFindItemBankCount)
 {
 	if (!ISINDEX())
 		return false;
-	PCHAR pName = GETFIRST();
-	BOOL bExact = false;
-
-	if (*pName == '=')
-	{
-		bExact = true;
-		pName++;
-	}
-	Ret.DWord = FindBankItemCountByName(pName, bExact);
 	Ret.Type = pIntType;
+	if (ISNUMBER())
+	{
+		Ret.DWord = FindBankItemCountById(GETNUMBER());
+	} 
+	else
+	{
+		PCHAR pName = GETFIRST();
+		BOOL bExact = false;
+
+		if (*pName == '=')
+		{
+			bExact = true;
+			pName++;
+		}
+		Ret.DWord = FindBankItemCountByName(pName, bExact);
+	}
+	
 	return true;
 }
 
