@@ -80,7 +80,10 @@ BOOL SetEQKeyBindByNumber(DWORD N, BOOL Alternate, KeyCombo &Combo)
 
 inline BOOL SetEQKeyBind(PCHAR name, BOOL Alternate, KeyCombo &Combo )
 {
-    return SetEQKeyBindByNumber(FindMappableCommand(name),Alternate,Combo);
+    int num = FindMappableCommand(name);
+	if (num >= 0)
+		return SetEQKeyBindByNumber(num,Alternate,Combo);
+	return 0;
 } 
 
 BOOL MQ2HandleKeyDown(class KeyCombo const &Combo)

@@ -8057,7 +8057,9 @@ class EQ_Affect
 {
 public:
 EQLIB_OBJECT void EQ_Affect::Reset(void);
-EQLIB_OBJECT int EQ_Affect::GetAffectData(int)const;
+EQLIB_OBJECT int EQ_Affect::GetAffectData(int Slot)const;
+EQLIB_OBJECT void EQ_Affect::SetAffectData(int Slot, int Val);
+
 #if !defined(ROF2EMU) && !defined(UFEMU)
 /*0x00*/ EqGuid    CasterGuid;
 /*0x08*/ SlotData SlotData[NUM_SLOTDATA]; // used for book keeping of various effects (debuff counter, rune/vie damage remaining)

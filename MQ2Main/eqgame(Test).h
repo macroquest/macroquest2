@@ -906,6 +906,7 @@ GNU General Public License for more details.
 #define EQ_Character__GetAdjustedSkill_x                           0x4DC740
 #define EQ_Character__GetBaseSkill_x                               0x4DD6E0
 #define EQ_Character__CanUseItem_x                                 0x4E1A30
+#define EQ_Character__CanMedOnHorse_x                              0x4EA660
 
 //ProfileManager
 #define ProfileManager__GetCurrentProfile_x                        0x90C7D0
@@ -1061,6 +1062,7 @@ GNU General Public License for more details.
 
 //EQ_Affect
 #define EQ_Affect__GetAffectData_x                                 0x915110
+#define EQ_Affect__SetAffectData_x                                 0x9156E0
 
 //CTargetWnd
 #define CTargetWnd__GetBuffCaster_x                                0x85D0F0

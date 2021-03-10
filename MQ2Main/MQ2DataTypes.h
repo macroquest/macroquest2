@@ -1280,6 +1280,7 @@ public:
 		WarforgedEmblem = 317,
 		RestlessMark = 318,
 		LoyaltyTokens = 319,
+		Debuff = 320,
 	};
 	enum CharacterMethods
 	{
@@ -1601,6 +1602,7 @@ public:
 		TypeMember(RestlessMark);
 		TypeMember(WarforgedEmblem);
 		TypeMember(LoyaltyTokens);
+		TypeMember(Debuff);
 
 		TypeMethod(Stand);
 		TypeMethod(Sit);
@@ -1736,6 +1738,7 @@ public:
 		SlowPct = 81,
 		HastePct = 82,
 		MyDuration = 83,
+		CanCure = 84,
 	};
 	enum SpellMethods
 	{
@@ -1825,6 +1828,8 @@ public:
 		TypeMember(SlowPct);
 		TypeMember(HastePct);
 		TypeMember(MyDuration);
+		TypeMember(CanCure);
+
 	}
 
 	~MQ2SpellType()

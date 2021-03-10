@@ -386,6 +386,14 @@ static inline DWORD GetBodyType(PSPAWNINFO pSpawn)
 	return 0;
 }
 
+static inline bool endsWith(char* base, char* str) {
+	if (!base || !str)
+		return false;
+	int blen = strlen(base);
+	int slen = strlen(str);
+	return (blen >= slen) && (0 == strcmp(base + blen - slen, str));
+}
+
 static inline eSpawnType GetSpawnType(PSPAWNINFO pSpawn)
 {
 	switch (pSpawn->Type)
@@ -395,7 +403,7 @@ static inline eSpawnType GetSpawnType(PSPAWNINFO pSpawn)
 		return PC;
 	}
 	case SPAWN_NPC:
-		if (pSpawn->Rider)
+		if (pSpawn->Rider || endsWith(pSpawn->DisplayedName, "`s Mount"))
 		{
 			return MOUNT;
 		}
@@ -760,14 +768,6 @@ static inline BOOL IsMobFleeing(PSPAWNINFO pChar, PSPAWNINFO pSpawn)
 static inline DWORD FixOffset(DWORD nOffset)
 {
 	return ((nOffset - 0x400000) + baseAddress);
-}
-
-static inline bool endsWith(char* base, char* str) {
-	if (!base || !str)
-		return false;
-	int blen = strlen(base);
-	int slen = strlen(str);
-	return (blen >= slen) && (0 == strcmp(base + blen - slen, str));
 }
 
 // ***************************************************************************

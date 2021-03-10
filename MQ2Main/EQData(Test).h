@@ -574,6 +574,8 @@ enum MOUSE_DATA_TYPES {
 #define SPA_INVIS_TO_UNDEAD             28
 #define SPA_INVIS_TO_ANIMALS            29
 #define SPA_NPC_REACTION_RATING         30
+#define SPA_DISEASE                     35
+#define SPA_POISON                      36
 #define SPA_VAMPIRISM                   45
 #define SPA_CHANGE_FORM                 58
 #define SPA_CLEAR_NPC_TARGETLIST        63
@@ -585,6 +587,7 @@ enum MOUSE_DATA_TYPES {
 #define SPA_HEALDOT                     100
 #define SPA_COMPLETEHEAL                101
 #define SPA_SUMMON_MOUNT                113
+#define SPA_CURSE                       116
 #define SPA_SPELLDAMAGE                 124
 #define SPA_HEALING                     125
 #define SPA_REAGENTCHANCE               131
@@ -616,6 +619,7 @@ enum MOUSE_DATA_TYPES {
 #define SPA_IMPROVED_INVIS_ANIMALS      316
 #define SPA_SHIELDBLOCKCHANCE           320
 #define SPA_NO_MOVE_HP                  334
+#define SPA_CORRUPTION                  369
 #define SPA_MANA_IGNITE					401
 #define SPA_ENDURANCE_IGNITE			402
 #define SPA_LIMIT_HP        			408
@@ -2422,7 +2426,7 @@ typedef struct _CHARINFO {
 /******************* PcZoneClient End ******************/
 /******************* PCClient Begin ************************/
 /*0x2868*/ ExtendedTargetList* pXTargetMgr;
-/*0x286C*/ DWORD		InCombat;
+/*0x286C*/ bool			InCombat;
 /*0x2870*/ DWORD		Downtime;
 /*0x2874*/ DWORD		DowntimeStamp;
 /*0x2878*/ bool			bOverrideAvatarProximity;
@@ -2812,7 +2816,7 @@ typedef struct _CHARINFONEW {
 /******************* PcZoneClient End ******************/
 /******************* PCClient Begin ************************/
 /*0x2868*/ ExtendedTargetList* pXTargetMgr;
-/*0x286C*/ DWORD		InCombat;
+/*0x286C*/ bool			InCombat;
 /*0x2870*/ DWORD		Downtime;
 /*0x2874*/ DWORD		DowntimeStamp;
 /*0x2878*/ bool			bOverrideAvatarProximity;

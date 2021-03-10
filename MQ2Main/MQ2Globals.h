@@ -1627,6 +1627,7 @@ namespace MQ2Globals
 	EQLIB_VAR DWORD EQ_Character__GetAdjustedSkill;
 	EQLIB_VAR DWORD EQ_Character__GetBaseSkill;
 	EQLIB_VAR DWORD EQ_Character__CanUseItem;
+	EQLIB_VAR DWORD EQ_Character__CanMedOnHorse;
 	EQLIB_VAR DWORD BaseProfile__GetItemPossession;
 	
 	EQLIB_VAR DWORD ArrayClass__DeleteElement;
@@ -1796,7 +1797,7 @@ namespace MQ2Globals
 	
 	EQLIB_VAR DWORD __IsResEffectSpell;
 	EQLIB_VAR DWORD EQ_Affect__GetAffectData;
-
+	EQLIB_VAR DWORD EQ_Affect__SetAffectData;
 	EQLIB_VAR DWORD CharacterZoneClient__CalcAffectChangeGeneric;
 	EQLIB_VAR DWORD CharacterZoneClient__GetFocusReuseMod;
 	EQLIB_VAR DWORD CharacterZoneClient__CalcAffectChange;

@@ -858,6 +858,14 @@ LEGACY_API BOOL Calculate(PCHAR szFormula, DOUBLE& Dest);
 // comma separators, or decimals.
 EQLIB_API void PrettifyNumber(char* string, size_t bufferSize, int decimals = 0);
 
+//
+enum class GetMoneyFromStringFormat {
+	Long = 0,       // e.g. pp, gp, sp, cp
+	Short = 1,      // e.g. p, g, s, c
+};
+EQLIB_API uint64_t GetMoneyFromString(const char* string, GetMoneyFromStringFormat format = GetMoneyFromStringFormat::Long);
+EQLIB_API void FormatMoneyString(char* szBuffer, size_t bufferLength, uint64_t moneyAmount, GetMoneyFromStringFormat format = GetMoneyFromStringFormat::Long);
+
 #ifndef ISXEQ
 #include "MQ2TopLevelObjects.h"
 #include "MQ2Commands.h"

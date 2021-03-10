@@ -2203,6 +2203,7 @@ namespace MQ2Globals
 	INITIALIZE_EQGAME_OFFSET(EQ_Character__GetAdjustedSkill);
 	INITIALIZE_EQGAME_OFFSET(EQ_Character__GetBaseSkill);
 	INITIALIZE_EQGAME_OFFSET(EQ_Character__CanUseItem);
+	INITIALIZE_EQGAME_OFFSET(EQ_Character__CanMedOnHorse);
 #ifdef BaseProfile__GetItemPossession_x
 	INITIALIZE_EQGAME_OFFSET(BaseProfile__GetItemPossession);
 #endif
@@ -2362,7 +2363,8 @@ namespace MQ2Globals
 	INITIALIZE_EQGAME_OFFSET(EQ_Spell__IsLullSpell);
 	INITIALIZE_EQGAME_OFFSET(__IsResEffectSpell);
 	INITIALIZE_EQGAME_OFFSET(EQ_Affect__GetAffectData);
-
+	INITIALIZE_EQGAME_OFFSET(EQ_Affect__SetAffectData);
+	
 	INITIALIZE_EQGAME_OFFSET(CharacterZoneClient__CalcAffectChange);
 	INITIALIZE_EQGAME_OFFSET(CharacterZoneClient__CalcAffectChangeGeneric);
 	INITIALIZE_EQGAME_OFFSET(CharacterZoneClient__GetFocusReuseMod);

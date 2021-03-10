@@ -334,7 +334,9 @@ public:
 												if (pItem->Cost > 0)
 												{
 													int sellprice = ((EQ_Item*)ptr.pObject)->ValueSellMerchant((float)1.05, 1);
-													DWORD cp = sellprice;
+													FormatMoneyString(szTemp3, MAX_STRING, sellprice);
+													
+													/*DWORD cp = sellprice;
 													DWORD sp = cp / 10; cp = cp % 10;
 													DWORD gp = sp / 10; sp = sp % 10;
 													DWORD pp = gp / 10; gp = gp % 10;
@@ -359,7 +361,7 @@ public:
 													{
 														sprintf_s(szTemp2, MAX_STRING, " %dcp", cp);
 														strcat_s(szTemp3, MAX_STRING, szTemp2);
-													}
+													}*/
 												}
 												else
 												{
@@ -394,70 +396,6 @@ public:
 				}
 			}
 		}
-	}
-
-	int GetMoneyFromString(char* str)
-	{
-		char* szLabel1 = new char[MAX_STRING];
-		strcpy_s(szLabel1, MAX_STRING, str);
-
-		int pp = 0;
-		int gp = 0;
-		int sp = 0;
-		int cp = 0;
-
-		if (char* pDest = strstr(szLabel1, "pp"))
-		{
-			pDest[0] = '\0';
-			pp = atoi(szLabel1);
-			strcpy_s(szLabel1, MAX_STRING, &pDest[2]);
-		}
-		else if (char* pDest = strstr(szLabel1, "p"))
-		{
-			pDest[0] = '\0';
-			pp = atoi(szLabel1);
-			strcpy_s(szLabel1, MAX_STRING, &pDest[1]);
-		}
-		if (char* pDest = strstr(szLabel1, "gp"))
-		{
-			pDest[0] = '\0';
-			gp = atoi(szLabel1);
-			strcpy_s(szLabel1, MAX_STRING, &pDest[2]);
-		}
-		else if (char* pDest = strstr(szLabel1, "g"))
-		{
-			pDest[0] = '\0';
-			gp = atoi(szLabel1);
-			strcpy_s(szLabel1, MAX_STRING, &pDest[1]);
-		}
-		if (char* pDest = strstr(szLabel1, "sp"))
-		{
-			pDest[0] = '\0';
-			sp = atoi(szLabel1);
-			strcpy_s(szLabel1, MAX_STRING, &pDest[2]);
-		}
-		else if (char* pDest = strstr(szLabel1, "s"))
-		{
-			pDest[0] = '\0';
-			sp = atoi(szLabel1);
-			strcpy_s(szLabel1, MAX_STRING, &pDest[1]);
-		}
-		if (char* pDest = strstr(szLabel1, "cp"))
-		{
-			pDest[0] = '\0';
-			cp = atoi(szLabel1);
-			strcpy_s(szLabel1, MAX_STRING, &pDest[2]);
-		}
-		else if (char* pDest = strstr(szLabel1, "c"))
-		{
-			pDest[0] = '\0';
-			cp = atoi(szLabel1);
-			strcpy_s(szLabel1, MAX_STRING, &pDest[1]);
-		}
-
-		delete szLabel1;
-		int total = (pp * 1000) + (gp * 100) + (sp * 10) + cp;
-		return total;
 	}
 	int CBarterWnd__WndNotification_Tramp(CXWnd*, uint32_t, void*);
 	int CBarterWnd__WndNotification_Detour(CXWnd* pWnd, uint32_t uiMessage, void* pData)
@@ -523,9 +461,9 @@ public:
 				case 4://Offering
 				{
 					GetCXStr(pSI->StrLabel1, szLabel1);
-					int int1 = GetMoneyFromString(szLabel1);
+					uint64_t int1 = GetMoneyFromString(szLabel1, GetMoneyFromStringFormat::Short);
 					GetCXStr(pSI->StrLabel2, szLabel2);
-					int int2 = GetMoneyFromString(szLabel2);
+					uint64_t int2 = GetMoneyFromString(szLabel2, GetMoneyFromStringFormat::Short);
 
 					if (int1 > int2)
 						pSI->SortResult = -1;
@@ -558,7 +496,19 @@ public:
 					int searchIndex = (int)pListWnd->GetItemData(selIndex);
 					if (searchIndex < pBSWnd->InventoryItemsArray.Count)
 					{
-						if (PCONTENTS pCont = FindItemByID(pBSWnd->InventoryItemsArray[searchIndex].ItemID))
+						int itemid = pBSWnd->InventoryItemsArray[searchIndex].ItemID;
+						PCONTENTS pCont = 0;
+						if (itemid == 88888)
+						{
+							//we can't really do anything here, I can't find Krono locally, and would have to
+							//send a inspect request, to the server, i don't want to do that.
+							//so for now, screw it, no inpection of Krono...
+						}
+						else
+						{
+							pCont = FindItemByID(itemid);
+						}
+						if (pCont)
 						{
 							bool IsShiftPressed = (pWndMgr->GetKeyboardFlags() & 1U) != 0;
 							VePointer<CONTENTS>cont;
@@ -628,9 +578,9 @@ public:
 				case 3://Value
 				{
 					GetCXStr(pSI->StrLabel1, szLabel1);
-					int int1 = GetMoneyFromString(szLabel1);
+					uint64_t int1 = GetMoneyFromString(szLabel1, GetMoneyFromStringFormat::Short);
 					GetCXStr(pSI->StrLabel2, szLabel2);
-					int int2 = GetMoneyFromString(szLabel2);
+					uint64_t int2 = GetMoneyFromString(szLabel2, GetMoneyFromStringFormat::Short);
 
 					if (int1 > int2)
 						pSI->SortResult = -1;
@@ -713,7 +663,8 @@ public:
 								if (pItem->Cost > 0)
 								{
 									int sellprice = ((EQ_Item*)pCont)->ValueSellMerchant((float)1.05, 1);
-									DWORD cp = sellprice;
+									FormatMoneyString(szTemp3, MAX_STRING, sellprice,GetMoneyFromStringFormat::Short);
+									/*DWORD cp = sellprice;
 									DWORD sp = cp / 10; cp = cp % 10;
 									DWORD gp = sp / 10; sp = sp % 10;
 									DWORD pp = gp / 10; gp = gp % 10;
@@ -738,7 +689,7 @@ public:
 									{
 										sprintf_s(szTemp2, MAX_STRING, " %dc", cp);
 										strcat_s(szTemp3, MAX_STRING, szTemp2);
-									}
+									}*/
 								}
 								else
 								{
@@ -776,9 +727,9 @@ public:
 					case 7:
 					{
 						GetCXStr(pSI->StrLabel1, szLabel1);
-						int int1 = GetMoneyFromString(szLabel1);
+						uint64_t int1 = GetMoneyFromString(szLabel1);
 						GetCXStr(pSI->StrLabel2, szLabel2);
-						int int2 = GetMoneyFromString(szLabel2);
+						uint64_t int2 = GetMoneyFromString(szLabel2);
 
 						if (int1 > int2)
 							pSI->SortResult = -1;

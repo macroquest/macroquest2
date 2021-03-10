@@ -4250,6 +4250,9 @@ FUNCTION_AT_ADDRESS(void EQ_Affect::Reset(void),EQ_Affect__Reset);
 #ifdef EQ_Affect__GetAffectData_x
 FUNCTION_AT_ADDRESS(int EQ_Affect::GetAffectData(int)const,EQ_Affect__GetAffectData);
 #endif
+#ifdef EQ_Affect__SetAffectData_x
+FUNCTION_AT_ADDRESS(void EQ_Affect::SetAffectData(int Slot, int Val), EQ_Affect__SetAffectData);
+#endif
 #ifdef EQ_Character__EQ_Character_x
 FUNCTION_AT_ADDRESS( EQ_Character::EQ_Character(void),EQ_Character__EQ_Character);
 #endif

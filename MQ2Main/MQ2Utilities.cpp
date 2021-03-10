@@ -3282,8 +3282,41 @@ void FIllSlotData(EQ_Affect* pAffect, PSPELL pSpell)
 		}
 	}
 #else
-	LONG slots = GetSpellNumEffects(pSpell);
 	PSPELLCALCINFO pCalcInfo = 0;
+	if (ClientSpellManager *pSpellM = (ClientSpellManager *)pSpellMgr)
+	{
+		for (int i = 0; i < 6; i++)
+		{
+			pAffect->SlotData[i].Slot = -1;
+			pAffect->SlotData[i].Value = 0;
+		}
+		LONG slots = GetSpellNumEffects(pSpell);
+		for (int i = 0; i < slots; i++)
+		{
+			if (pCalcInfo = pSpellM->GetSpellAffect(pSpell->CalcIndex + i))
+			{
+				if (pCalcInfo->Attrib == SPA_DISEASE ||
+					pCalcInfo->Attrib == SPA_POISON ||
+					pCalcInfo->Attrib == SPA_CURSE ||
+					pCalcInfo->Attrib == SPA_CORRUPTION)
+				{
+					((EQ_Affect*)pAffect)->SetAffectData(pCalcInfo->Slot, pCalcInfo->Base);
+					Sleep(0);
+				}
+				else if (pCalcInfo->Max)
+				{
+					((EQ_Affect*)pAffect)->SetAffectData(pCalcInfo->Slot, pCalcInfo->Max);
+					Sleep(0);
+				}
+			}
+		}
+	}
+
+
+
+
+
+	/*PSPELLCALCINFO pCalcInfo = 0;
 	if (ClientSpellManager *pSpellM = (ClientSpellManager *)pSpellMgr)
 	{
 		for (LONG sd = 0; sd < NUM_SLOTDATA; sd++) {
@@ -3293,7 +3326,16 @@ void FIllSlotData(EQ_Affect* pAffect, PSPELL pSpell)
 			{
 				if (pCalcInfo = pSpellM->GetSpellAffect(pSpell->CalcIndex + sd))
 				{
-					if (pCalcInfo->Max)
+					pAffect->SlotData[sd].Slot = sd;
+					if (pCalcInfo->Attrib == SPA_DISEASE ||
+						pCalcInfo->Attrib == SPA_POISON ||
+						pCalcInfo->Attrib == SPA_CURSE ||
+						pCalcInfo->Attrib == SPA_CORRUPTION)
+					{
+						pAffect->SlotData[sd].Slot = pCalcInfo->Slot;
+						pAffect->SlotData[sd].Value = pCalcInfo->Base;
+					}
+					else if (pCalcInfo->Max)
 					{
 						pAffect->SlotData[sd].Slot = pCalcInfo->Slot;
 						pAffect->SlotData[sd].Value = pCalcInfo->Max;
@@ -3301,7 +3343,7 @@ void FIllSlotData(EQ_Affect* pAffect, PSPELL pSpell)
 				}
 			}
 		}
-	}
+	}*/
 #endif
 }
 PCHAR ParseSpellEffect(PSPELL pSpell, int i, PCHAR szBuffer, SIZE_T BufferSize, LONG level)
@@ -10438,11 +10480,19 @@ int GetSelfBuffBySubCat(PCHAR subcat, DWORD classmask, int startslot)
 }
 int GetSelfBuffBySPA(int spa, bool bIncrease, int startslot)
 {
+	bool bNoDispell = false;
+	if (startslot == -1)
+	{
+		startslot = 0;
+		bNoDispell = true;
+	}
 	if (PCHARINFO2 pChar2 = GetCharInfo2()) {
 		for (unsigned long i = startslot; i < NUM_LONG_BUFFS; i++)
 		{
 			if (PSPELL pSpell = GetSpellByID(pChar2->Buff[i].SpellID))
 			{
+				if (bNoDispell && pSpell->NoDisspell)
+					continue;
 				if (LONG base = ((EQ_Spell *)pSpell)->SpellAffectBase(spa)) {
 					switch (spa)
 					{
@@ -10489,11 +10539,19 @@ int GetSelfBuffBySPA(int spa, bool bIncrease, int startslot)
 }
 int GetSelfShortBuffBySPA(int spa, bool bIncrease, int startslot)
 {
+	bool bNoDispell = false;
+	if (startslot == -1)
+	{
+		startslot = 0;
+		bNoDispell = true;
+	}
 	if (PCHARINFO2 pChar2 = GetCharInfo2()) {
 		for (unsigned long i = startslot; i < NUM_SHORT_BUFFS; i++)
 		{
 			if (PSPELL pSpell = GetSpellByID(pChar2->ShortBuff[i].SpellID))
 			{
+				if (bNoDispell && pSpell->NoDisspell)
+					continue;
 				if (LONG base = ((EQ_Spell *)pSpell)->SpellAffectBase(spa)) {
 					switch (spa)
 					{
@@ -12159,6 +12217,132 @@ void PrettifyNumber(char* string, size_t bufferSize, int decimals /* = 0 */)
 		&fmt,
 		string,
 		bufferSize);
+}
+uint64_t GetMoneyFromString(const char* str, GetMoneyFromStringFormat format)
+{
+	char szLabel1[50];
+	strcpy_s(szLabel1, str);
+
+	uint64_t pp = 0;
+	uint64_t gp = 0;
+	uint64_t sp = 0;
+	uint64_t cp = 0;
+
+	if (format == GetMoneyFromStringFormat::Long)
+	{
+		if (char* pDest = strstr(szLabel1, "pp"))
+		{
+			pDest[0] = '\0';
+			pp = atoi(szLabel1);
+			strcpy_s(szLabel1, &pDest[2]);
+		}
+
+		if (char* pDest = strstr(szLabel1, "gp"))
+		{
+			pDest[0] = '\0';
+			gp = atoi(szLabel1);
+			strcpy_s(szLabel1, &pDest[2]);
+		}
+
+		if (char* pDest = strstr(szLabel1, "sp"))
+		{
+			pDest[0] = '\0';
+			sp = atoi(szLabel1);
+			strcpy_s(szLabel1, &pDest[2]);
+		}
+
+		if (char* pDest = strstr(szLabel1, "cp"))
+		{
+			pDest[0] = '\0';
+			cp = atoi(szLabel1);
+			strcpy_s(szLabel1, &pDest[2]);
+		}
+	}
+	else if (format == GetMoneyFromStringFormat::Short)
+	{
+		if (char* pDest = strstr(szLabel1, "p"))
+		{
+			pDest[0] = '\0';
+			pp = atoi(szLabel1);
+			strcpy_s(szLabel1, &pDest[1]);
+		}
+
+		if (char* pDest = strstr(szLabel1, "g"))
+		{
+			pDest[0] = '\0';
+			gp = atoi(szLabel1);
+			strcpy_s(szLabel1, &pDest[1]);
+		}
+
+		if (char* pDest = strstr(szLabel1, "s"))
+		{
+			pDest[0] = '\0';
+			sp = atoi(szLabel1);
+			strcpy_s(szLabel1, &pDest[1]);
+		}
+
+		if (char* pDest = strstr(szLabel1, "c"))
+		{
+			pDest[0] = '\0';
+			cp = atoi(szLabel1);
+			strcpy_s(szLabel1, &pDest[1]);
+		}
+	}
+
+	uint64_t total = (pp * 1000) + (gp * 100) + (sp * 10) + cp;
+	return total;
+}
+void FormatMoneyString(char* szBuffer, size_t bufferLength, uint64_t moneyAmount, GetMoneyFromStringFormat format)
+{
+	uint64_t cp = moneyAmount;
+	uint64_t sp = cp / 10; cp = cp % 10;
+	uint64_t gp = sp / 10; sp = sp % 10;
+	uint64_t pp = gp / 10; gp = gp % 10;
+
+	szBuffer[0] = 0;
+	char szTemp[16];
+
+	if (pp > 0)
+	{
+		if (format == GetMoneyFromStringFormat::Long)
+			sprintf_s(szTemp, "%I64dpp", pp);
+		else if (format == GetMoneyFromStringFormat::Short)
+			sprintf_s(szTemp, "%I64dp", pp);
+		strcat_s(szBuffer, bufferLength, szTemp);
+	}
+
+	if (gp > 0)
+	{
+		if (szBuffer[0] != 0)
+			strcat_s(szBuffer, bufferLength, " ");
+		if (format == GetMoneyFromStringFormat::Long)
+			sprintf_s(szTemp, " %I64dgp", gp);
+		else if (format == GetMoneyFromStringFormat::Short)
+			sprintf_s(szTemp, " %I64dg", gp);
+		strcat_s(szBuffer, bufferLength, szTemp);
+	}
+
+	if (sp > 0)
+	{
+		if (szBuffer[0] != 0)
+			strcat_s(szBuffer, bufferLength, " ");
+		if (format == GetMoneyFromStringFormat::Long)
+			sprintf_s(szTemp, " %I64dsp", sp);
+		else if (format == GetMoneyFromStringFormat::Short)
+			sprintf_s(szTemp, " %I64ds", sp);
+		strcat_s(szBuffer, bufferLength, szTemp);
+	}
+
+	if (cp > 0)
+	{
+		if (szBuffer[0] != 0)
+			strcat_s(szBuffer, bufferLength, " ");
+		if (format == GetMoneyFromStringFormat::Long)
+			sprintf_s(szTemp, " %I64dcp", cp);
+		else if (format == GetMoneyFromStringFormat::Short)
+			sprintf_s(szTemp, " %I64dc", cp);
+		strcat_s(szBuffer, bufferLength, szTemp);
+	}
 }
 
 bool TargetBuffCastByMe(const char* pBuffName) {

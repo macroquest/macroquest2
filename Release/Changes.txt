@@ -1,3 +1,12 @@
+Mar 10 2021
+- Fix GetMoneyFromString and make an exported global helper for FormatMoneyString to do the opposite. - Brainiac
+- Fixed a bug in mount detection - Brainiac
+- Fixed a crash when setting an invalid keybind - Brainiac
+- Updated for LIVE
+-
+Mar 05 2021
+- Changed CombatState so it's no longer dependant on the player window.
+- 
 Mar 04 2021
 - Fixed the SPELL struct this should fix a bunch of misc bugs.
 - Updated for TEST

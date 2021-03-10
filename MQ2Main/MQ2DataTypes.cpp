@@ -5091,18 +5091,52 @@ bool MQ2CharacterType::GETMEMBER()
 		}
 		return false;
 	case CombatState:
+	{
 		Dest.Type = pStringType;
-		if (!pPlayerWnd)
-			return false;
-		switch (((PCPLAYERWND)pPlayerWnd)->CombatState)
+		int CombatState = 4;
+		if (PCHARINFO pChar = GetCharInfo())
+		{
+
+			if (pChar->InCombat)//COMBAT
+			{
+				CombatState = 0;
+			}
+			else if ((int)(pChar->Downtime - (GetFastTime() - pChar->DowntimeStamp)) > 0)//COOLDOWN
+			{
+				CombatState = 2;
+			}
+			else //DEBUFFED
+			{
+				bool bDebuffed = false;
+				PCHARINFO2 pChar2 = GetCharInfo2();
+				if (!pChar2)
+					return false;
+				for (unsigned long k = 0; k < NUM_LONG_BUFFS; k++)
+				{
+					PSPELLBUFF pSpellBuff = &pChar2->Buff[k];
+					if (PSPELL pSpell = GetSpellByID(pChar2->Buff[k].SpellID))
+					{
+						if (pSpellBuff->Type != 0 && pSpell->SpellType == 0 && pSpell->BypassRegenCheck == 0)
+						{
+							bDebuffed = true;
+							break;
+						}
+					}
+				}
+				if(bDebuffed)
+				{
+					CombatState = 1;//DEBUFFED
+				}
+				else if (!((((PSPAWNINFO)pLocalPlayer)->StandState == STANDSTATE_SIT) || (((EQ_Character*)pCharData1)->CanMedOnHorse())))
+				{
+					CombatState = 3;//so we are not on a horse and we are not sitting... so we are "active"
+				}
+			}
+		}
+		switch (CombatState)
 		{
 		case 0:
-			if (((CXWnd*)pPlayerWnd)->GetChildItem("PW_CombatStateAnim"))
-			{
-				strcpy_s(DataTypeTemp, "COMBAT");
-				break;
-			}
-			strcpy_s(DataTypeTemp, "NULL");
+			strcpy_s(DataTypeTemp, "COMBAT");
 			break;
 		case 1:
 			strcpy_s(DataTypeTemp, "DEBUFFED");
@@ -5116,13 +5150,137 @@ bool MQ2CharacterType::GETMEMBER()
 		case 4:
 			strcpy_s(DataTypeTemp, "RESTING");
 			break;
-		default:
-			strcpy_s(DataTypeTemp, "UNKNOWN");
-			break;
 		}
 		Dest.Ptr = &DataTypeTemp[0];
-		Dest.Type = pStringType;
 		return true;
+	}
+#ifdef WIP
+	case Debuff://supports poison/disease/curse/other for now. /any
+	{
+		PCHARINFO2 pChar2 = GetCharInfo2();
+		if (!pChar2)
+			return false;
+		Dest.Ptr = 0;
+		Dest.Type = pBuffType;
+		if (ISINDEX())
+		{
+			if (ISNUMBER())//add later
+			{
+				int nDebuffType = GETNUMBER() - 1;
+				if (nDebuffType < 0)
+					return false;
+				switch (nDebuffType)
+				{
+				case 0:
+					break;
+				};
+				return false;
+			}
+			else
+			{
+				int nDebuffType = -1;
+				if (!_stricmp(GETFIRST(), "corruption"))
+				{
+					nDebuffType = 0;
+				} else if (!_stricmp(GETFIRST(), "curse"))
+				{
+					nDebuffType = 1;
+				} else if (!_stricmp(GETFIRST(), "disease"))
+				{
+					nDebuffType = 2;
+				}
+				else if (!_stricmp(GETFIRST(), "poison"))
+				{
+					nDebuffType = 3;
+				}
+				else if (!_stricmp(GETFIRST(), "other"))
+				{
+					nDebuffType = 10;
+				}
+				int nBuff = -1;
+				switch (nDebuffType)
+				{
+					case 0://corruption
+						if ((nBuff = GetSelfBuffBySPA(369, 0)) != -1)//Corruption Counter
+						{
+							Dest.Ptr = &pChar2->Buff[nBuff];
+							return true;
+						}
+						if ((nBuff = GetSelfShortBuffBySPA(369, 0)) != -1)//Corruption Counter
+						{
+							Dest.Ptr = &pChar2->ShortBuff[nBuff];
+							return true;
+						}
+						break;
+					case 1://curse		
+						if ((nBuff = GetSelfBuffBySPA(116, 0, -1)) != -1)//Curse Counter
+						{
+							Dest.Ptr = &pChar2->Buff[nBuff];
+						}
+						if ((nBuff = GetSelfShortBuffBySPA(116, 0, -1)) != -1)//Curse Counter
+						{
+							Dest.Ptr = &pChar2->ShortBuff[nBuff];
+						}
+						break;
+					case 2://disease
+						if ((nBuff = GetSelfBuffBySPA(35, 0, -1)) != -1)//Disease Counter
+						{
+							Dest.Ptr = &pChar2->Buff[nBuff];
+						}
+						if ((nBuff = GetSelfShortBuffBySPA(35, 0, -1)) != -1)//Disease Counter
+						{
+							Dest.Ptr = &pChar2->ShortBuff[nBuff];
+						}
+						break;
+					case 3://poison
+						if ((nBuff = GetSelfBuffBySPA(36, 0, -1)) != -1)//Poison Counter
+						{
+							Dest.Ptr = &pChar2->Buff[nBuff];
+						}
+						if ((nBuff = GetSelfShortBuffBySPA(36, 0, -1)) != -1)//Poison Counter
+						{
+							Dest.Ptr = &pChar2->ShortBuff[nBuff];
+						}
+						break;
+					case 10://other
+					{
+						for (unsigned long k = 0; k < NUM_SHORT_BUFFS; k++)
+						{
+							PSPELLBUFF pSpellBuff = &pChar2->ShortBuff[k];
+							if (PSPELL pSpell = GetSpellByID(pChar2->ShortBuff[k].SpellID))
+							{
+								if (pSpell->NoDisspell)
+									continue;
+								if (pSpellBuff->Type != 0 && pSpell->SpellType == 0 && pSpell->BypassRegenCheck == 0)
+								{
+									Dest.Ptr = &pChar2->ShortBuff[k];
+									break;
+								}
+							}
+						}
+						for (unsigned long k = 0; k < NUM_LONG_BUFFS; k++)
+						{
+							PSPELLBUFF pSpellBuff = &pChar2->Buff[k];
+							if (PSPELL pSpell = GetSpellByID(pChar2->Buff[k].SpellID))
+							{
+								if (pSpell->NoDisspell)
+									continue;
+								if (pSpellBuff->Type != 0 && pSpell->SpellType == 0 && pSpell->BypassRegenCheck == 0)
+								{
+									Dest.Ptr = &pChar2->Buff[k];
+									break;
+								}
+							}
+						}
+						break;
+					}
+				};
+				return true;
+			}
+		}
+		break;
+	}
+	#endif
 	case svCorruption:
 		Dest.DWord = pChar->SaveCorruption;
 		Dest.Type = pIntType;
@@ -7173,6 +7331,64 @@ bool MQ2SpellType::GETMEMBER()
 		}
 		return true;
 	}
+#ifdef WIP
+	case CanCure://${Spell[Radiant Cure].CanCure[Skunk Shit]}
+	{
+		Dest.DWord = 0;
+		Dest.Type = pIntType;
+
+		if (!ISINDEX())
+			return true;
+		PSPELL DebuffSpell = NULL;
+		if (ISNUMBER())
+			DebuffSpell = GetSpellByID(GETNUMBER());
+		else
+			DebuffSpell = GetSpellByName(GETFIRST());
+		if (!DebuffSpell)
+			return true;
+		PSPELL radiantcurespell = pSpell;
+		for (int i = 0; i < GetSpellNumEffects(radiantcurespell); i++)
+		{
+			int SPA = GetSpellAttrib(radiantcurespell, i);
+			if (SPA != SPA_DISEASE &&
+				SPA != SPA_POISON &&
+				SPA != SPA_CURSE &&
+				SPA != SPA_CORRUPTION)
+			{
+				continue;
+			}
+			EQ_Affect eff = { 0 };
+			FIllSlotData(&eff, DebuffSpell);
+			eff.SpellID = DebuffSpell->ID;
+			//eff.Level = DebuffSpell->ClassLevel[((PSPAWNINFO)pLocalPlayer)->mActorClient.Class];
+			eff.Level = ((PSPAWNINFO)pLocalPlayer)->Level;
+			eff.Type = 2;
+			eff.Modifier = 1.0;
+			//this is the buff on us that has the SPA on it
+			EQ_Affect *pDebuffEffect2 = ((EQ_Character*)pCharData1)->GetPCSpellAffect(SPA, NULL);
+			//this is us faking a affect we do not have on us.
+			EQ_Affect *pDebuffEffect = &eff;
+			if (pDebuffEffect != NULL)
+			{
+				if (PSPELL DebuffSpell = GetSpellByID(pDebuffEffect->SpellID))
+				{			
+					if (unsigned char debuffslotindex = ((EQ_Spell*)DebuffSpell)->SpellAffects(SPA))
+					{
+						//ok so the SpellAffects function returns the index of the pSpell->SlotData[index] the SPA is in + 1 so we need to decrease it
+						debuffslotindex--;
+						int change = ((CharacterZoneClient*)pCharData1)->CalcAffectChange((EQ_Spell*)DebuffSpell, pDebuffEffect->Level, debuffslotindex, NULL, -1, ((PlayerZoneClient*)pLocalPlayer));
+						//ok just as a test lets calc this from a spell not on us
+						int change2 = ((CharacterZoneClient*)pCharData1)->CalcAffectChange((EQ_Spell*)radiantcurespell,
+							((PSPAWNINFO)pLocalPlayer)->Level, debuffslotindex,&eff, 0, ((PlayerZoneClient*)pLocalPlayer));
+						Dest.DWord = change2 + change;
+						break;
+					}
+				}
+			}
+		}
+		return true;
+	}
+#endif
 	case WillStack:
 	case StacksWith:
 	case NewStacksWith://if a spell stack with another spell
