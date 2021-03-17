@@ -1,3 +1,9 @@
+Mar 16 2021
+- Added the eqlib namespace by brainiac so we can free and allocate memory using eqs heap.
+- Check bounds on notify select commands - Brainiac
+- Misc Fixes
+- Updated for TEST
+-
 Mar 10 2021
 - Fix GetMoneyFromString and make an exported global helper for FormatMoneyString to do the opposite. - Brainiac
 - Fixed a bug in mount detection - Brainiac

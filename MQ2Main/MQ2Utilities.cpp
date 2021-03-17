@@ -12361,3 +12361,18 @@ bool TargetBuffCastByMe(const char* pBuffName) {
 	}
 	return false;
 }
+namespace eqlib {
+
+	eqAllocFn eqAlloc = nullptr;
+	eqFreeFn eqFree = nullptr;
+
+	FUNCTION_AT_VARIABLE_ADDRESS(void* eqAllocImpl(size_t), __eq_new);
+	FUNCTION_AT_VARIABLE_ADDRESS(void eqFreeImpl(void*), __eq_delete);
+
+
+	void InitializeEQLib()
+	{
+		eqAlloc = eqAllocImpl;
+		eqFree = eqFreeImpl;
+	}
+} // namespace eqlib

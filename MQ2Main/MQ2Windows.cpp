@@ -460,17 +460,7 @@ public:
 				}
 				case 4://Offering
 				{
-					GetCXStr(pSI->StrLabel1, szLabel1);
-					uint64_t int1 = GetMoneyFromString(szLabel1, GetMoneyFromStringFormat::Short);
-					GetCXStr(pSI->StrLabel2, szLabel2);
-					uint64_t int2 = GetMoneyFromString(szLabel2, GetMoneyFromStringFormat::Short);
-
-					if (int1 > int2)
-						pSI->SortResult = -1;
-					else if (int1 < int2)
-						pSI->SortResult = 1;
-					else
-						pSI->SortResult = 0;
+					pSI->SortResult = CompareMoneyStrings(pSI, GetMoneyFromStringFormat::Short);
 					break;
 				}
 				}
@@ -577,23 +567,11 @@ public:
 				}
 				case 3://Value
 				{
-					GetCXStr(pSI->StrLabel1, szLabel1);
-					uint64_t int1 = GetMoneyFromString(szLabel1, GetMoneyFromStringFormat::Short);
-					GetCXStr(pSI->StrLabel2, szLabel2);
-					uint64_t int2 = GetMoneyFromString(szLabel2, GetMoneyFromStringFormat::Short);
-
-					if (int1 > int2)
-						pSI->SortResult = -1;
-					else if (int1 < int2)
-						pSI->SortResult = 1;
-					else
-						pSI->SortResult = 0;
+					pSI->SortResult = CompareMoneyStrings(pSI, GetMoneyFromStringFormat::Short);
 					break;
 				}
 				default:
-					delete szLabel1;
-					delete szLabel2;
-					return 0;
+					break;
 				}
 				delete szLabel1;
 				delete szLabel2;
@@ -663,33 +641,7 @@ public:
 								if (pItem->Cost > 0)
 								{
 									int sellprice = ((EQ_Item*)pCont)->ValueSellMerchant((float)1.05, 1);
-									FormatMoneyString(szTemp3, MAX_STRING, sellprice,GetMoneyFromStringFormat::Short);
-									/*DWORD cp = sellprice;
-									DWORD sp = cp / 10; cp = cp % 10;
-									DWORD gp = sp / 10; sp = sp % 10;
-									DWORD pp = gp / 10; gp = gp % 10;
-									szTemp3[0] = '\0';
-
-									if (pp > 0)
-									{
-										sprintf_s(szTemp2, MAX_STRING, " %dp", pp);
-										strcat_s(szTemp3, MAX_STRING, szTemp2);
-									}
-									if (gp > 0)
-									{
-										sprintf_s(szTemp2, MAX_STRING, " %dg", gp);
-										strcat_s(szTemp3, MAX_STRING, szTemp2);
-									}
-									if (sp > 0)
-									{
-										sprintf_s(szTemp2, MAX_STRING, " %ds", sp);
-										strcat_s(szTemp3, MAX_STRING, szTemp2);
-									}
-									if (cp > 0)
-									{
-										sprintf_s(szTemp2, MAX_STRING, " %dc", cp);
-										strcat_s(szTemp3, MAX_STRING, szTemp2);
-									}*/
+									FormatMoneyString(szTemp3, MAX_STRING, sellprice,GetMoneyFromStringFormat::Short);		
 								}
 								else
 								{
@@ -709,6 +661,21 @@ public:
 			}
 		}
 	}
+	static int CompareMoneyStrings(SListWndSortInfo* sInfo, GetMoneyFromStringFormat format)
+	{
+		char* szLabel1 = new char[MAX_STRING];
+		char* szLabel2 = new char[MAX_STRING];
+		GetCXStr(sInfo->StrLabel1, szLabel1);
+		uint64_t int1 = GetMoneyFromString(szLabel1, format);
+		GetCXStr(sInfo->StrLabel2, szLabel2);
+		uint64_t int2 = GetMoneyFromString(szLabel2, format);
+
+		int64_t value1 = static_cast<int64_t>(szLabel1[0] ? int1 : -1);
+		int64_t value2 = static_cast<int64_t>(szLabel2[0] ? int2 : -1);
+		delete szLabel1;
+		delete szLabel2;
+		return static_cast<int>(value1 - value2);
+	}
 	int CFindItemWnd__WndNotification_Tramp(CXWnd*, uint32_t, void*);
 	int CFindItemWnd__WndNotification_Detour(CXWnd* pWnd, uint32_t uiMessage, void* pData)
 	{
@@ -719,31 +686,15 @@ public:
 			{
 				if (SListWndSortInfo* pSI = (SListWndSortInfo *)pData)
 				{
-					char* szLabel1 = new char[MAX_STRING];
-					char* szLabel2 = new char[MAX_STRING];
-
 					switch (pSI->SortCol)
 					{
-					case 7:
-					{
-						GetCXStr(pSI->StrLabel1, szLabel1);
-						uint64_t int1 = GetMoneyFromString(szLabel1);
-						GetCXStr(pSI->StrLabel2, szLabel2);
-						uint64_t int2 = GetMoneyFromString(szLabel2);
+						case 7:
+						{
 
-						if (int1 > int2)
-							pSI->SortResult = -1;
-						else if (int1 < int2)
-							pSI->SortResult = 1;
-						else
-							pSI->SortResult = 0;
+							pSI->SortResult = CompareMoneyStrings(pSI, GetMoneyFromStringFormat::Long);
+							return 1;
+						}
 					}
-					break;
-					}
-
-					delete szLabel1;
-					delete szLabel2;
-					return 0;
 				}
 			}
 		}
@@ -3110,18 +3061,36 @@ int WndNotify(int argc, char* argv[])
 
 	if (!_stricmp(szArg3, "listselect"))
 	{
+		if (Data <= 0)
+		{
+			WriteChatf("\arWndNotify: listselect index out of bounds: %s", szLine);
+			RETURN(0);
+		}
+
 		SendListSelect(szArg1, szArg2, Data - 1);
         RETURN(0);
 	}
 
 	if (!_stricmp(szArg3, "comboselect"))
 	{
+		if (Data <= 0)
+		{
+			WriteChatf("\arWndNotify: comboselect index out of bounds: %s", szLine);
+			RETURN(0);
+		}
+
 		SendComboSelect(szArg1, szArg2, Data - 1);
         RETURN(0);
 	}
 
 	if (!_stricmp(szArg3, "tabselect"))
 	{
+		if (Data <= 0)
+		{
+			WriteChatf("\arWndNotify: tabselect index out of bounds: %s", szLine);
+			RETURN(0);
+		}
+
 		SendTabSelect(szArg1, szArg2, Data - 1);
         RETURN(0);
     } 
