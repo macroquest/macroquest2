@@ -435,7 +435,7 @@ GNU General Public License for more details.
 #define CBankWnd__WndNotification_x                                0x6DADA0
 
 // CBazaarSearchWnd 
-#define CBazaarSearchWnd__HandleBazaarMsg_x                        0x6E87F0
+#define CBazaarSearchWnd__HandleSearchResults_x                    0x6E87F0
 
 // CButtonWnd 
 #define CButtonWnd__SetCheck_x                                     0x92E030

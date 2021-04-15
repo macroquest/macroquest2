@@ -12893,15 +12893,10 @@ bool MQ2PetType::GETMEMBER()
 		return false;
 	case Taunt:
 		Dest.DWord = (pPetInfoWindow && pPetInfoWindow->Taunt);
-		/*
-		if (pPetInfoWindow && pPetInfoWindow->Taunt)
-		{
-			Dest.DWord = TRUE;
-		}
-		else {
-			Dest.DWord = FALSE;
-		}
-		*/
+		Dest.Type = pBoolType;
+		return true;
+	case Focus:
+		Dest.DWord = (pPetInfoWindow && pPetInfoWindow->Focus);
 		Dest.Type = pBoolType;
 		return true;
 	}

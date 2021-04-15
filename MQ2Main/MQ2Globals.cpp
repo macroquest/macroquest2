@@ -1755,7 +1755,7 @@ namespace MQ2Globals
 	INITIALIZE_EQGAME_OFFSET(CBarterWnd__WndNotification);
 	INITIALIZE_EQGAME_OFFSET(CBarterSearchWnd__UpdateInventoryList);
 	INITIALIZE_EQGAME_OFFSET(CBankWnd__GetNumBankSlots);
-	INITIALIZE_EQGAME_OFFSET(CBazaarSearchWnd__HandleBazaarMsg);
+	INITIALIZE_EQGAME_OFFSET(CBazaarSearchWnd__HandleSearchResults);
 	INITIALIZE_EQGAME_OFFSET(CButtonWnd__SetCheck);
 	INITIALIZE_EQGAME_OFFSET(CChatManager__GetRGBAFromIndex);
 	INITIALIZE_EQGAME_OFFSET(CChatManager__InitContextMenu);

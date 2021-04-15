@@ -444,7 +444,7 @@ PLUGIN_API VOID InitializePlugin(VOID)
     //AddCommand("/pricecheck",bzpc);
     AddMQ2Data("Bazaar",dataBazaar);              // cc - added, but not using TLO yet
 
-    EzDetourwName(CBazaarSearchWnd__HandleBazaarMsg,&BzSrchHook::BzDetour,&BzSrchHook::BzTrampoline,"CBazaarSearchWnd__HandleBazaarMsg");
+    EzDetourwName(CBazaarSearchWnd__HandleSearchResults,&BzSrchHook::BzDetour,&BzSrchHook::BzTrampoline,"CBazaarSearchWnd__HandleSearchResults");
     pBazaarType = new MQ2BazaarType;
     pBazaarItemType = new MQ2BazaarItemType;
 }
@@ -456,7 +456,7 @@ PLUGIN_API VOID ShutdownPlugin(VOID)
     DebugSpewAlways("Shutting down MQ2Bzsrch");
 
     // Remove commands, macro parameters, hooks, etc.
-    RemoveDetour(CBazaarSearchWnd__HandleBazaarMsg);
+    RemoveDetour(CBazaarSearchWnd__HandleSearchResults);
     RemoveMQ2Data("Bazaar");
     //RemoveCommand("/pricecheck");
     RemoveCommand("/mq2bzsrch");

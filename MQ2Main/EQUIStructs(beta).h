@@ -1773,7 +1773,7 @@ typedef struct _BAZAARSEARCHWND {
 /*0x0000*/ struct _CSIDLWND     Wnd;
 /*0x0238*/ BYTE         Unknown0x0238[0x8ff8];
 /*0x9230*/ void**       ppTraderData;
-/*0x9234*/ DWORD        hashVal;//find in CBazaarSearchWnd__HandleBazaarMsg_x
+/*0x9234*/ DWORD        hashVal;//find in CBazaarSearchWnd__HandleSearchResults_x
 /*0x9238*/ BYTE         Unknown0x9238[0xa0];
 /*0x92d8*/
 } BAZAARSEARCHWND, *PBAZAARSEARCHWND;

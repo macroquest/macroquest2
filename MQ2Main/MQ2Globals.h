@@ -1187,7 +1187,7 @@ namespace MQ2Globals
 	EQLIB_VAR DWORD CBankWnd__AutoBank;
 	#endif
 	
-	EQLIB_VAR DWORD CBazaarSearchWnd__HandleBazaarMsg;
+	EQLIB_VAR DWORD CBazaarSearchWnd__HandleSearchResults;
 
 	EQLIB_VAR DWORD CButtonWnd__SetCheck;
 
