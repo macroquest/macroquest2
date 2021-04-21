@@ -220,7 +220,7 @@ FUNCTION_AT_VIRTUAL_ADDRESS(class CXRect CXWnd::GetClientRect(void)const,0xfc);
 FUNCTION_AT_VIRTUAL_ADDRESS(void CXWnd::SetWindowTextA(const CXStr&),0x128);
 FUNCTION_AT_VIRTUAL_ADDRESS(int CXWnd::SetVScrollPos(int),0x138);//don't ever doubt this one, double check CXWnd__CXWnd vftable and count
 FUNCTION_AT_VIRTUAL_ADDRESS(void CListWnd::DeleteAll(void),0x180);//see CComboWnd__DeleteAll_x
-#if defined(TEST)
+#if !defined(ROF2EMU) && !defined(UFEMU)
 FUNCTION_AT_VIRTUAL_ADDRESS(void CListWnd::Sort(bool bArg),0x18C);
 #else
 FUNCTION_AT_VIRTUAL_ADDRESS(void CListWnd::Sort(void),0x188);

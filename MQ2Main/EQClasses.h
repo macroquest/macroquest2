@@ -4136,7 +4136,7 @@ public:
 	/*0x05ec*/ int RightClickMenuSocketSlot;
 	/*0x05f0*/ int WindowID;
 	/*0x05f4*/
-#elif defined(TEST)
+#else
 	/*0x0238*/ CStmlWnd *pDescription;
 	/*0x023C*/ CButtonWnd *pIconButton;//*IconButton
 	/*0x0240*/ CStmlWnd *pLore;//*ItemLore
@@ -4198,70 +4198,6 @@ public:
 	/*0x0620*/ int Unknown0x0620;
 	/*0x0624*/ int Unknown0x0624;
 	/*0x0628*/
-#else
-	/*0x0240*/ CStmlWnd *pDescription;
-	/*0x0244*/ CStmlWnd *pName;
-	/*0x0248*/ CButtonWnd *pIconButton;
-	/*0x024c*/ CStmlWnd *pLore;
-	/*0x0250*/ CTabWnd *pItemDescriptionTab;//named ItemDescriptionTabBox in the xml
-	/*0x0254*/ CPageWnd *pDescriptionPage;//its named ItemDescriptionTab in the xml, so that's a bug.
-	/*0x0258*/ CPageWnd *pLorePage;//its named ItemLoreTab in the xml
-	/*0x025c*/ CSidlScreenWnd *pAppearanceSocketScreen;
-	/*0x0260*/ CButtonWnd *pAppearanceSocketItem;
-	/*0x0264*/ CButtonWnd *pAppearanceSocketBuyButton;
-	/*0x0268*/ CStmlWnd *pAppearanceSocketDescription;
-	/*0x026c*/ CSidlScreenWnd *pItemSocketScreen[6];
-	/*0x0284*/ CButtonWnd *pItemSocketItemButton[6];
-	/*0x029c*/ CStmlWnd *pItemSocketDescription[6];
-	/*0x02b4*/ PCXSTR ItemInfo;
-	/*0x02b8*/ PCXSTR MoreText;
-	/*0x02bc*/ PCXSTR LoreText;
-	/*0x02c0*/ PCXSTR CreatorName;
-	/*0x02c4*/ PCXSTR BackupTabTitle;
-	/*0x02c8*/ PCXSTR SolventText;
-	/*0x02cc*/ PCXSTR InformationText;
-	/*0x02d0*/ PCONTENTS pCurrentItem;
-	/*0x02d4*/ bool bActiveItem;
-	/*0x02d5*/ bool bItemTextSet;
-	/*0x02d8*/ CTextureAnimation* pTABuffIcons;
-	/*0x02dc*/ CTextureAnimation* pTADragIcons;
-	/*0x02e0*/ bool bTaggable;
-	/*0x02e1*/ bool bFailed;
-	/*0x02e4*/ UINT TabCount;
-	/*0x02e8*/ CLabel *pModButtonLabel;
-	/*0x02ec*/ CStmlWnd *pRewardButtonLabel;//<STMLbox item = "IDW_RewardButtonLabel">
-	/*0x02f0*/ CStmlWnd *pConvertButtonStml;//<STMLbox item="IDW_ConvertButtonLabel">
-	/*0x02f4*/ CLabel *pFuseLabel;
-	/*0x02f8*/ CLabel *pMadeByLabel;
-	/*0x02fc*/ CLabel *pCollectedLabel;
-	/*0x0300*/ CLabel *pScribedLabel;
-	/*0x0304*/ int Row;
-	/*0x0308*/ bool bAntiTwink;// see 788DC7 in mar 4 2021 live exe -eqmule
-	/*0x030c*/ CButtonWnd *pModButton;
-	/*0x0310*/ CButtonWnd *pRewardButton;
-	/*0x0314*/ CButtonWnd *pPrintRealEstateItems;
-	/*0x0318*/ CButtonWnd *pConvertButton;
-	/*0x031c*/ CButtonWnd *pFuseButton;
-	/*0x0320*/ bool bCollected;
-	/*0x0321*/ bool bReceivedCollectableStatus;
-	/*0x0322*/ bool bFused;
-	/*0x0323*/ bool bReceivedFusedStatus;
-	/*0x0324*/ PCXSTR		Unknown0x0324;
-	/*0x0328*/ PCXSTR		ItemName;
-	/*0x032c*/ bool			bScribed;
-	/*0x032d*/ bool			bScribedReceived;
-	/*0x0330*/ int Group[6];
-	/*0x0348*/ bool bClickedTwink;
-	/*0x034c*/ int HeroicLabelCount;
-	/*0x0350*/ int ItemInfoLabelCount;
-	/*0x0354*/ CLabel *pItemInfoLabel[0xd];
-	/*0x0388*/ CLabel *pStatLabel[0x1a][3];//size 0x138
-	/*0x04c0*/ CLabel *pValueLabel[0x1a][3];//size 0x138
-	/*0x05f8*/ CLabel *pHeroicLabel[0xd];
-	/*0x062c*/ int RightClickMenuID;
-	/*0x0630*/ int RightClickMenuSocketSlot;
-	/*0x0634*/ int WindowID;
-	/*0x0638*/
 #endif
 EQLIB_OBJECT CItemDisplayWnd::CItemDisplayWnd(CXWnd *);
 EQLIB_OBJECT class CXStr CItemDisplayWnd::CreateEquipmentStatusString(class EQ_Item *);
@@ -4792,7 +4728,7 @@ EQLIB_OBJECT int CListWnd::WndNotification(class CXWnd *,unsigned __int32,void *
 //EQLIB_OBJECT void * CListWnd::`scalar deleting destructor'(unsigned int);
 //EQLIB_OBJECT void * CListWnd::`vector deleting destructor'(unsigned int);
 EQLIB_OBJECT void CListWnd::DeleteAll(void);
-#if defined(TEST)
+#if !defined(ROF2EMU) && !defined(UFEMU)
 EQLIB_OBJECT void CListWnd::Sort(bool bArg = false);
 #else
 EQLIB_OBJECT void CListWnd::Sort(void);
