@@ -292,11 +292,11 @@ typedef struct _BodyInfo
 #define USERCOLOR_CHAT_8                0xFF +  43 //  43 - Chat Channel 8
 #define USERCOLOR_CHAT_9                0xFF +  44 //  44 - Chat Channel 9
 #define USERCOLOR_CHAT_10               0xFF +  45 //  45 - Chat Channel 10
-#define USERCOLOR_MELEE_CRIT            0xFF +  46 //  46 - Melee Crits
-#define USERCOLOR_SPELL_CRIT            0xFF +  47 //  47 - Spell Crits
+#define USERCOLOR_MELEE_CRIT            0xFF +  46 //  46 - Melee Crits (Yours)
+#define USERCOLOR_SPELL_CRIT            0xFF +  47 //  47 - Spell & Dot Crits (Yours)
 #define USERCOLOR_TOO_FAR_AWAY          0xFF +  48 //  48 - Too far away (melee)
 #define USERCOLOR_NPC_RAMPAGE           0xFF +  49 //  49 - NPC Rampage
-#define USERCOLOR_NPC_FLURRY            0xFF +  50 //  50 - NPC Furry
+#define USERCOLOR_NPC_FLURRY            0xFF +  50 //  50 - NPC Flurry
 #define USERCOLOR_NPC_ENRAGE            0xFF +  51 //  51 - NPC Enrage
 #define USERCOLOR_ECHO_SAY              0xFF +  52 //  52 - say echo
 #define USERCOLOR_ECHO_TELL             0xFF +  53 //  53 - tell echo
@@ -316,27 +316,52 @@ typedef struct _BodyInfo
 #define USERCOLOR_ECHO_CHAT_8           0xFF +  67 //  67 - chat 8 echo
 #define USERCOLOR_ECHO_CHAT_9           0xFF +  68 //  68 - chat 9 echo
 #define USERCOLOR_ECHO_CHAT_10          0xFF +  69 //  69 - chat 10 echo
-#define USERCOLOR_RESERVED              0xFF +  70 //  70 - "unused at this time" 
-#define USERCOLOR_LINK                  0xFF +  71 //  71 - item links 
-#define USERCOLOR_RAID                  0xFF +  72 //  72 - raid 
-#define USERCOLOR_PET                   0xFF +  73 //  73 - my pet 
-#define USERCOLOR_DAMAGESHIELD          0xFF +  74 //  74 - damage shields 
-#define USERCOLOR_LEADER                0xFF +  75 //  75 - LAA-related messages 
-#define USERCOLOR_PETRAMPFLURRY         0xFF +  76 //  76 - pet rampage/flurry 
-#define USERCOLOR_PETCRITS              0xFF +  77 //  77 - pet's critical hits 
-#define USERCOLOR_FOCUS                 0xFF +  78 //  78 - focus item activation 
-#define USERCOLOR_XP                    0xFF +  79 //  79 - xp gain/loss 
-#define USERCOLOR_SYSTEM                0xFF +  80 //  80 - system broadcasts etc 
+#define USERCOLOR_RESERVED              0xFF +  70 //  70 - "unused at this time"
+#define USERCOLOR_LINK                  0xFF +  71 //  71 - item links
+#define USERCOLOR_RAID                  0xFF +  72 //  72 - raid
+#define USERCOLOR_PET                   0xFF +  73 //  73 - my pet
+#define USERCOLOR_DAMAGESHIELD          0xFF +  74 //  74 - damage shield hits you
+#define USERCOLOR_LEADER                0xFF +  75 //  75 - LAA-related messages
+#define USERCOLOR_PETRAMPFLURRY         0xFF +  76 //  76 - pet rampage/flurry
+#define USERCOLOR_PETCRITS              0xFF +  77 //  77 - pet's critical hits
+#define USERCOLOR_FOCUS                 0xFF +  78 //  78 - focus item activation
+#define USERCOLOR_XP                    0xFF +  79 //  79 - xp gain/loss
+#define USERCOLOR_SYSTEM                0xFF +  80 //  80 - system broadcasts etc
 #define USERCOLOR_PET_SPELLS            0xFF +  81 //  81 - pet spells
 #define USERCOLOR_PET_RESPONSES         0xFF +  82 //  82 - pet responses
 #define USERCOLOR_ITEM_SPEECH           0xFF +  83 //  83 - item speech
 #define USERCOLOR_STRIKETHROUGH         0xFF +  84 //  84 - strikethrough messages
-#define USERCOLOR_STUN                  0XFF +  85 //  85 - stun messages
+#define USERCOLOR_STUN                  0xFF +  85 //  85 - stun messages
 #define USERCOLOR_RESERVED2             0xFF +  86 //  86 - "unused at this time" (or unknown!?)
 #define USERCOLOR_FELLOWSHIP            0xFF +  87 //  87 - fellowship messages
 #define USERCOLOR_NPC_SPEECH            0xFF +  88 //  88 - npc dialogue
 #define USERCOLOR_NPC_SPEECH_TO_YOU     0xFF +  89 //  89 - npc dialogue to you
 #define USERCOLOR_GUILD_MSG             0xFF +  90 //  90 - guild messages
+#define USERCOLOR_MERCENARY_GRP         0xFF +  91 //  91 - mercenary tells group
+#define USERCOLOR_ACHIEVEMENT           0xFF +  93 //  93 - Achievement - you and other
+#define USERCOLOR_ACHIEVEMENT_GUILD     0xFF +  94 //  94 - Achievement - Guildmate
+#define USERCOLOR_FLURRY                0xFF +  101 //  101 - Flurry (Self)
+#define USERCOLOR_NPC_DEATH             0xFF +  103 //  103 - NPC Death
+#define USERCOLOR_DICE_OTHER            0xFF +  105 //  105 - Other rolls Dice
+#define USERCOLOR_FALL_DAMAGE_SELF      0xFF +  106 //  106 - Fall Damage Self
+#define USERCOLOR_FALL_DAMAGE_OTHER     0xFF +  107 //  107 - Fall Damage Other
+#define USERCOLOR_DAMAGESHIELD_SELF     0xFF +  108 //  108 - Damage Shield Self
+#define USERCOLOR_DAMAGESHIELD_OTHER    0xFF +  109 //  109 - Damage Shield Other hit Other
+#define USERCOLOR_OVERWRITTEN_DET       0xFF +  111 //  111 - has been overwritten - Detrimental
+#define USERCOLOR_OVERWRITTEN_BENE      0xFF +  112 //  112 - has been overwritten - Beneficial
+#define USERCOLOR_CANT_USE_COMMAND      0xFF +  113 //  113 - You cannot use that command right now
+#define USERCOLOR_ABILITY_COOLDOWN      0xFF +  114 //  114 - You can use [Ability Name] again in [Time till you can use it again]
+#define USERCOLOR_AA_REUSE_TIMER        0xFF +  115 //  115 - AA Reuse Timer failed
+#define USERCOLOR_DESTROY_ITEM          0xFF +  116 //  116 - Destroy Item Message
+#define USERCOLOR_HOT_OTHER             0xFF +  118 //  118 - Heal over time on other
+#define USERCOLOR_HEAL_OTHER            0xFF +  119 //  119 - You heal other
+#define USERCOLOR_OTHER_BUFF_OTHER      0xFF +  120 //  120 - Other buff other (same as other heal other)
+#define USERCOLOR_OTHER_HEAL_OTHER      0xFF +  120 //  120 - Other Heal other (same as other buff other)
+#define USERCOLOR_DOTS_YOURS            0xFF +  121 //  121 - Your DoTs
+#define USERCOLOR_DOTS_OTHERS           0xFF +  122 //  122 - Other DoTs
+#define USERCOLOR_SONG                  0xFF +  123 //  123 - Song message - Soandso beings to sing a song. <Selo's Sonata I>
+#define USERCOLOR_NON_MELEE_OTHER       0xFF +  124 //  124 - You cannot use that command right now
+#define USERCOLOR_SPELL_MESSAGES        0xFF +  125 //  125 - Your spell messages
 
 #define DEITY_Bertoxxulous              201
 #define DEITY_BrellSerilis              202
