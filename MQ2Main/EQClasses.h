@@ -6547,10 +6547,11 @@ EQLIB_OBJECT class CTextureAnimation CSidlManager::CreateTextureAnimationFromSid
 EQLIB_OBJECT class CXStr CSidlManager::GetParsingErrorMsg(void)const;
 #if !defined(ROF2EMU) && !defined(UFEMU)
 EQLIB_OBJECT class CXWnd * CSidlManager::CreateXWndFromTemplate(class CXWnd *,class CControlTemplate *, bool bSomething = 0);
+EQLIB_OBJECT CXWnd* CSidlManager::CreateXWnd(CXWnd *pwndParent, CControlTemplate *pControl, bool bSomething = 0);
 #else
 EQLIB_OBJECT class CXWnd * CSidlManager::CreateXWndFromTemplate(class CXWnd *,class CControlTemplate *);
-#endif
 EQLIB_OBJECT CXWnd* CSidlManager::CreateXWnd(CXWnd *pwndParent, CControlTemplate *pControl);
+#endif
 EQLIB_OBJECT CXWnd* CSidlManager::CreateHotButtonWnd(CXWnd* pwndParent, CControlTemplate* pControl);
 EQLIB_OBJECT CXWnd * CSidlManager::CreateXWndFromTemplate(CXWnd *,CXStr &);
 EQLIB_OBJECT class CXWndDrawTemplate * CSidlManager::FindDrawTemplate(CXStr *)const;
@@ -8520,9 +8521,14 @@ EQLIB_OBJECT unsigned char EQ_Spell::SpellAffects(int)const;//this one takes an 
 EQLIB_OBJECT unsigned char EQ_Spell::GetSpellLevelNeeded(int)const;//takes a Class, druid for example is 6
 EQLIB_OBJECT int EQ_Spell::SpellAffectBase(int)const;//takes a SPA, returns the first matching base it finds for it
 EQLIB_OBJECT const PSPELLCALCINFO EQ_Spell::GetSpellAffectBySlot(int Slot) const;
-EQLIB_OBJECT bool EQ_Spell::IsLullSpell(void) const;
 #if !defined(ROF2EMU) && !defined(UFEMU)
+EQLIB_OBJECT bool EQ_Spell::IsLullSpell(void) const;
 EQLIB_OBJECT const PSPELLCALCINFO EQ_Spell::GetSpellAffectByIndex(int Index) const;
+#else
+EQLIB_OBJECT bool EQ_Spell::IsLullSpell() const
+{
+	return SpellAffects(0x12) || SpellAffects(0x56) || SpellAffects(0x1e);
+}
 #endif
 #ifdef EQ_Spell__IsNoRemove_x
 EQLIB_OBJECT bool EQ_Spell::IsNoRemove(void) const;

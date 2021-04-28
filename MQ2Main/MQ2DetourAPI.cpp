@@ -1351,6 +1351,10 @@ int LoadFrontEnd_Detour()
 	int ret = LoadFrontEnd_Trampoline();
 	gGameState = GetGameState();
 	DebugTry(Benchmark(bmPluginsSetGameState, PluginsSetGameState(gGameState)));
+	if (ret) {//means it was loaded properly
+		InitializeLoginPulse();
+		PluginsSetGameState(GAMESTATE_POSTFRONTLOAD);
+	}
 	return ret;
 }
 HANDLE ghFrontEnd = 0;

@@ -194,7 +194,6 @@ namespace MQ2Globals
 		ppMarketplaceWnd = (CMarketplaceWnd**)pinstCMarketplaceWnd;
 		ppEditLabelWnd = (CEditLabelWnd**)pinstCEditLabelWnd;
 		ppOptionsWnd = (COptionsWnd**)pinstCOptionsWnd;
-		ppOverseerWnd = (COverseerWnd**)pinstCOverseerWnd;
 		ppBuffWindowSHORT = (CBuffWindow**)pinstCBuffWindowSHORT;
 		ppBuffWindowNORMAL = (CBuffWindow**)pinstCBuffWindowNORMAL;
 		ppTargetWnd = (CTargetWnd**)pinstCTargetWnd;
@@ -202,7 +201,10 @@ namespace MQ2Globals
 		ppCombatSkillsSelectWnd = (CCombatSkillsSelectWnd**)pinstCCombatSkillsSelectWnd;
 		ppHotButtonWnd = (CHotButtonWnd**)pinstCHotButtonWnd;
 		ppPlayerWnd = (CPlayerWnd**)pinstCPlayerWnd;
+		#if !defined(ROF2EMU) && !defined(UFEMU)
+		ppOverseerWnd = (COverseerWnd**)pinstCOverseerWnd;
 		ppPurchaseGroupWnd = (CPurchaseGroupWnd**)pinstCPurchaseGroupWnd;
+		#endif
 		ppCastingWnd = (CCastingWnd**)pinstCCastingWnd;
 		ppCastSpellWnd = (CCastSpellWnd**)pinstCCastSpellWnd;
 		ppSpellBookWnd = (CSpellBookWnd**)pinstCSpellBookWnd;
@@ -2361,8 +2363,8 @@ namespace MQ2Globals
 	INITIALIZE_EQGAME_OFFSET(EQSpellStrings__GetString);
 	INITIALIZE_EQGAME_OFFSET(EQ_Spell__GetSpellAffectByIndex);
 	INITIALIZE_EQGAME_OFFSET(EQ_Spell__IsDegeneratingLevelMod);
-#endif
 	INITIALIZE_EQGAME_OFFSET(EQ_Spell__IsLullSpell);
+#endif
 	INITIALIZE_EQGAME_OFFSET(__IsResEffectSpell);
 	INITIALIZE_EQGAME_OFFSET(EQ_Affect__GetAffectData);
 	INITIALIZE_EQGAME_OFFSET(EQ_Affect__SetAffectData);

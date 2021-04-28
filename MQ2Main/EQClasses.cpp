@@ -9542,7 +9542,11 @@ FUNCTION_AT_ADDRESS(class CXWnd *  CSidlManager::CreateXWndFromTemplate(class CX
 FUNCTION_AT_ADDRESS(class CXWnd * CSidlManager::CreateXWndFromTemplate(CXWnd *,CXStr &),CSidlManager__CreateXWndFromTemplate1);
 #endif
 #ifdef CSidlManager__CreateXWnd_x
+#if !defined(ROF2EMU) && !defined(UFEMU)
+FUNCTION_AT_ADDRESS(CXWnd* CSidlManager::CreateXWnd(CXWnd *pwndParent, CControlTemplate *pControl, bool),CSidlManager__CreateXWnd);
+#else
 FUNCTION_AT_ADDRESS(CXWnd* CSidlManager::CreateXWnd(CXWnd *pwndParent, CControlTemplate *pControl),CSidlManager__CreateXWnd);
+#endif
 #endif
 #ifdef CSidlManager__CreateHotButtonWnd_x
 FUNCTION_AT_ADDRESS(CXWnd* CSidlManager::CreateHotButtonWnd(CXWnd* pwndParent, CControlTemplate* pControl),CSidlManager__CreateHotButtonWnd);

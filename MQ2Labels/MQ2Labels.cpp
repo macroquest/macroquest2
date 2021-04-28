@@ -86,10 +86,17 @@ struct _CControl {
 
 class CSidlManagerHook {
 public:
+	#if defined(ROF2EMU) || defined(UFEMU)
+	CXWnd* CreateXWnd_Trampoline(CXWnd*, CControlTemplate*);
+	CXWnd* CreateXWnd_Detour(CXWnd* pParent, CControlTemplate* pTemplate)
+    {
+		CXWnd* newXWnd = CreateXWnd_Trampoline(pParent, pTemplate);
+	#else
 	CXWnd* CreateXWnd_Trampoline(CXWnd*, CControlTemplate*, bool bValue);
 	CXWnd* CreateXWnd_Detour(CXWnd* pParent, CControlTemplate* pTemplate, bool bValue)
     {
 		CXWnd* newXWnd = CreateXWnd_Trampoline(pParent, pTemplate, bValue);
+	#endif
 		if (pTemplate && pTemplate->RuntimeTypes.GetLength() > 0)
 		{
 			int type = pTemplate->RuntimeTypes[pTemplate->RuntimeTypes.GetLength() - 1];
@@ -108,9 +115,11 @@ public:
 		return newXWnd;
     }
 };
-
+#if defined(ROF2EMU) || defined(UFEMU)
+DETOUR_TRAMPOLINE_EMPTY(class CXWnd * CSidlManagerHook::CreateXWnd_Trampoline(CXWnd*, CControlTemplate*));
+#else
 DETOUR_TRAMPOLINE_EMPTY(class CXWnd * CSidlManagerHook::CreateXWnd_Trampoline(CXWnd*, CControlTemplate*, bool bValue));
-
+#endif
 //#pragma optimize ("g", on)
 
 int __cdecl GetGaugeValueFromEQ_Trampoline(int, class CXStr *, bool *, unsigned long *);

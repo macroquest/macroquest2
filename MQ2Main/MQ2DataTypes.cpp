@@ -7016,7 +7016,11 @@ bool MQ2CharacterType::GETMEMBER()
 		return true;
 	}
 	case LoyaltyTokens:
+		#if defined(ROF2EMU) || defined(UFEMU)
+		Dest.DWord = 0;
+		#else
 		Dest.DWord = pChar->LoyaltyRewardBalance;
+		#endif
 		Dest.Type = pIntType;
 		return true;
 	}
@@ -14816,7 +14820,11 @@ bool MQ2FellowshipMemberType::GETMEMBER()
 		{
 			for (int i = 0; i < pFellowship->Members; i++)
 			{
+				#if defined(ROF2EMU) || defined(UFEMU)
+				if (pFellowshipMember->WorldID == pFellowship->FellowshipMember[i].WorldID)
+				#else
 				if (pFellowshipMember->UniqueEntityID.GUID == pFellowship->FellowshipMember[i].UniqueEntityID.GUID)
+				#endif
 				{
 					Dest.DWord = pFellowship->bExpSharingEnabled[i];
 					break;

@@ -1306,10 +1306,11 @@ public:
 DETOUR_TRAMPOLINE_EMPTY(void CSidlInitHook::Init_Trampoline(CXStr*, int));
 DETOUR_TRAMPOLINE_EMPTY(int CSidlInitHook::CTargetWnd__WndNotification_Tramp(CXWnd*, unsigned __int32, void*));
 DETOUR_TRAMPOLINE_EMPTY(int CSidlInitHook::CBankWnd__WndNotification_Tramp(CXWnd*, unsigned __int32, void*));
+
+#if !defined(ROF2EMU) && !defined(UFEMU)
 DETOUR_TRAMPOLINE_EMPTY(int CSidlInitHook::CBarterSearchWnd__WndNotification_Tramp(CXWnd*, unsigned __int32, void*));
 DETOUR_TRAMPOLINE_EMPTY(void CSidlInitHook::CBarterSearchWnd__UpdateInventoryList_Tramp());
 DETOUR_TRAMPOLINE_EMPTY(int CSidlInitHook::CBarterWnd__WndNotification_Tramp(CXWnd*, unsigned __int32, void*));
-#if !defined(ROF2EMU) && !defined(UFEMU)
 DETOUR_TRAMPOLINE_EMPTY(int CSidlInitHook::CFindItemWnd__WndNotification_Tramp(CXWnd*, unsigned __int32, void*));
 DETOUR_TRAMPOLINE_EMPTY(void CSidlInitHook::CFindItemWnd__Update_Tramp());
 #endif
@@ -1781,11 +1782,11 @@ void InitializeMQ2Windows()
 #undef AddSlotArray
 	
 	EzDetourwName(CBankWnd__WndNotification, &CSidlInitHook::CBankWnd__WndNotification_Detour, &CSidlInitHook::CBankWnd__WndNotification_Tramp, "CBankWnd__WndNotification");
+	
+#if !defined(ROF2EMU) && !defined(UFEMU)
 	EzDetourwName(CBarterSearchWnd__WndNotification, &CSidlInitHook::CBarterSearchWnd__WndNotification_Detour, &CSidlInitHook::CBarterSearchWnd__WndNotification_Tramp, "CBarterSearchWnd__WndNotification");
 	EzDetourwName(CBarterSearchWnd__UpdateInventoryList, &CSidlInitHook::CBarterSearchWnd__UpdateInventoryList_Detour, &CSidlInitHook::CBarterSearchWnd__UpdateInventoryList_Tramp, "CBarterSearchWnd__UpdateInventoryList");
 	EzDetourwName(CBarterWnd__WndNotification, &CSidlInitHook::CBarterWnd__WndNotification_Detour, &CSidlInitHook::CBarterWnd__WndNotification_Tramp, "CBarterWnd__WndNotification");
-	
-#if !defined(ROF2EMU) && !defined(UFEMU)
 	EzDetourwName(CFindItemWnd__WndNotification, &CSidlInitHook::CFindItemWnd__WndNotification_Detour, &CSidlInitHook::CFindItemWnd__WndNotification_Tramp, "CFindItemWnd__WndNotification");
 	EzDetourwName(CFindItemWnd__Update, &CSidlInitHook::CFindItemWnd__Update_Detour, &CSidlInitHook::CFindItemWnd__Update_Tramp, "CFindItemWnd__Update");
 #endif
@@ -1875,12 +1876,12 @@ void ShutdownMQ2Windows()
 #if !defined(ROF2EMU) && !defined(UFEMU)
     RemoveDetour(CFindItemWnd__WndNotification);
     RemoveDetour(CFindItemWnd__Update);
-#else
-	RemoveCommand("/autobank");
-#endif
     RemoveDetour(CBarterWnd__WndNotification);
     RemoveDetour(CBarterSearchWnd__UpdateInventoryList);
     RemoveDetour(CBarterSearchWnd__WndNotification);
+#else
+	RemoveCommand("/autobank");
+#endif
     RemoveDetour(CBankWnd__WndNotification);
 	RemoveAutoBankMenu();
 	RemoveDetour(CXMLSOMDocumentBase__XMLRead);
