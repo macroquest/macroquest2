@@ -3485,7 +3485,7 @@ int ItemNotify(int argc, char *argv[])
 
 		if (Slot > 0 && Slot < MAX_INV_SLOTS && !pSlot)
 		{
-            pSlot = pInvMgr->SlotArray[Slot];
+			pSlot = (EQINVSLOT*)pInvSlotMgr->FindInvSlot(Slot,-1, eItemContainerPossessions, false);
         }
     }
 

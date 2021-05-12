@@ -1414,7 +1414,7 @@ void InitializeMQ2Detours()
 	//EzDetourwName(CrashDetected, CrashDetected_Detour, CrashDetected_Trampoline,"CrashDetected");
 #endif
 #ifndef TESTMEM
-	//we don't need this detour anymore, we wil just add a one time guard page exception and add login pulse up when it's hit
+	//we don't need this detour anymore, we will just add a one time guard page exception and add login pulse up when it's hit
 	#if defined(ROF2EMU) || defined(UFEMU)
 	EzDetourwName(__LoadFrontEnd, LoadFrontEnd_Detour, LoadFrontEnd_Trampoline,"__LoadFrontEnd");
 	#else
