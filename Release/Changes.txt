@@ -1,3 +1,9 @@
+May 19 2021
+- Updated for LIVE
+- Fixed /listmacros crash - reported by cwtn
+- Updated MQ2Radar no more crashes on unload, reload, /loadskin, /camp, /q or /exit
+- Removed Dsurface dependency in MQ2Radar
+-
 May 11 2021
 - Updated for TEST
 - Yes I am aware the loot checkboxes on itemdisplay are behind the new itemcompare combo

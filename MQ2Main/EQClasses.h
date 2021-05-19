@@ -4151,53 +4151,57 @@ public:
 	/*0x0278*/ CButtonWnd *pItemSocketItemButton[6];
 	/*0x0290*/ CStmlWnd *pItemSocketDescription[6];
 	/*0x02A8*/ PCXSTR ItemInfo;
-	/*0x02AC*/ PCXSTR MoreText;//*
-	/*0x02B0*/ PCXSTR LoreText;//*
-	/*0x02B4*/ PCXSTR CreatorName;
-	/*0x02B8*/ PCXSTR SolventText;
-	/*0x02BC*/ PCXSTR InformationText;
-	/*0x02C0*/ PCONTENTS pCurrentItem;
-	/*0x02C4*/ bool bActiveItem;
-	/*0x02C5*/ bool bItemTextSet;
-	/*0x02C8*/ CTextureAnimation* pTADragIcons;
-	/*0x02CC*/ bool bTaggable;
-	/*0x02CD*/ bool bFailed;
-	/*0x02D0*/ CLabel *pModButtonLabel;//*
-	/*0x02D4*/ CStmlWnd *pRewardButtonStml;//*<STMLbox item = "IDW_RewardButtonLabel">
-	/*0x02D8*/ CStmlWnd *pConvertButtonStml;//*<STMLbox item="IDW_ConvertButtonLabel">
-	/*0x02DC*/ CLabel *pFuseLabel;//*
-	/*0x02E0*/ CLabel *pMadeByLabel;//*
-	/*0x02E4*/ CLabel *pCollectedLabel;//*
-	/*0x02E8*/ CLabel *pScribedLabel;//*
-	/*0x02EC*/ int Row;
-	/*0x02F0*/ bool bAntiTwink;// see 788DC7 in mar 4 2021 live exe -eqmule
-	/*0x02F4*/ CButtonWnd *pModButton;//*
-	/*0x02F8*/ CButtonWnd *pRewardButton;//*
-	/*0x02FC*/ CButtonWnd *pPrintRealEstateItems;//*
-	/*0x0300*/ CButtonWnd *pConvertButton;//*
-	/*0x0304*/ CButtonWnd *pFuseButton;//*
-	/*0x0308*/ bool bCollected;
-	/*0x0309*/ bool bReceivedCollectableStatus;
-	/*0x030a*/ bool bFused;//just guessing
-	/*0x030b*/ bool bReceivedFusedStatus;
-	/*0x030C*/ PCXSTR		Unknown0x030C;
-	/*0x0310*/ PCXSTR		ItemName;//*
-	/*0x0314*/ bool			bScribed;
-	/*0x0315*/ bool			bScribedReceived;
-	/*0x0318*/ int Group[6];
-	/*0x0330*/ int HeroicLabelCount;//how many pHeroicLabel are used -------
-	/*0x0334*/ int ItemInfoLabelCount;// how many pItemInfoLabel are used -|
-	/*0x0338*/ CLabel *pItemInfoLabel[0xd];//*       <---------------------|
-	/*0x036C*/ CLabel *pStatLabel[0x1a][3];//size 0x138                    |
-	/*0x04A4*/ CLabel *pValueLabel[0x1a][3];//size 0x138                   |
-	/*0x05DC*/ CLabel *pHeroicLabel[0xd];//*         <---------------------|
-	/*0x0610*/ int RightClickMenuID;//*
-	/*0x0614*/ int RightClickMenuSocketSlot;
-	/*0x0618*/ int WindowID;
-	/*0x061C*/ bool bUnknown0x061C;
-	/*0x0620*/ int Unknown0x0620;
-	/*0x0624*/ int Unknown0x0624;
-	/*0x0628*/
+	/*0x02AC*/ PCXSTR Unknown0x02AC;//ADDED may 11 2021
+	/*0x02B0*/ PCXSTR Unknown0x02B0;//ADDED may 11 2021
+	/*0x02B4*/ PCXSTR MoreText;//*
+	/*0x02B8*/ PCXSTR LoreText;//*
+	/*0x02BC*/ PCXSTR CreatorName;
+	/*0x02C0*/ PCXSTR SolventText;
+	/*0x02C4*/ PCXSTR InformationText;
+	/*0x02C8*/ PCONTENTS pCurrentItem;
+	/*0x02CC*/ bool bActiveItem;
+	/*0x02CD*/ bool bItemTextSet;
+	/*0x02D0*/ CTextureAnimation* pTADragIcons;
+	/*0x02D4*/ bool bTaggable;
+	/*0x02D5*/ bool bFailed;
+	/*0x02D8*/ CLabel *pModButtonLabel;//*
+	/*0x02DC*/ CStmlWnd *pRewardButtonStml;//*<STMLbox item = "IDW_RewardButtonLabel">
+	/*0x02E0*/ CStmlWnd *pConvertButtonStml;//*<STMLbox item="IDW_ConvertButtonLabel">
+	/*0x02E4*/ CLabel *pFuseLabel;//*
+	/*0x02E8*/ CLabel *pMadeByLabel;//*
+	/*0x02EC*/ CLabel *pCollectedLabel;//*
+	/*0x02F0*/ CLabel *pScribedLabel;//*
+	/*0x02F4*/ int Row;
+	/*0x02F8*/ bool bAntiTwink;// see 788DC7 in mar 4 2021 live exe -eqmule
+	/*0x02FC*/ CButtonWnd *pModButton;//*
+	/*0x0300*/ CButtonWnd *pRewardButton;//*
+	/*0x0304*/ CButtonWnd *pPrintRealEstateItems;//*
+	/*0x0308*/ CButtonWnd *pConvertButton;//*
+	/*0x030C*/ CButtonWnd *pFuseButton;//*
+	/*0x0310*/ bool bCollected;
+	/*0x0311*/ bool bReceivedCollectableStatus;
+	/*0x0312*/ bool bFused;//just guessing
+	/*0x0313*/ bool bReceivedFusedStatus;
+	/*0x0314*/ PCXSTR		Unknown0x030C;
+	/*0x0318*/ PCXSTR		ItemName;//*
+	/*0x031C*/ bool			bScribed;
+	/*0x031D*/ bool			bScribedReceived;
+	/*0x0320*/ int Group[6];
+	/*0x0338*/ int HeroicLabelCount;//how many pHeroicLabel are used -------
+	/*0x033C*/ int ItemInfoLabelCount;// how many pItemInfoLabel are used -|
+	/*0x0340*/ CLabel *pItemInfoLabel[0xd];//*       <---------------------|
+	/*0x0374*/ CLabel *pStatLabel[0x1a][3];//size 0x138                    |
+	/*0x04AC*/ CLabel *pValueLabel[0x1a][3];//size 0x138                   |
+	/*0x05E4*/ CLabel *pHeroicLabel[0xd];//*         <---------------------|
+	/*0x0618*/ int RightClickMenuID;//*
+	/*0x061C*/ int RightClickMenuSocketSlot;
+	/*0x0620*/ void *pItemCompareList;//COMBOBOX
+	/*0x0624*/ bool bUnknown0x0624;//TODO: look into... well this was added in the apr 13 2021 test exe, the patchnotes says: -Added weapon ratio to the Item Display Window.
+	/*0x0628*/ int Unknown0x0628;//maybe that is this? -eqmule
+	/*0x062C*/ int FT_DefPageBorderHighlight;//https://forums.daybreakgames.com/eq/index.php?threads/test-update-04-13-21-patch-notes-and-discussions.274393/
+	/*0x0630*/ int FT_DefPageBorder;
+	/*0x0634*/ int WindowID;
+	/*0x0638*/
 #endif
 EQLIB_OBJECT CItemDisplayWnd::CItemDisplayWnd(CXWnd *);
 EQLIB_OBJECT class CXStr CItemDisplayWnd::CreateEquipmentStatusString(class EQ_Item *);

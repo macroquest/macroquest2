@@ -1945,8 +1945,8 @@ typedef struct _EQITEMWINDOW {
 /*0x02F4*/ CBUTTONWND	*FuseButton;
 /*0x02F8*/ bool			bCollected;
 /*0x02F9*/ bool			bCollectedReceived;
-/*0x02FA*/ bool			bSomething;
-/*0x02FB*/ bool			bReceivedSomethingStatus;
+/*0x02FA*/ bool			bFused;
+/*0x02FB*/ bool			bReceivedFusedStatus;
 /*0x02FC*/ int			Unknown0x02F4;
 /*0x0300*/ PCXSTR		ItemName;
 /*0x0304*/ bool			bScribed;

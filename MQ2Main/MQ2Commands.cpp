@@ -59,12 +59,11 @@ VOID ListMacros(PSPAWNINFO pChar, PCHAR szLine)
 	bRunNextCommand = TRUE;
 	HANDLE hSearch;
 	WIN32_FIND_DATA FileData;
-	BOOL fFinished = FALSE;
+	bool bFinished = false;
 
-	DWORD Count = 0, a, b;
 	CHAR szFilename[MAX_STRING] = { 0 };
-	//CHAR szName[100][MAX_STRING] = { 0 };
-	char *szName = new CHAR[100*MAX_STRING];
+	std::map<std::string, FILETIME>MacroFiles;
+
 	if (szLine[0] != 0) {
 		sprintf_s(szFilename, "%s\\*%s*.*", gszMacroPath, szLine);
 	}
@@ -72,45 +71,34 @@ VOID ListMacros(PSPAWNINFO pChar, PCHAR szLine)
 		sprintf_s(szFilename, "%s\\*.*", gszMacroPath);
 	}
 
-
-
 	// Start searching for .TXT files in the current directory.
-
 	hSearch = FindFirstFile(szFilename, &FileData);
 	if (hSearch == INVALID_HANDLE_VALUE) {
 		WriteChatColor("Couldn't find any macros", USERCOLOR_DEFAULT);
 		return;
 	}
 
-
-	while (!fFinished)
+	while (!bFinished)
 	{
-		strcat_s(&szName[Count],MAX_STRING, FileData.cFileName);
-		Count++;
-		if (Count>99) fFinished = TRUE;
-
-		if (!FindNextFile(hSearch, &FileData))
-			fFinished = TRUE;
-	}
-	FindClose(hSearch);
-	Count;
-
-	for (a = Count - 1; a>0; a--) {
-		for (b = 0; b<a; b++) {
-			if (szName[b]>szName[b + 1]) {
-				strcat_s(szFilename, &szName[b]);
-				strcat_s(&szName[b], MAX_STRING, &szName[b + 1]);
-				strcat_s(&szName[b + 1], MAX_STRING, szFilename);
+		if (char *pDest = strrchr(FileData.cFileName, '.'))
+		{
+			if (!_stricmp(&pDest[0], ".mac"))
+			{
+				MacroFiles[FileData.cFileName] = FileData.ftCreationTime;
 			}
 		}
+		if (!FindNextFile(hSearch, &FileData))
+			bFinished = true;
 	}
-
+	FindClose(hSearch);
 	WriteChatColor("Macro list", USERCOLOR_WHO);
 	WriteChatColor("----------------", USERCOLOR_WHO);
-	for (a = 0; a<Count; a++) {
-		WriteChatColor(&szName[a], USERCOLOR_WHO);
+
+	for (std::map<std::string, FILETIME>::iterator a = MacroFiles.begin(); a != MacroFiles.end();a++)
+	{
+		sprintf_s(szFilename, "%s", a->first.c_str());
+		WriteChatColor(szFilename, USERCOLOR_WHO);
 	}
-	delete[] szName;
 }
 // ***************************************************************************
 // Function:    SetError
