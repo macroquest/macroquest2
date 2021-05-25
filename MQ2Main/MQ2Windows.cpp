@@ -3233,14 +3233,14 @@ int ItemNotify(int argc, char *argv[])
 		else if (!_strnicmp(szArg2, "sharedbank", 10))
 		{
 			invslot = atoi(&szArg2[10]) - 1;
-			bagslot = atoi(szArg3) - 1;
-			type = eItemContainerSharedBank;
+bagslot = atoi(szArg3) - 1;
+type = eItemContainerSharedBank;
 		}
 		else if (!_strnicmp(szArg2, "pack", 4))
 		{
-			invslot = atoi(&szArg2[4]) - 1 + BAG_SLOT_START;
-			bagslot = atoi(szArg3) - 1;
-			type = eItemContainerPossessions;
+		invslot = atoi(&szArg2[4]) - 1 + BAG_SLOT_START;
+		bagslot = atoi(szArg3) - 1;
+		type = eItemContainerPossessions;
 		}
 
 		// I wish I could just call:
@@ -3264,9 +3264,9 @@ int ItemNotify(int argc, char *argv[])
 			{
 				// we dont care about the bagslot here
 				// and we dont care if the user has something
-																// on cursor either, cause we know they
-																// specified "in" so a container MUST exist... -eqmule
-				PCONTENTS pContainer = FindItemBySlot(invslot);
+				// on cursor either, cause we know they
+				// specified "in" so a container MUST exist... -eqmule
+				PCONTENTS pContainer = FindItemBySlot(invslot, -1, type);
 				if (!pContainer)
 				{
 					WriteChatf("There was no container in slot %d", invslot);
@@ -3291,18 +3291,18 @@ int ItemNotify(int argc, char *argv[])
 				}
 				else
 				{
-					PickupItem(type, FindItemBySlot(invslot, bagslot));
+					PickupItem(type, FindItemBySlot(invslot, bagslot, type));
 				}
 
 				RETURN(0);
 			}
 
 			if (pNotification && !_strnicmp(pNotification, "rightmouseup", 12))
-				{
+			{
 				// we fake it with /useitem
 				if (HasExpansion(EXPANSION_VoA))
 				{
-					PCONTENTS pItem = FindItemBySlot(invslot, bagslot);
+					PCONTENTS pItem = FindItemBySlot(invslot, bagslot, type);
 					if (pItem)
 					{
 						if (GetItemFromContents(pItem)->Clicky.SpellID > 0 && GetItemFromContents(pItem)->Clicky.SpellID != -1)
@@ -3332,7 +3332,10 @@ int ItemNotify(int argc, char *argv[])
 		if (Slot == 0)
 		{
 			_strlwr_s(szArg1);
-			Slot = ItemSlotMap[szArg1];
+			if (ItemSlotMap.find(szArg1) != ItemSlotMap.end())
+			{
+				Slot = ItemSlotMap[szArg1];
+			}
 			if (Slot < GetCurrentInvSlots() && pInvSlotMgr)
 			{
 				DebugTry(pSlot = (EQINVSLOT*)pInvSlotMgr->FindInvSlot(Slot));
@@ -3358,11 +3361,19 @@ int ItemNotify(int argc, char *argv[])
 				{
 					invslot = atoi(szArg1 + 4) - 1;
                     type = eItemContainerBank;
+					if (!pBankWnd || (pBankWnd && pBankWnd->IsVisible() == 0))
+					{
+						RETURN(0);
+					}
 				}
 				else if (!_strnicmp(szArg1, "sharedbank", 10))
 				{
 					invslot = atoi(szArg1 + 10) - 1;
                     type = eItemContainerSharedBank;
+					if (!pBankWnd || (pBankWnd && pBankWnd->IsVisible() == 0))
+					{
+						RETURN(0);
+					}
 				}
 				else if (!_strnicmp(szArg1, "trade", 5))
 				{
@@ -3483,12 +3494,80 @@ int ItemNotify(int argc, char *argv[])
             RETURN(0);
 		}
 
-		if (Slot > 0 && Slot < MAX_INV_SLOTS && !pSlot)
+		if (Slot > 0 && !pSlot)
 		{
-			pSlot = (EQINVSLOT*)pInvSlotMgr->FindInvSlot(Slot,-1, eItemContainerPossessions, false);
+			CHAR szType[MAX_STRING] = { 0 };
+			for (std::map<std::string, DWORD>::iterator i = ItemSlotMap.begin(); i != ItemSlotMap.end(); i++)
+			{
+				if (i->second == Slot)
+				{
+					strcpy_s(szType, i->first.c_str());
+					_strlwr_s(szType);
+					if (!_strnicmp(szType, "loot", 4))
+					{
+						invslot = atoi(szType + 4) - 1;
+						type = eItemContainerCorpse;
+						break;
+					}
+					else if (!_strnicmp(szType, "enviro", 6))
+					{
+						invslot = atoi(szType + 6) - 1;
+						type = eItemContainerWorld;
+						break;
+					}
+					else if (!_strnicmp(szType, "pack", 4))
+					{
+						invslot = atoi(szType + 4) - 1 + BAG_SLOT_START;
+						type = eItemContainerPossessions;
+						break;
+					}
+					else if (!_strnicmp(szType, "bank", 4))
+					{
+						invslot = atoi(szType + 4) - 1;
+						type = eItemContainerBank;
+						if (!pBankWnd || (pBankWnd && pBankWnd->IsVisible() == 0))
+						{
+							RETURN(0);
+						}
+						break;
+					}
+					else if (!_strnicmp(szType, "sharedbank", 10))
+					{
+						invslot = atoi(szType + 10) - 1;
+						type = eItemContainerSharedBank;
+						if (!pBankWnd || (pBankWnd && pBankWnd->IsVisible() == 0))
+						{
+							RETURN(0);
+						}
+						break;
+					}
+					else if (!_strnicmp(szType, "trade", 5))
+					{
+						invslot = atoi(szType + 5) - 1;
+						type = eItemContainerTrade;
+						break;
+					}
+					else
+					{
+						if (Slot < BAG_SLOT_START)
+						{
+							invslot = Slot;
+							type = eItemContainerPossessions;
+						}
+						break;
+					}
+				}
+			}
+			if(type!=eItemContainerInvalid)
+				pSlot = (EQINVSLOT*)pInvSlotMgr->FindInvSlot(invslot,-1, type, false);
         }
     }
-
+	if (szArg1[0] == '0')
+	{
+		//don't default to the charmslot they could have a bug in their macro and 0 means no slot unless the argument is "charm"
+		//it's basically the only slot we can't find by its slot ID.
+		pSlot = 0;
+	}
     if (!pSlot)
     {
 		WriteChatf("SLOT IS NULL: Could not send notification to %s %s", szArg1, szArg2);

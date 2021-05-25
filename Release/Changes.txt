@@ -1,3 +1,6 @@
+May 24 2021
+- Fixed some problems with /itemnotify
+-
 May 19 2021
 - Updated for LIVE
 - Fixed /listmacros crash - reported by cwtn

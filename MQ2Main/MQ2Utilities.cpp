@@ -9782,19 +9782,27 @@ PEQINVSLOT GetInvSlot(DWORD type, short invslot, short bagslot)
 {
 	PEQINVSLOTMGR pInvMgr = (PEQINVSLOTMGR)pInvSlotMgr;
 	if (pInvMgr) {
+		//PEQINVSLOT pSlot1 = (PEQINVSLOT)pInvSlotMgr->FindInvSlot(invslot, bagslot, type);
 		PEQINVSLOT pSlot = 0;
 		CHAR szType[MAX_STRING] = { 0 };
 		for (DWORD i = 0; i<pInvMgr->TotalSlots; i++) {
 			pSlot = pInvMgr->SlotArray[i];
-			if (pSlot && pSlot->Valid && pSlot->pInvSlotWnd && pSlot->pInvSlotWnd->Location == type && (short)pSlot->pInvSlotWnd->Slot1 == invslot && (short)pSlot->pInvSlotWnd->Slot2 == bagslot) {
-				CXMLData *pXMLData = ((CXWnd*)pSlot->pInvSlotWnd)->GetXMLData();
-				if (pXMLData) {
-					GetCXStr(pXMLData->ScreenID.Ptr, szType, MAX_STRING);
-					if (!_stricmp(szType, "HB_InvSlot")) {//we dont want this, the user specified a container , not a hotbutton...
-						continue;
+			if (pSlot && pSlot->Valid && pSlot->pInvSlotWnd && pSlot->pInvSlotWnd->Location == type)
+			{
+				if ((short)pSlot->pInvSlotWnd->Slot1 == invslot)
+				{
+					if ((short)pSlot->pInvSlotWnd->Slot2 == bagslot)
+					{
+						CXMLData *pXMLData = ((CXWnd*)pSlot->pInvSlotWnd)->GetXMLData();
+						if (pXMLData) {
+							GetCXStr(pXMLData->ScreenID.Ptr, szType, MAX_STRING);
+							if (!_stricmp(szType, "HB_InvSlot")) {//we dont want this, the user specified a container , not a hotbutton...
+								continue;
+							}
+						}
+						return pSlot;
 					}
 				}
-				return pSlot;
 			}
 		}
 	}
