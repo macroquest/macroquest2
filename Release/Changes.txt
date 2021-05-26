@@ -1,3 +1,7 @@
+May 25 2021
+- Updated for TEST
+- Added some chat color defines - sic
+-
 May 24 2021
 - Fixed some problems with /itemnotify
 -
