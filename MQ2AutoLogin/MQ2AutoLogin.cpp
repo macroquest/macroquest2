@@ -145,6 +145,8 @@ struct _ServerData {
 };
 
 _ServerData ServerData[] = {
+    {"phinigel",   161},
+    {"selo",       167},
     {"rizlona",    169},
     {"lockjaw",    160},
     {"ragefire",   159},

@@ -247,137 +247,137 @@ typedef struct _BodyInfo
 #define CONCOLOR_YELLOW                 0x0f
 #define CONCOLOR_RED                    0x0d
 
-#define USERCOLOR_SAY                   0xFF +   1 //  1  - Say
-#define USERCOLOR_TELL                  0xFF +   2 //  2  - Tell
-#define USERCOLOR_GROUP                 0xFF +   3 //  3  - Group
-#define USERCOLOR_GUILD                 0xFF +   4 //  4  - Guild
-#define USERCOLOR_OOC                   0xFF +   5 //  5  - OOC
-#define USERCOLOR_AUCTION               0xFF +   6 //  6  - Auction
-#define USERCOLOR_SHOUT                 0xFF +   7 //  7  - Shout
-#define USERCOLOR_EMOTE                 0xFF +   8 //  8  - Emote
-#define USERCOLOR_SPELLS                0xFF +   9 //  9  - Spells (meming, scribing, casting, etc.)
-#define USERCOLOR_YOU_HIT_OTHER         0xFF +  10 //  10 - You hit other
-#define USERCOLOR_OTHER_HIT_YOU         0xFF +  11 //  11 - Other hits you
-#define USERCOLOR_YOU_MISS_OTHER        0xFF +  12 //  12 - You miss other
-#define USERCOLOR_OTHER_MISS_YOU        0xFF +  13 //  13 - Other misses you
-#define USERCOLOR_DUELS                 0xFF +  14 //  14 - Some broadcasts (duels)
-#define USERCOLOR_SKILLS                0xFF +  15 //  15 - Skills (ups, non-combat use, etc.)
-#define USERCOLOR_DISCIPLINES           0xFF +  16 //  16 - Disciplines or special abilities
-#define USERCOLOR_UNUSED001             0xFF +  17 //  17 - Unused at this time
-#define USERCOLOR_DEFAULT               0xFF +  18 //  18 - Default text and stuff you type
-#define USERCOLOR_FACTION_MSG           0xFF +  19 //  19 - Faction Messages
-#define USERCOLOR_MERCHANT_OFFER        0xFF +  20 //  20 - Merchant Offer Price
-#define USERCOLOR_MERCHANT_EXCHANGE     0xFF +  21 //  21 - Merchant Buy/Sell
-#define USERCOLOR_YOUR_DEATH            0xFF +  22 //  22 - Your death message
-#define USERCOLOR_OTHER_DEATH           0xFF +  23 //  23 - Others death message
-#define USERCOLOR_OTHER_HIT_OTHER       0xFF +  24 //  24 - Other damage other
-#define USERCOLOR_OTHER_MISS_OTHER      0xFF +  25 //  25 - Other miss other
-#define USERCOLOR_WHO                   0xFF +  26 //  26 - /who command
-#define USERCOLOR_YELL                  0xFF +  27 //  27 - yell for help
-#define USERCOLOR_NON_MELEE             0xFF +  28 //  28 - Hit for non-melee
-#define USERCOLOR_SPELL_WORN_OFF        0xFF +  29 //  29 - Spell worn off
-#define USERCOLOR_MONEY_SPLIT           0xFF +  30 //  30 - Money splits
-#define USERCOLOR_LOOT                  0xFF +  31 //  31 - Loot message
-#define USERCOLOR_RANDOM                0xFF +  32 //  32 - Dice Roll (/random)
-#define USERCOLOR_OTHERS_SPELLS         0xFF +  33 //  33 - Others spells
-#define USERCOLOR_SPELL_FAILURE         0xFF +  34 //  34 - Spell Failures (resists, fizzles, missing component, bad target, etc.)
-#define USERCOLOR_CHAT_CHANNEL          0xFF +  35 //  35 - Chat Channel Messages
-#define USERCOLOR_CHAT_1                0xFF +  36 //  36 - Chat Channel 1
-#define USERCOLOR_CHAT_2                0xFF +  37 //  37 - Chat Channel 2
-#define USERCOLOR_CHAT_3                0xFF +  38 //  38 - Chat Channel 3
-#define USERCOLOR_CHAT_4                0xFF +  39 //  39 - Chat Channel 4
-#define USERCOLOR_CHAT_5                0xFF +  40 //  40 - Chat Channel 5
-#define USERCOLOR_CHAT_6                0xFF +  41 //  41 - Chat Channel 6
-#define USERCOLOR_CHAT_7                0xFF +  42 //  42 - Chat Channel 7
-#define USERCOLOR_CHAT_8                0xFF +  43 //  43 - Chat Channel 8
-#define USERCOLOR_CHAT_9                0xFF +  44 //  44 - Chat Channel 9
-#define USERCOLOR_CHAT_10               0xFF +  45 //  45 - Chat Channel 10
-#define USERCOLOR_MELEE_CRIT            0xFF +  46 //  46 - Melee Crits (Yours)
-#define USERCOLOR_SPELL_CRIT            0xFF +  47 //  47 - Spell & Dot Crits (Yours)
-#define USERCOLOR_TOO_FAR_AWAY          0xFF +  48 //  48 - Too far away (melee)
-#define USERCOLOR_NPC_RAMPAGE           0xFF +  49 //  49 - NPC Rampage
-#define USERCOLOR_NPC_FLURRY            0xFF +  50 //  50 - NPC Flurry
-#define USERCOLOR_NPC_ENRAGE            0xFF +  51 //  51 - NPC Enrage
-#define USERCOLOR_ECHO_SAY              0xFF +  52 //  52 - say echo
-#define USERCOLOR_ECHO_TELL             0xFF +  53 //  53 - tell echo
-#define USERCOLOR_ECHO_GROUP            0xFF +  54 //  54 - group echo
-#define USERCOLOR_ECHO_GUILD            0xFF +  55 //  55 - guild echo
-#define USERCOLOR_ECHO_OOC              0xFF +  56 //  56 - ooc echo
-#define USERCOLOR_ECHO_AUCTION          0xFF +  57 //  57 - auction echo
-#define USERCOLOR_ECHO_SHOUT            0xFF +  58 //  58 - shout echo
-#define USERCOLOR_ECHO_EMOTE            0xFF +  59 //  59 - emote echo
-#define USERCOLOR_ECHO_CHAT_1           0xFF +  60 //  60 - chat 1 echo
-#define USERCOLOR_ECHO_CHAT_2           0xFF +  61 //  61 - chat 2 echo
-#define USERCOLOR_ECHO_CHAT_3           0xFF +  62 //  62 - chat 3 echo
-#define USERCOLOR_ECHO_CHAT_4           0xFF +  63 //  63 - chat 4 echo
-#define USERCOLOR_ECHO_CHAT_5           0xFF +  64 //  64 - chat 5 echo
-#define USERCOLOR_ECHO_CHAT_6           0xFF +  65 //  65 - chat 6 echo
-#define USERCOLOR_ECHO_CHAT_7           0xFF +  66 //  66 - chat 7 echo
-#define USERCOLOR_ECHO_CHAT_8           0xFF +  67 //  67 - chat 8 echo
-#define USERCOLOR_ECHO_CHAT_9           0xFF +  68 //  68 - chat 9 echo
-#define USERCOLOR_ECHO_CHAT_10          0xFF +  69 //  69 - chat 10 echo
-#define USERCOLOR_AVATAR_COMMAND        0xFF +  70 //  70 - Avatar Command Output
-#define USERCOLOR_LINK                  0xFF +  71 //  71 - item links
-#define USERCOLOR_RAID                  0xFF +  72 //  72 - raid
-#define USERCOLOR_PET                   0xFF +  73 //  73 - my pet
-#define USERCOLOR_DAMAGESHIELD          0xFF +  74 //  74 - damage shield hits you
-#define USERCOLOR_GROUP_RAID_ROLE_MSG   0xFF +  75 //  75 - Group / Raid Role Messages
-#define USERCOLOR_PETRAMPFLURRY         0xFF +  76 //  76 - pet rampage/flurry
-#define USERCOLOR_PETCRITS              0xFF +  77 //  77 - pet's critical hits
-#define USERCOLOR_FOCUS                 0xFF +  78 //  78 - focus item activation
-#define USERCOLOR_XP                    0xFF +  79 //  79 - xp gain/loss
-#define USERCOLOR_SYSTEM                0xFF +  80 //  80 - system broadcasts etc
-#define USERCOLOR_PET_SPELLS            0xFF +  81 //  81 - pet spells
-#define USERCOLOR_PET_RESPONSES         0xFF +  82 //  82 - pet responses
-#define USERCOLOR_ITEM_SPEECH           0xFF +  83 //  83 - item speech
-#define USERCOLOR_STRIKETHROUGH         0xFF +  84 //  84 - strikethrough messages
-#define USERCOLOR_STUN                  0xFF +  85 //  85 - stun messages
-#define USERCOLOR_SWARM_PET_DEATH       0xFF +  86 //  86 - Swarm Pet Deat
-#define USERCOLOR_FELLOWSHIP            0xFF +  87 //  87 - fellowship messages
-#define USERCOLOR_NPC_SPEECH            0xFF +  88 //  88 - npc dialogue
-#define USERCOLOR_NPC_SPEECH_TO_YOU     0xFF +  89 //  89 - npc dialogue to you
-#define USERCOLOR_GUILD_MSG             0xFF +  90 //  90 - guild messages
-#define USERCOLOR_MERCENARY_GRP         0xFF +  91 //  91 - mercenary tells group
-#define USERCOLOR_ACHIEVEMENT_EMOTE     0xFF +  92 //  92 - Achievement - Emote
-#define USERCOLOR_ACHIEVEMENT           0xFF +  93 //  93 - Achievement - you and other
-#define USERCOLOR_ACHIEVEMENT_GUILD     0xFF +  94 //  94 - Achievement - Guildmate
-#define USERCOLOR_PVP_MSG               0xFF +  95 //  95 - PVP Messages
-#define USERCOLOR_HOTBUTTON_COOLDOWN_OL 0XFF +  96 //  96 - Hotbutton Cooldown Overlay
-#define USERCOLOR_AGGRO_LABEL_LOW       0XFF +  97 //  97 - Aggro Label Low
-#define USERCOLOR_AGGRO_LABEL_WARNING   0XFF +  98 //  97 - Aggro Label Warning
-#define USERCOLOR_AGGRO_LABEL_MOST      0XFF +  99 //  97 - Aggro Label Most
-#define USERCOLOR_DIALOG_RESPONSE_LINK  0XFF +  100 //  98 - Dialog Response Link
-#define USERCOLOR_FLURRY                0xFF +  101 //  101 - Flurry (Self)
-#define USERCOLOR_DEBUG                 0XFF +  102 //  100 - Debug Output
-#define USERCOLOR_NPC_DEATH             0xFF +  103 //  103 - NPC Death
-#define USERCOLOR_DICE_OTHER            0xFF +  104 //  103 - Other rolls Dice
-#define USERCOLOR_DICE_GROUP_RAID       0xFF +  105 //  105 - Group/Raid rolls Dice
-#define USERCOLOR_FALL_DAMAGE_SELF      0xFF +  106 //  106 - Fall Damage Self
-#define USERCOLOR_FALL_DAMAGE_OTHER     0xFF +  107 //  107 - Fall Damage Other
-#define USERCOLOR_DAMAGESHIELD_SELF     0xFF +  108 //  108 - Damage Shield Self
-#define USERCOLOR_DAMAGESHIELD_OTHER    0xFF +  109 //  109 - Damage Shield Other hit Other
-#define USERCOLOR_EVENT_MESSAGES        0xFF +  110 //  110 - Event Messages
-#define USERCOLOR_OVERWRITTEN_DET       0xFF +  111 //  111 - has been overwritten - Detrimental
-#define USERCOLOR_OVERWRITTEN_BENE      0xFF +  112 //  112 - has been overwritten - Beneficial
-#define USERCOLOR_CANT_USE_COMMAND      0xFF +  113 //  113 - You cannot use that command right now
-#define USERCOLOR_ABILITY_COOLDOWN      0xFF +  114 //  114 - You can use [Ability Name] again in [Time till you can use it again]
-#define USERCOLOR_AA_REUSE_TIMER        0xFF +  115 //  115 - AA Reuse Timer failed
-#define USERCOLOR_DESTROY_ITEM          0xFF +  116 //  116 - Destroy Item Message
-#define USERCOLOR_AURA                  0xFF +  117 //  117 - Aura (You)
-#define USERCOLOR_AURA_OTHER            0xFF +  118 //  118 - Aura (Other)
-#define USERCOLOR_HEAL_OTHER            0xFF +  119 //  119 - You heal other
-#define USERCOLOR_OTHER_BUFF_OTHER      0xFF +  120 //  120 - Other buff other (same as other heal other)
-#define USERCOLOR_OTHER_HEAL_OTHER      0xFF +  120 //  120 - Other Heal other (same as other buff other)
-#define USERCOLOR_DOTS_YOURS            0xFF +  121 //  121 - Your DoTs
-#define USERCOLOR_DOTS_OTHERS           0xFF +  122 //  122 - Other DoTs
-#define USERCOLOR_SONG                  0xFF +  123 //  123 - Song message - Soandso beings to sing a song. <Selo's Sonata I>
-#define USERCOLOR_NON_MELEE_OTHER       0xFF +  124 //  124 - Non-Melee Other
-#define USERCOLOR_SPELL_MESSAGES        0xFF +  125 //  125 - Your spell messages
-#define USERCOLOR_FACTION_LINKS         0xFF +  126 //  126 - Faction Links
-#define USERCOLOR_TAUNT_MESSAGES        0xFF +  127 //  127 - Taunt Messages
-#define USERCOLOR_COMBAT_AB_DISC_OTHER  0xFF +  128 //  128 - Combat Abilities / Disciplines Other
-#define USERCOLOR_ITEMSTAT_POSITIVE     0xFF +  129 //  129 - Item Stat Positive
-#define USERCOLOR_ITEMSTAT_NEGATIVE     0xFF +  130 //  130 - Item Stat Negative
+// UserColor values start with the first value at 256. These can have colors assigned by the user and filtered as well.
+#define USERCOLOR_SAY                            256 // 1  - Say
+#define USERCOLOR_TELL                           257 // 2  - Tell
+#define USERCOLOR_GROUP                          258 // 3  - Group
+#define USERCOLOR_GUILD                          259 // 4  - Guild
+#define USERCOLOR_OOC                            260 // 5  - OOC
+#define USERCOLOR_AUCTION                        261 // 6  - Auction
+#define USERCOLOR_SHOUT                          262 // 7  - Shout
+#define USERCOLOR_EMOTE                          263 // 8  - Emote
+#define USERCOLOR_SPELLS                         264 // 9  - Spells (memming, scribing, casting, etc.)
+#define USERCOLOR_YOU_HIT_OTHER                  265 // 10 - You hit other
+#define USERCOLOR_OTHER_HIT_YOU                  266 // 11 - Other hits you
+#define USERCOLOR_YOU_MISS_OTHER                 267 // 12 - You miss other
+#define USERCOLOR_OTHER_MISS_YOU                 268 // 13 - Other misses you
+#define USERCOLOR_DUELS                          269 // 14 - Broadcasts (duels, etc)
+#define USERCOLOR_SKILLS                         270 // 15 - Skills (ups, non-combat use, etc.)
+#define USERCOLOR_DISCIPLINES                    271 // 16 - Disciplines or special abilities
+#define USERCOLOR_UNUSED001                      272 // 17 - Unused at this time
+#define USERCOLOR_DEFAULT                        273 // 18 - Default text and stuff you type
+#define USERCOLOR_FACTION                        274 // 19 - Faction Messages
+#define USERCOLOR_MERCHANT_OFFER                 275 // 20 - Merchant Offer Price
+#define USERCOLOR_MERCHANT_EXCHANGE              276 // 21 - Merchant Buy/Sell
+#define USERCOLOR_YOUR_DEATH                     277 // 22 - Your death message
+#define USERCOLOR_OTHER_DEATH                    278 // 23 - Others death message
+#define USERCOLOR_OTHER_HIT_OTHER                279 // 24 - Other damage other
+#define USERCOLOR_OTHER_MISS_OTHER               280 // 25 - Other miss other
+#define USERCOLOR_WHO                            281 // 26 - /who command
+#define USERCOLOR_YELL                           282 // 27 - yell for help
+#define USERCOLOR_NON_MELEE                      283 // 28 - Spell Damage
+#define USERCOLOR_SPELL_WORN_OFF                 284 // 29 - Spell worn off
+#define USERCOLOR_MONEY_SPLIT                    285 // 30 - Money splits
+#define USERCOLOR_LOOT                           286 // 31 - Loot message
+#define USERCOLOR_RANDOM                         287 // 32 - Dice Roll (/random)
+#define USERCOLOR_OTHERS_SPELLS                  288 // 33 - Others spells
+#define USERCOLOR_SPELL_FAILURE                  289 // 34 - Spell Failures (resists, fizzles, missing component, bad target, etc.)
+#define USERCOLOR_CHAT_CHANNEL                   290 // 35 - Chat Channel Messages
+#define USERCOLOR_CHAT_1                         291 // 36 - Chat Channel 1
+#define USERCOLOR_CHAT_2                         292 // 37 - Chat Channel 2
+#define USERCOLOR_CHAT_3                         293 // 38 - Chat Channel 3
+#define USERCOLOR_CHAT_4                         294 // 39 - Chat Channel 4
+#define USERCOLOR_CHAT_5                         295 // 40 - Chat Channel 5
+#define USERCOLOR_CHAT_6                         296 // 41 - Chat Channel 6
+#define USERCOLOR_CHAT_7                         297 // 42 - Chat Channel 7
+#define USERCOLOR_CHAT_8                         298 // 43 - Chat Channel 8
+#define USERCOLOR_CHAT_9                         299 // 44 - Chat Channel 9
+#define USERCOLOR_CHAT_10                        300 // 45 - Chat Channel 10
+#define USERCOLOR_MELEE_CRIT                     301 // 46 - Melee Crits (Yours)
+#define USERCOLOR_SPELL_CRIT                     302 // 47 - Spell & Dot Crits (Yours)
+#define USERCOLOR_TOO_FAR_AWAY                   303 // 48 - Too far away (melee)
+#define USERCOLOR_NPC_RAMPAGE                    304 // 49 - NPC Rampage
+#define USERCOLOR_NPC_FLURRY                     305 // 50 - NPC Flurry
+#define USERCOLOR_NPC_ENRAGE                     306 // 51 - NPC Enrage
+#define USERCOLOR_ECHO_SAY                       307 // 52 - say echo
+#define USERCOLOR_ECHO_TELL                      308 // 53 - tell echo
+#define USERCOLOR_ECHO_GROUP                     309 // 54 - group echo
+#define USERCOLOR_ECHO_GUILD                     310 // 55 - guild echo
+#define USERCOLOR_ECHO_OOC                       311 // 56 - group echo
+#define USERCOLOR_ECHO_AUCTION                   312 // 57 - auction echo
+#define USERCOLOR_ECHO_SHOUT                     313 // 58 - shout echo
+#define USERCOLOR_ECHO_EMOTE                     314 // 59 - emote echo
+#define USERCOLOR_ECHO_CHAT_1                    315 // 60 - chat 1 echo
+#define USERCOLOR_ECHO_CHAT_2                    316 // 61 - chat 2 echo
+#define USERCOLOR_ECHO_CHAT_3                    317 // 62 - chat 3 echo
+#define USERCOLOR_ECHO_CHAT_4                    318 // 63 - chat 4 echo
+#define USERCOLOR_ECHO_CHAT_5                    319 // 64 - chat 5 echo
+#define USERCOLOR_ECHO_CHAT_6                    320 // 65 - chat 6 echo
+#define USERCOLOR_ECHO_CHAT_7                    321 // 66 - chat 7 echo
+#define USERCOLOR_ECHO_CHAT_8                    322 // 67 - chat 8 echo
+#define USERCOLOR_ECHO_CHAT_9                    323 // 68 - chat 9 echo
+#define USERCOLOR_ECHO_CHAT_10                   324 // 69 - chat 10 echo
+#define USERCOLOR_AVATAR_CMD                     325 // 70 - Avatar Command Output
+#define USERCOLOR_LINK                           326 // 71 - Item Links
+#define USERCOLOR_RAID                           327 // 72 - Raid Say
+#define USERCOLOR_PET                            328 // 73 - My Pet Melee
+#define USERCOLOR_DAMAGESHIELD                   329 // 74 - damage shield hits you
+#define USERCOLOR_LEADER                         330 // 75 - Group / Raid Role messages
+#define USERCOLOR_PETRAMPFLURRY                  331 // 76 - pet rampage/flurry
+#define USERCOLOR_PETCRITS                       332 // 77 - pet's critical hits
+#define USERCOLOR_FOCUS                          333 // 78 - focus item activation
+#define USERCOLOR_XP                             334 // 79 - xp gain/loss
+#define USERCOLOR_SYSTEM                         335 // 80 - system broadcasts etc
+#define USERCOLOR_PET_SPELLS                     336 // 81 - pet spells
+#define USERCOLOR_PET_RESPONSES                  337 // 82 - pet responses
+#define USERCOLOR_ITEM_SPEECH                    338 // 83 - item speech
+#define USERCOLOR_STRIKETHROUGH                  339 // 84 - strikethrough messages
+#define USERCOLOR_STUN                           340 // 85 - stun messages
+#define USERCOLOR_SWARM_PET_DEATH                341 // 86 - Swarm Pet Death
+#define USERCOLOR_FELLOWSHIP                     342 // 87 - fellowship messages
+#define USERCOLOR_NPC_SPEECH                     343 // 88 - npc dialogue
+#define USERCOLOR_NPC_SPEECH_TO_YOU              344 // 89 - npc dialogue to you
+#define USERCOLOR_GUILD_MSG                      345 // 90 - guild messages
+#define USERCOLOR_MERCENARY_GRP                  346 // 91 - mercenary tells group
+#define USERCOLOR_ACHIEVEMENT                    347 // 92 - Achievement Links
+#define USERCOLOR_ACHIEVEMENT_EMOTE              348 // 93 - Emote achievement messages
+#define USERCOLOR_ACHIEVEMENT_GUILD              349 // 94 - Guild achievement messages
+#define USERCOLOR_PVP                            350 // 95 - PvP Messages
+#define USERCOLOR_HOTBUTTON_COOLDOWN             351 // 96 - Hotbutton Cooldown Overlay
+#define USERCOLOR_AGGRO_LOW                      352 // 97 - Aggro Labels - Low
+#define USERCOLOR_AGGRO_WARNING                  353 // 98 - Aggro Labels - Warning
+#define USERCOLOR_AGGRO_MOST                     354 // 99 - Aggro Labels - Most
+#define USERCOLOR_DIALOG_LINK                    355 // 100 - Dialog [Response] Links
+#define USERCOLOR_FLURRY                         356 // 101 - Flurry (Self)
+#define USERCOLOR_DEBUG                          357 // 102 - Debug Output
+#define USERCOLOR_NPC_DEATH                      358 // 103 - Death Notification - NPCs
+#define USERCOLOR_DICE_OTHER                     359 // 104 - Dice Roll (/random) - Others
+#define USERCOLOR_DICE_GROUP                     360 // 105 - Dice Roll (/random) - Group / Raid
+#define USERCOLOR_FALL_DAMAGE_SELF               361 // 106 - Environmental Damage (Yours)
+#define USERCOLOR_FALL_DAMAGE_OTHER              362 // 107 - Environmental Damage (Others)
+#define USERCOLOR_DAMAGESHIELD_SELF              363 // 108 - Damage Shield Self
+#define USERCOLOR_DAMAGESHIELD_OTHER             364 // 109 - Damage Shield Other hit Other
+#define USERCOLOR_EVENT                          365 // 110 - Event Messages
+#define USERCOLOR_OVERWRITTEN_DET                366 // 111 - Spell Overwritten (Detrimental)
+#define USERCOLOR_OVERWRITTEN_BENE               367 // 112 - Spell Overwritten (Beneficial)
+#define USERCOLOR_CANT_USE_COMMAND               368 // 113 - Can't Use Command Warning
+#define USERCOLOR_ABILITY_COOLDOWN               369 // 114 - Combat Ability Reuse - You can use [Ability Name] again in [Time till you can use it again]
+#define USERCOLOR_AA_REUSE_TIMER                 370 // 115 - AA Reuse Timer failed
+#define USERCOLOR_DESTROY_ITEM                   371 // 116 - Destroy Item Message
+#define USERCOLOR_AURAS_YOU                      372 // 117 - Auras (You)
+#define USERCOLOR_AURAS_OTHER                    373 // 118 - Auras (Others)
+#define USERCOLOR_HEALS_YOU                      374 // 119 - Heals (You)
+#define USERCOLOR_HEALS_OTHERS                   375 // 120 - Heals (Others)
+#define USERCOLOR_DOTS_YOURS                     376 // 121 - DoTs (Yours)
+#define USERCOLOR_DOTS_OTHERS                    377 // 122 - DoTs (Others)
+#define USERCOLOR_BARD_SONG_PETS                 378 // 123 - Bard Songs on Pets
+#define USERCOLOR_DIRECT_DAMAGE_OTHERS           379 // 124 - Direct Damage (Others)
+#define USERCOLOR_SPELL_MESSAGES                 380 // 125 - Spell Emotes
+#define USERCOLOR_FACTION_LINK                   381 // 126 - Faction Links
+#define USERCOLOR_TAUNT_MESSAGES                 382 // 127 - Taunt Messages
+#define USERCOLOR_DISCIPLINES_OTHER              383 // 128 - Combat Abilities / Disciplines (Others)
+#define USERCOLOR_ITEM_STAT_POSITIVE             384 // 129 - Item Stat Positive
+#define USERCOLOR_ITEM_STAT_NEGATIVE             385 // 130 - Item Stat Negative
 
 #define DEITY_Bertoxxulous              201
 #define DEITY_BrellSerilis              202
@@ -1040,54 +1040,54 @@ typedef struct _ItemEvolutionData
 /*0x18*/
 } ItemEvolutionData, *PItemEvolutionData;
 
-//Actual Size: 0x110 (see 0x65AE00 in eqgame.exe Test dated May 25 2021) - eqmule
+//Actual Size: 0x110 (see 0x65B640 in eqgame.exe Test dated Jun  8 2021) - eqmule
 typedef struct _CONTENTS {
 /*0x0000*/ void*	vtable;
 /*0x0004*/ mutable int	RefCount;
 /*0x0008*/ void*	punknown;
 //start of ItemBase
-/*0x000C*/ int	Open;
-/*0x0010*/ UINT	RespawnTime;
-/*0x0014*/ struct _ITEMINFO *Item1;
-/*0x0018*/ bool	bItemNeedsUpdate;
-/*0x001C*/ int	Charges;
-/*0x0020*/ int	ConvertItemID;
-/*0x0028*/ __int64 MerchantSlot;
-/*0x0030*/ int	NoDropFlag;
-/*0x0034*/ struct _CXSTR *ConvertItemName;
-/*0x0038*/ struct _CXSTR *	ActorTag1;
-/*0x003C*/ int	Power;
-/*0x0040*/ bool	bRankDisabled;
-/*0x0044*/ int	Luck;
-/*0x0048*/ bool	bCollected;
-/*0x004C*/ struct _CXSTR *SaveString;
-/*0x0050*/ UINT	Tint;
-/*0x0054*/ int	StackCount;
-/*0x0058*/ int	MerchantQuantity;
-/*0x0060*/ __int64	DontKnow;
-/*0x0068*/ UINT	ItemHash;
-/*0x0070*/ __int64 Price;
-/*0x0078*/ bool	bCopied;
-/*0x0079*/ bool	bRealEstateItemPlaceable;
-/*0x007C*/ int	ScriptIndex;
-/*0x0080*/ int	RealEstateID;
-/*0x0084*/ ItemGlobalIndex2 GlobalIndex; /* Size is 0xa (0xc)*/
-/*0x0090*/ UINT	NewArmorID;
-/*0x0094*/ ArrayClass_RO<UINT> RealEstateArray;
-/*0x00A4*/ int	OrnamentationIcon;
-/*0x00A8*/ int	ArmorType;
-/*0x00AC*/ UINT	LastCastTime;
-/*0x00B0*/ struct _CXSTR *	ActorTag2;
-/*0x00B4*/ SharedPtr<ItemEvolutionData> pEvolutionData;
-/*0x00BC*/ ItemBaseContainer2 Contents; /* Size is 0x1c */
-/*0x00D8*/ bool	bDisableAugTexture;
-/*0x00D9*/ bool	bConvertable;
-/*0x00DC*/ int	ID;
-/*0x00E0*/ int	NoteStatus;
-/*0x00E4*/ int	AugFlag;
-/*0x00E8*/ EqItemGuid ItemGUID;
+/*0x000C*/ SharedPtr<ItemEvolutionData> pEvolutionData;
+/*0x0014*/ int	AugFlag;
+/*0x0018*/ struct _ITEMINFO *Item1;
+/*0x001C*/ UINT	RespawnTime;
+/*0x0020*/ __int64 MerchantSlot;
+/*0x0028*/ struct _CXSTR *	ActorTag1;
+/*0x002C*/ struct _CXSTR *SaveString;
+/*0x0030*/ int	RealEstateID;
+/*0x0038*/ __int64	DontKnow;
+/*0x0040*/ bool	bDisableAugTexture;
+/*0x0044*/ int	Open;
+/*0x0048*/ int	ArmorType;
+/*0x004C*/ bool	bItemNeedsUpdate;
+/*0x0050*/ UINT	LastCastTime;
+/*0x0054*/ bool	bCopied;
+/*0x0058*/ __int64 Price;
+/*0x0060*/ bool	bConvertable;
+/*0x0064*/ int	NoteStatus;
+/*0x0068*/ int	ScriptIndex;
+/*0x006C*/ struct _CXSTR *ConvertItemName;
+/*0x0070*/ UINT	Tint;
+/*0x0074*/ bool	bCollected;
+/*0x0078*/ ItemBaseContainer2 Contents; /* Size is 0x1c */
+/*0x0094*/ int	StackCount;
+/*0x0098*/ struct _CXSTR *	ActorTag2;
+/*0x009C*/ int	ConvertItemID;
+/*0x00A0*/ bool	bRankDisabled;
+/*0x00A4*/ UINT	NewArmorID;
+/*0x00A8*/ EqItemGuid ItemGUID;
+/*0x00BC*/ int	Power;
+/*0x00C0*/ int	Charges;
+/*0x00C4*/ UINT	ItemHash;
+/*0x00C8*/ int	NoDropFlag;
+/*0x00CC*/ int	ID;
+/*0x00D0*/ ArrayClass_RO<UINT> RealEstateArray;
+/*0x00E0*/ ItemGlobalIndex2 GlobalIndex; /* Size is 0xa (0xc)*/
+/*0x00EC*/ int	Luck;
+/*0x00F0*/ bool	bRealEstateItemPlaceable;
+/*0x00F4*/ int	OrnamentationIcon;
+/*0x00F8*/ int	MerchantQuantity;
 //start of ItemClient
-/*0x00FC*/ int Filler0x00FC[0x2];
+/*0x00FC*/ BYTE Filler0x00FC[0x8];
 /*0x0104*/ struct _ITEMINFO*	Item2;
 /*0x0108*/ struct _CXSTR *ClientString;
 /*0x010C*/ BYTE Filler0x010C[0x4];
@@ -3356,125 +3356,125 @@ struct SDoCollisionMovementStats
 };
 
 #define PLAYERZONECLIENT \
-	bool		bAnimationOnPop; \
-	BYTE		InPvPArea; /* are we in a PvP area? */ \
-	bool		Sneak; \
-	FLOAT		CameraOffset; \
-	UINT		LastTimeStoodStill; \
-	BYTE		LastAttack; \
-	CHAR		Handle[0x20]; \
-	BYTE		GMRank; /* i think */ \
-	CHAR		DraggingPlayer[0x40]; \
-	CHAR		Title[0x80]; \
-	__int64	HPCurrent; \
-	bool		bAttackRelated; \
-	bool		LFG; \
-	int		EnduranceCurrent; \
-	FLOAT		AnimationSpeedRelated; \
-	UINT		LastResendAddPlayerPacket; \
-	struct _EQC_INFO*	spawneqc_info; \
-	struct _LAUNCHSPELLDATA	CastingData; /* size: 0x58 */ \
-	int		Dontknowyet2; \
-	CPhysicsInfo	LastCollision; \
-	CHAR		DragNames[0x2][0x40]; \
-	int		PetID; \
-	bool		Linkdead; \
-	int		ManaMax; \
-	int		berserker; \
-	bool		bStationary; \
-	UINT		RespawnTimer; /* its actually TimeOfDeath...TimeStamp of when RespawnWnd will close - 0 when you're alive */ \
-	BYTE		Level; \
-	int		Trader;	/* found in CEverQuest__RightClickedOnPlayer_x */ \
-	UINT		CorpseDragCount; \
-	UINT		MasterID; \
-	int		Stuff; \
-	bool		bSummoned; /* by a PC or by anyone? need to investigate */ \
-	bool		PvPFlag; \
-	UINT		TimeStamp; /* updates all the time including when on a mount */ \
-	FLOAT		MyWalkSpeed; \
 	BYTE		IsPassenger; /* if u are on a boat or airship or whatever */ \
 	FLOAT		BearingToTarget; \
 	bool		bShowHelm; \
-	UINT		NextSwim; \
-	int		AltAttack; \
-	int		Buyer; \
-	struct _SPAWNINFO*	pViewPlayer; \
-	UINT		LastRangedUsedTime; \
-	bool		bBetaBuffed; \
-	int		NpcTintIndex; \
-	__int64	HPMax; \
-	UINT		StunTimer; \
-	DWORD		Meditating; \
-	UINT		SpellGemETA[0xf]; /*InnateETA is now the last member in this array */ \
-	UINT		NextIntimidateTime; \
-	BYTE		FishingEvent; \
-	int		HideMode; \
-	bool		bOfflineMode; \
-	BYTE		IntimidateCount; \
-	UINT		ACounter; /* not sure what this one is for*/ \
-	UINT		LastSecondaryUseTime; \
-	BYTE		Light; \
-	__int64	GuildID; \
-	DWORD		Zone; \
 	DWORD		LoginSerial; \
-	int		ManaCurrent; \
-	UINT		FishingETA; \
-	int		CurrIOState; \
-	bool		bAlwaysShowAura; \
-	UINT		CombatSkillTicks[0x2]; \
-	bool		Mercenary; \
-	bool		bSwitchMoved; /* true when a door moves near the spawn */ \
-	UINT		SpellCooldownETA; \
-	BYTE		Blind; \
-	BYTE		FindBits; \
-	UINT		LastRefresh; \
-	UINT		SitStartTime; \
-	FLOAT		GetMeleeRangeVar1; /* used by GetMeleeRange */ \
-	CHAR		GM; \
-	int		AFK; \
-	int		SomethingElse; \
-	void		*pRaceGenderInfo; /* todo this is not a void* so... map the CRaceGenderInfo class */ \
-	BYTE		HmmWhat; /* todo: figure out */ \
-	CHAR		Suffix[0x80]; \
-	UINT		LastTick; \
-	int		AARank;/* this really is the title id */ \
-	FLOAT		FallingStartZ; \
-	BYTE		FD; \
-	BYTE		Type2; /* check */ \
-	bool		bTempPet; \
-	int		RealEstateID; \
-	int		DoSpecialMelee; \
-	int		SomeData[0x2]; \
-	int		LastCastNum; \
-	void		*pTouchingSwitch; /* need to get that in here : struct _EQSWITCH */ \
-	UINT		CombatSkillUsed[0x2]; \
-	BYTE		CharClass; /* Im pretty sure this isnt working */ \
-	UINT		EnduranceMax; \
-	DWORD		**ppUDP; /* UdpLibrary::UdpConnection? */ \
-	BYTE		HoldingAnimation; /* todo: create enum for this byte. Holding: Nothing=0 A RightHand Weapon=1 A Shield=2 Dual Wielding Two Weapons=3 A Spear=4 A LeftHand Weapon=5 A Two Handed Weapon=6 A bow=7 */ \
-	BYTE		StandState; \
-	UINT		MinuteTimer; \
+	int		Dontknowyet2; \
+	int		ManaMax; \
+	struct _EQC_INFO*	spawneqc_info; \
+	FLOAT		MerchantGreed; \
 	int		Anon; /* found in EQPlayer__SetNameSpriteTint_x */ \
-	int		WarCry; \
-	int		SecondaryTintIndex; \
-	FLOAT		ViewHeight; \
-	UINT		LastTrapDamageTime; \
-	int		RealEstateItemId; \
-	CHAR		LoginRelated[0x20]; \
+	bool		bSummoned; /* by a PC or by anyone? need to investigate */ \
+	bool		bAnimationOnPop; \
+	BYTE		FD; \
+	bool		bBuffTimersOnHold; /* no you can't control this client side so unless you want to get banned leave it alone */ \
+	bool		bSwitchMoved; /* true when a door moves near the spawn */ \
+	int		berserker; \
+	int		Buyer; \
+	CHAR		GM; \
+	UINT		NextIntimidateTime; \
+	int		Stuff; \
+	UINT		SpellGemETA[0xf]; /*InnateETA is now the last member in this array */ \
 	int		PrimaryTintIndex; \
 	int		IsAttacking; /* need to investigate */ \
-	EqItemGuid realEstateItemGuid; \
-	FLOAT		MerchantGreed; \
-	FLOAT		RunSpeed; /*0.70 on runspeed 5... */ \
-	int		Deity; \
-	bool		bBuffTimersOnHold; /* no you can't control this client side so unless you want to get banned leave it alone */ \
-	FLOAT		MissileRangeToTarget; \
-	BYTE		TitleVisible; \
-	DWORD		LastCastTime; \
-	UINT		LastPrimaryUseTime; \
-	int		DontKnowYet; \
 	UINT		LastMealTime; /* last time we eat or drank */ \
-/*0x060C*/
+	int		CurrIOState; \
+	DWORD		Zone; \
+	UINT		RespawnTimer; /* its actually TimeOfDeath...TimeStamp of when RespawnWnd will close - 0 when you're alive */ \
+	bool		bOfflineMode; \
+	DWORD		**ppUDP; /* UdpLibrary::UdpConnection? */ \
+	bool		LFG; \
+	BYTE		Level; \
+	int		RealEstateID; \
+	FLOAT		ViewHeight; \
+	int		LastCastNum; \
+	BYTE		Type2; /* check */ \
+	int		AARank;/* this really is the title id */ \
+	int		DontKnowYet; \
+	DWORD		LastCastTime; \
+	int		HideMode; \
+	UINT		LastTick; \
+	UINT		LastSecondaryUseTime; \
+	BYTE		GMRank; /* i think */ \
+	int		EnduranceCurrent; \
+	bool		Sneak; \
+	bool		bAttackRelated; \
+	void		*pTouchingSwitch; /* need to get that in here : struct _EQSWITCH */ \
+	__int64	GuildID; \
+	CHAR		Handle[0x20]; \
+	UINT		MasterID; \
+	UINT		LastTimeStoodStill; \
+	UINT		CorpseDragCount; \
+	UINT		MinuteTimer; \
+	BYTE		FindBits; \
+	CHAR		Suffix[0x80]; \
+	BYTE		CharClass; /* Im pretty sure this isnt working */ \
+	bool		bStationary; \
+	int		NpcTintIndex; \
+	CHAR		DraggingPlayer[0x40]; \
+	UINT		LastRangedUsedTime; \
+	CHAR		LoginRelated[0x20]; \
+	CHAR		Title[0x80]; \
+	UINT		SitStartTime; \
+	UINT		SpellCooldownETA; \
+	BYTE		Blind; \
+	FLOAT		FallingStartZ; \
+	int		Trader;	/* found in CEverQuest__RightClickedOnPlayer_x */ \
+	__int64	HPMax; \
+	BYTE		IntimidateCount; \
+	int		Deity; \
+	BYTE		Light; \
+	FLOAT		MissileRangeToTarget; \
+	bool		PvPFlag; \
+	int		DoSpecialMelee; \
+	BYTE		HoldingAnimation; /* todo: create enum for this byte. Holding: Nothing=0 A RightHand Weapon=1 A Shield=2 Dual Wielding Two Weapons=3 A Spear=4 A LeftHand Weapon=5 A Two Handed Weapon=6 A bow=7 */ \
+	__int64	HPCurrent; \
+	BYTE		FishingEvent; \
+	FLOAT		CameraOffset; \
+	struct _SPAWNINFO*	pViewPlayer; \
+	BYTE		HmmWhat; /* todo: figure out */ \
+	UINT		CombatSkillTicks[0x2]; \
+	FLOAT		AnimationSpeedRelated; \
+	UINT		LastPrimaryUseTime; \
+	UINT		EnduranceMax; \
+	int		PetID; \
+	EqItemGuid realEstateItemGuid; \
+	CPhysicsInfo	LastCollision; \
+	BYTE		LastAttack; \
+	void		*pRaceGenderInfo; /* todo this is not a void* so... map the CRaceGenderInfo class */ \
+	int		WarCry; \
+	bool		bBetaBuffed; \
+	UINT		CombatSkillUsed[0x2]; \
+	BYTE		InPvPArea; /* are we in a PvP area? */ \
+	UINT		StunTimer; \
+	DWORD		Meditating; \
+	struct _LAUNCHSPELLDATA	CastingData; /* size: 0x58 */ \
+	int		AltAttack; \
+	UINT		ACounter; /* not sure what this one is for*/ \
+	UINT		LastTrapDamageTime; \
+	UINT		NextSwim; \
+	BYTE		StandState; \
+	FLOAT		GetMeleeRangeVar1; /* used by GetMeleeRange */ \
+	bool		bTempPet; \
+	bool		Linkdead; \
+	FLOAT		RunSpeed; /*0.70 on runspeed 5... */ \
+	BYTE		TitleVisible; \
+	int		SecondaryTintIndex; \
+	bool		bAlwaysShowAura; \
+	UINT		TimeStamp; /* updates all the time including when on a mount */ \
+	int		SomeData[0x2]; \
+	CHAR		DragNames[0x2][0x40]; \
+	int		RealEstateItemId; \
+	bool		Mercenary; \
+	UINT		LastRefresh; \
+	UINT		LastResendAddPlayerPacket; \
+	FLOAT		MyWalkSpeed; \
+	int		SomethingElse; \
+	UINT		FishingETA; \
+	int		ManaCurrent; \
+	int		AFK; \
+/*0x061C*/
 
 
 //END PLAYERZONECLIENT
@@ -3752,37 +3752,37 @@ typedef struct _SPAWNINFO {
 /* ******************** PlayerZoneClient Starts Here ***************** */
 /*0x0190*/ UINT		LastIntimidateUse;
 /*0x0194*/ PLAYERZONECLIENT
-/*0x060c*/ //I wont finetune these comments every single patch cause they change since PLAYERZONECLIENT size change...
-/*0x060c*/ TCircularBuffer<SDoCollisionMovementStats, 0x14>MovementStats; /* size (0x74 * 0x14) +8 = 0x918 */
-/*0x0f24*/ struct _SPAWNINFO*   WhoFollowing; // NULL if autofollow off
-/*0x0f28*/ DWORD	GroupAssistNPC[0x1];
-/*0x0f2c*/ DWORD	RaidAssistNPC[0x3];
-/*0x0f38*/ DWORD	GroupMarkNPC[0x3];
-/*0x0f44*/ DWORD	RaidMarkNPC[0x3];
-/*0x0f50*/ DWORD	TargetOfTarget;
-/*0x0f54*/ BYTE		PhysStuff[0x20];
-/*0x0f74*/ UINT		ParticleCastStartTime;
-/*0x0f78*/ UINT		ParticleCastDuration;
-/*0x0f7c*/ int		ParticleVisualSpellNum;
-/*0x0f80*/ BYTE		Filler0x0f80[0x4];
-/*0x0f84*/ ActorClient	mActorClient;          // start of ActorClient struct  size 0x1BC?
-/*0x1140*/ PlayerAnimationBase *pAnimation;
-/*0x1144*/ FLOAT	MeleeRadius;      // used by GetMeleeRange
-/*0x1148*/ UINT		CollisionCounter;
-/*0x114c*/ FLOAT	CachedFloorLocationY;
-/*0x1150*/ FLOAT	CachedFloorLocationX;
-/*0x1154*/ FLOAT	CachedFloorLocationZ;
-/*0x1158*/ FLOAT	CachedFloorHeight;
-/*0x115c*/ FLOAT	CachedCeilingLocationY;
-/*0x1160*/ FLOAT	CachedCeilingLocationX;
-/*0x1164*/ FLOAT	CachedCeilingLocationZ;
-/*0x1168*/ FLOAT	CachedCeilingHeight;
-/*0x116c*/ CCapsule	StaticCollision;//size 0x1c
-/*0x1188*/ ArrayClass_RO<PhysicsEffect> mPhysicsEffects;//size is 0x10
-/*0x1198*/ ArrayClass_RO<bool> PhysicsEffectsUpdated;//size is 0x10
+/*0x061c*/ //I wont finetune these comments every single patch cause they change since PLAYERZONECLIENT size change...
+/*0x061c*/ TCircularBuffer<SDoCollisionMovementStats, 0x14>MovementStats; /* size (0x74 * 0x14) +8 = 0x918 */
+/*0x0f34*/ struct _SPAWNINFO*   WhoFollowing; // NULL if autofollow off
+/*0x0f38*/ DWORD	GroupAssistNPC[0x1];
+/*0x0f3c*/ DWORD	RaidAssistNPC[0x3];
+/*0x0f48*/ DWORD	GroupMarkNPC[0x3];
+/*0x0f54*/ DWORD	RaidMarkNPC[0x3];
+/*0x0f60*/ DWORD	TargetOfTarget;
+/*0x0f64*/ BYTE		PhysStuff[0x20];
+/*0x0f84*/ UINT		ParticleCastStartTime;
+/*0x0f88*/ UINT		ParticleCastDuration;
+/*0x0f8c*/ int		ParticleVisualSpellNum;
+/*0x0f90*/ BYTE		Filler0x0f90[0x4];
+/*0x0f94*/ ActorClient	mActorClient;          // start of ActorClient struct  size 0x1BC?
+/*0x1150*/ PlayerAnimationBase *pAnimation;
+/*0x1154*/ FLOAT	MeleeRadius;      // used by GetMeleeRange
+/*0x1158*/ UINT		CollisionCounter;
+/*0x115c*/ FLOAT	CachedFloorLocationY;
+/*0x1160*/ FLOAT	CachedFloorLocationX;
+/*0x1164*/ FLOAT	CachedFloorLocationZ;
+/*0x1168*/ FLOAT	CachedFloorHeight;
+/*0x116c*/ FLOAT	CachedCeilingLocationY;
+/*0x1170*/ FLOAT	CachedCeilingLocationX;
+/*0x1174*/ FLOAT	CachedCeilingLocationZ;
+/*0x1178*/ FLOAT	CachedCeilingHeight;
+/*0x117c*/ CCapsule	StaticCollision;//size 0x1c
+/*0x1198*/ ArrayClass_RO<PhysicsEffect> mPhysicsEffects;//size is 0x10
+/*0x11a8*/ ArrayClass_RO<bool> PhysicsEffectsUpdated;//size is 0x10
 /* ********************* PlayerZoneClient Ends Here ******************* */
 /* ********************** PlayerClient Starts Here ******************** */
-/*0x11a8*/ int		Animation; /* Current Animation Playing. see 5671F1 in feb 14 2019 test */
+/*0x11b8*/ int		Animation; /* Current Animation Playing. see 5671F1 in feb 14 2019 test */
 /*0x11ac*/ int		NextAnim;
 /*0x11b0*/ int		CurrLowerBodyAnim;
 /*0x11b4*/ int		NextLowerBodyAnim;
@@ -5211,8 +5211,8 @@ typedef struct _GROUPAGGRO {
 } GROUPAGGRO, *PGROUPAGGRO;
 
 #define EQ_ASSIST_CALC                  0x020c0f19
-#define EQ_ASSIST_COMPLETE              0x7D90   // aMsgTimeStampRe
-#define EQ_ASSIST                       0x69D1   // do_assist(PlayerClient *,char const *)+399 20160212 live (see 52C319)
+#define EQ_ASSIST_COMPLETE              0x2CEE   // aMsgTimeStampRe
+#define EQ_ASSIST                       0x63AA   // do_assist(PlayerClient *,char const *)+399 20160212 live (see 52C319)
 #define EQ_LoadingS__ArraySize          0x5a     // EQ_LoadingS__SetProgressBar_x+76 	(4C7396 yes it says 5b there, but we dont want to overwrite the NULL term...	2016 Apr 21
 };
 using namespace EQData;
