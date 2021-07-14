@@ -5064,58 +5064,58 @@ public:
 		EQLIB_OBJECT bool CMerchantWnd::PurchasePageHandler::RequestGetItem(int);
 		EQLIB_OBJECT void CMerchantWnd::PurchasePageHandler::RequestPutItem(int);
 	};
-	//size 0x458 in Aug 14 2020 see 5583F2 -eqmule
-	/*0x244*/ UINT			Filler0x244;
-	/*0x248*/ UINT			NextRefreshTime;
-	/*0x24c*/ bool			bInventoryWasActive;
-	/*0x250*/ VeArray<VePointer<MerchantPageHandler>> PageHandlers;//size 0xc
-	/*0x25c*/ float			MerchantGreed;
-	/*0x260*/ ItemGlobalIndex ItemLocation;//size 0xc
-	/*0x26c*/ BYTE			Unknown0x26c[0x8];
-	/*0x274*/ VePointer<CONTENTS>pSelectedItem;
-	/*0x278*/ __time32_t	MailExpireTime;
-	/*0x27c*/ bool			bAutoRetrieveingMail;
-	/*0x280*/ BYTE			Unknown0x280[0x14];
-	/*0x294*/ PCHAR			Labels[0xc];
-	/*0x2c4*/ CEditWnd		*SearchEdit;//0x2c4 for sure see 79DB91 -eqmule
-	/*0x2c8*/ CButtonWnd	*SearchButton;
-	/*0x2cc*/ CLabel		*MerchantNameLabel;
-	/*0x2d0*/ CLabel		*SelectedItemLabel;
-	/*0x2d4*/ CLabel		*SelectedPriceLabel;
-	/*0x2d8*/ CButtonWnd	*InspectButton;
-	/*0x2dc*/ CButtonWnd	*PreviewButton;
-	/*0x2e0*/ CButtonWnd	*SelectedItemButton;
-	/*0x2e4*/ CButtonWnd	*BuyButton;
-	/*0x2e8*/ CButtonWnd	*BuyMarketPlaceButton;
-	/*0x2ec*/ CButtonWnd	*SellButton;
-	/*0x2f0*/ CButtonWnd	*RecoverButton;
-	/*0x2f4*/ CButtonWnd	*RetrieveButton;
-	/*0x2f8*/ CButtonWnd	*RetrieveAllButton;
-	/*0x2fc*/ CButtonWnd	*SendButton;
-	/*0x300*/ CButtonWnd	*AdventureButton;
-	/*0x304*/ CLabel		*SendToLabel;
-	/*0x308*/ CEditWnd		*SendToEdit;
-	/*0x30c*/ CLabel		*NoteLabel;
-	/*0x310*/ CEditWnd		*NoteEdit;
-	/*0x314*/ CButtonWnd	*ClearNoteButton;
-	/*0x318*/ CListWnd		*ItemsList;//at 0x318 for sure! see 79DF8D -eqmule
-	/*0x31c*/ CListWnd		*ItemsRecoveryList;
-	/*0x320*/ CListWnd		*ItemsMailList;
-	/*0x324*/ CButtonWnd	*DoneButton;
-	/*0x328*/ CPageWnd		*PurchasePage;
-	/*0x32c*/ CPageWnd		*RecoveryPage;
-	/*0x330*/ CPageWnd		*MailPage;
-	/*0x334*/ CTabWnd		*TabWindow;
-	/*0x338*/ CButtonWnd	*UsableButton;
-	/*0x33c*/ CLabel		*CurrentCurrencyLabel;
-	/*0x340*/ int			Unknown0x340;
-	/*0x344*/ int			Unknown0x344;
-	/*0x348*/ int			Unknown0x348;
-	/*0x34c*/ int			Unknown0x34c;
-	/*0x350*/ int			Unknown0x350;
-	/*0x354*/ int			Guk_Currency;
-	/*0x358*/ BYTE			Unknown0x358[0x100];
-	/*0x458*/
+	//size 0x438 in Jul 13 2021 see 56FB76 -eqmule
+	/*0x22c*/ UINT			Filler0x22c;
+	/*0x230*/ UINT			NextRefreshTime;
+	/*0x234*/ bool			bInventoryWasActive;
+	/*0x238*/ VeArray<VePointer<MerchantPageHandler>> PageHandlers;//size 0xc
+	/*0x244*/ float			MerchantGreed;
+	/*0x248*/ ItemGlobalIndex ItemLocation;//size 0xc
+	/*0x254*/ int			Unknown0x254[0x2];
+	/*0x25c*/ VePointer<CONTENTS>pSelectedItem;
+	/*0x260*/ __time32_t	MailExpireTime;
+	/*0x264*/ bool			bAutoRetrieveingMail;
+	/*0x268*/ int			Unknown0x268[0x3];
+	/*0x274*/ PCHAR			Labels[0xc];
+	/*0x2a4*/ CEditWnd		*SearchEdit;//MW_ItemNameInput
+	/*0x2a8*/ CButtonWnd	*SearchButton;
+	/*0x2ac*/ CLabel		*MerchantNameLabel;
+	/*0x2b0*/ CLabel		*SelectedItemLabel;
+	/*0x2b4*/ CLabel		*SelectedPriceLabel;
+	/*0x2b8*/ CButtonWnd	*InspectButton;
+	/*0x2bc*/ CButtonWnd	*PreviewButton;
+	/*0x2c0*/ CButtonWnd	*SelectedItemButton;
+	/*0x2c4*/ CButtonWnd	*BuyButton;
+	/*0x2c8*/ CButtonWnd	*BuyMarketPlaceButton;
+	/*0x2cc*/ CButtonWnd	*SellButton;
+	/*0x2d0*/ CButtonWnd	*RecoverButton;
+	/*0x2d4*/ CButtonWnd	*RetrieveButton;
+	/*0x2d8*/ CButtonWnd	*RetrieveAllButton;
+	/*0x2dc*/ CButtonWnd	*SendButton;
+	/*0x2e0*/ CButtonWnd	*AdventureButton;
+	/*0x2e4*/ CLabel		*SendToLabel;
+	/*0x2e8*/ CEditWnd		*SendToEdit;
+	/*0x2ec*/ CLabel		*NoteLabel;
+	/*0x2f0*/ CEditWnd		*NoteEdit;
+	/*0x2f4*/ CButtonWnd	*ClearNoteButton;
+	/*0x2f8*/ CListWnd		*ItemsList;
+	/*0x2fc*/ CListWnd		*ItemsRecoveryList;
+	/*0x300*/ CListWnd		*ItemsMailList;
+	/*0x304*/ CButtonWnd	*DoneButton;
+	/*0x308*/ CPageWnd		*PurchasePage;
+	/*0x30c*/ CPageWnd		*RecoveryPage;
+	/*0x310*/ CPageWnd		*MailPage;
+	/*0x314*/ CTabWnd		*TabWindow;//MW_MerchantSubwindows
+	/*0x318*/ CButtonWnd	*UsableButton;
+	/*0x31c*/ CLabel		*CurrentCurrencyLabel;
+	/*0x320*/ int			Unknown0x320;
+	/*0x324*/ int			Unknown0x324;
+	/*0x328*/ int			Unknown0x328;
+	/*0x32c*/ int			Unknown0x32c;
+	/*0x330*/ int			Unknown0x330;
+	/*0x334*/ int			Guk_Currency;
+	/*0x338*/ BYTE			Unknown0x338[0x100];
+	/*0x438*/
 #else
 	template <typename TItem> class ItemContainer
 	{

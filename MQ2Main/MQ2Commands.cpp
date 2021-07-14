@@ -1121,7 +1121,7 @@ VOID BuyItem(PSPAWNINFO pChar, PCHAR szLine)
 	CHAR szQty[MAX_STRING] = { 0 };
 	PCHARINFO pCharInfo = NULL;
 	DWORD Qty;
-	if (!GetCharInfo() || !((PEQMERCHWINDOW)pMerchantWnd)->SelectedSlotID)
+	if (!GetCharInfo() || !((PEQMERCHWINDOW)pMerchantWnd)->pSelectedItem.pObject)
 		return;
 	if (((PEQMERCHWINDOW)pMerchantWnd)->pMerchOther && ((PEQMERCHWINDOW)pMerchantWnd)->pMerchOther->pMerchData) {
 		GetArg(szQty, szLine, 1);
@@ -1175,7 +1175,7 @@ VOID SellItem(PSPAWNINFO pChar, PCHAR szLine)
 	CHAR szQty[MAX_STRING] = { 0 };
 	PCHARINFO pCharInfo = NULL;
 	DWORD Qty;
-	if (!GetCharInfo() || !((PEQMERCHWINDOW)pMerchantWnd)->SelectedSlotID)
+	if (!GetCharInfo() || !((PEQMERCHWINDOW)pMerchantWnd)->pSelectedItem.pObject)
 		return;
 	if (((PEQMERCHWINDOW)pMerchantWnd)->pMerchOther && ((PEQMERCHWINDOW)pMerchantWnd)->pMerchOther->pMerchData) {
 		GetArg(szQty, szLine, 1);
