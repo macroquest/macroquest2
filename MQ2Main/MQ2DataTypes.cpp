@@ -7835,7 +7835,11 @@ bool MQ2SpellType::GETMEMBER()
 		Dest.Type = pBoolType;
 		return true;
 	case BookIcon:
+#if defined(ROF2EMU) || defined(UFEMU)
 		Dest.DWord = pSpell->BookIcon;
+#else
+		Dest.DWord = pSpell->SpellIcon;
+#endif
 		Dest.Type = pIntType;
 		return true;
 	case SpellIcon:
@@ -7843,7 +7847,11 @@ bool MQ2SpellType::GETMEMBER()
 		Dest.Type = pIntType;
 		return true;
 	case GemIcon:
+#if defined(ROF2EMU) || defined(UFEMU)
 		Dest.DWord = pSpell->GemIcon;
+#else
+		Dest.DWord = pSpell->SpellIcon;
+#endif
 		Dest.Type = pIntType;
 		return true;
 	case Target:
