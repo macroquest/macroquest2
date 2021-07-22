@@ -5536,4 +5536,88 @@ void MQCopyLayout(PSPAWNINFO pChar, PCHAR szLine)
 	sprintf_s(szTemp, "/tempcopylayout %s", szLine);
 	HideDoCommand((PSPAWNINFO)pLocalPlayer, szTemp, true);
 }
+void SetEqWindowPos(HWND hWnd, DWORD flag)
+{
+	if (!IsWindow(hWnd)) return;
+
+	BYTE keyState[256] = { 0 };
+	if (GetKeyboardState((LPBYTE)&keyState))
+	{
+		if (!(keyState[VK_MENU] & 0x80))
+		{
+			keybd_event(VK_MENU, 0, KEYEVENTF_EXTENDEDKEY | 0, 0);
+		}
+	}
+	if (flag == -1)
+	{
+		if (IsIconic(hWnd))
+		{
+			//SetWindowPos(hWnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_ASYNCWINDOWPOS | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOREPOSITION);
+			ShowWindow(hWnd, SW_RESTORE);
+		}
+		else {
+			ShowWindow(hWnd, SW_MINIMIZE);
+		}
+	}
+	else
+	{
+		if (IsIconic(hWnd))
+		{
+			ShowWindow(hWnd, flag);
+		}
+		else {
+			ShowWindow(hWnd, flag);
+		}
+	}
+	if (GetKeyboardState((LPBYTE)&keyState))
+	{
+		if (!(keyState[VK_MENU] & 0x80))
+		{
+			keybd_event(VK_MENU, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
+		}
+	}
+}
+// ***************************************************************************
+// Function:    ResizeCMD
+// Description: '/Resize' command
+// Purpose:     Adds the ability to resize your eq window.
+// Usage:		/Resize <min> <max> <restore> no args toggle min/restore
+// Example:		/bct <toonname> //Resize
+// Author:      EqMule
+// ***************************************************************************
+//work in progress need some testing
+void ResizeCMD(PSPAWNINFO pChar, PCHAR szLine)
+{
+	CHAR szArg[MAX_STRING] = { 0 };
+	GetArg(szArg, szLine, 1);
+	DWORD flag = -1;
+	if (!_stricmp(szArg, "min"))
+	{
+		flag = SW_MINIMIZE;
+	} else if (!_stricmp(szArg, "max"))
+	{
+		flag = SW_MAXIMIZE;
+	} else if (!_stricmp(szArg, "restore"))
+	{
+		flag = SW_RESTORE;
+	}
+
+	HWND EQhWnd = 0;
+	DWORD lReturn = GetCurrentProcessId();
+	DWORD pid = lReturn;
+	AllowSetForegroundWindow(pid);
+	BOOL ret = EnumWindows(EnumWindowsProc,(LPARAM)&lReturn);
+	if(lReturn!=pid) {
+		EQhWnd = (HWND)lReturn;
+		SetEqWindowPos(EQhWnd, flag);
+	}	
+	else
+	{
+		if (EQW_GetDisplayWindow)
+			EQhWnd = EQW_GetDisplayWindow();
+		else
+			EQhWnd = *(HWND*)EQADDR_HWND;
+		SetEqWindowPos(EQhWnd, flag);
+	}
+}
 #endif

@@ -117,6 +117,7 @@ LEGACY_API VOID ForeGroundCmd                       (PSPAWNINFO,PCHAR);
 LEGACY_API VOID QuitCmd                             (PSPAWNINFO,PCHAR);
 LEGACY_API VOID RemoveLev							(PSPAWNINFO,PCHAR);
 LEGACY_API VOID MQCopyLayout						(PSPAWNINFO,PCHAR);
+LEGACY_API VOID ResizeCMD							(PSPAWNINFO,PCHAR);
 LEGACY_API VOID EngineCommand                       (PSPAWNINFO,PCHAR);
 LEGACY_API VOID PluginCmdSort                       (VOID);
 #endif
