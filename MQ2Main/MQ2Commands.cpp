@@ -5536,7 +5536,7 @@ void MQCopyLayout(PSPAWNINFO pChar, PCHAR szLine)
 	sprintf_s(szTemp, "/tempcopylayout %s", szLine);
 	HideDoCommand((PSPAWNINFO)pLocalPlayer, szTemp, true);
 }
-void SetEqWindowPos(HWND hWnd, DWORD flag)
+void SetEqWindowPos(HWND hWnd, int x, int y, int width, int height, DWORD flag)
 {
 	if (!IsWindow(hWnd)) return;
 
@@ -5548,11 +5548,25 @@ void SetEqWindowPos(HWND hWnd, DWORD flag)
 			keybd_event(VK_MENU, 0, KEYEVENTF_EXTENDEDKEY | 0, 0);
 		}
 	}
-	if (flag == -1)
+	if (flag == SW_SHOWNORMAL)
+	{
+		if ((x == -1 || y == -1) && width && height)
+		{
+			SetWindowPos(hWnd, HWND_NOTOPMOST, 0, 0, width, height, SWP_ASYNCWINDOWPOS | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOREPOSITION);
+		}
+		else if (x!=-1 && y!=-1 && width && height)
+		{
+			SetWindowPos(hWnd, HWND_NOTOPMOST, x, y, width, height, SWP_ASYNCWINDOWPOS | SWP_NOACTIVATE);
+		}
+		else
+		{
+			SetWindowPos(hWnd, HWND_NOTOPMOST, x, y, 0, 0, SWP_ASYNCWINDOWPOS | SWP_NOACTIVATE | SWP_NOSIZE);
+		}
+	} 
+	else if (flag == -1)
 	{
 		if (IsIconic(hWnd))
 		{
-			//SetWindowPos(hWnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_ASYNCWINDOWPOS | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOREPOSITION);
 			ShowWindow(hWnd, SW_RESTORE);
 		}
 		else {
@@ -5589,19 +5603,52 @@ void SetEqWindowPos(HWND hWnd, DWORD flag)
 void ResizeCMD(PSPAWNINFO pChar, PCHAR szLine)
 {
 	CHAR szArg[MAX_STRING] = { 0 };
+	CHAR szX[MAX_STRING] = { 0 };
+	CHAR szY[MAX_STRING] = { 0 };
+	CHAR szWidth[MAX_STRING] = { 0 };
+	CHAR szHeight[MAX_STRING] = { 0 };
 	GetArg(szArg, szLine, 1);
+	GetArg(szX, szLine, 2);
+	GetArg(szY, szLine, 3);
+	GetArg(szWidth, szLine, 4);
+	GetArg(szHeight, szLine, 5);
+	int width = 0;
+	int height = 0;
+	int x = -1;
+	int y = -1;
 	DWORD flag = -1;
 	if (!_stricmp(szArg, "min"))
 	{
 		flag = SW_MINIMIZE;
-	} else if (!_stricmp(szArg, "max"))
+	}
+	else if (!_stricmp(szArg, "max"))
 	{
 		flag = SW_MAXIMIZE;
-	} else if (!_stricmp(szArg, "restore"))
+	}
+	else if (!_stricmp(szArg, "restore"))
 	{
 		flag = SW_RESTORE;
 	}
-
+	else if (!_stricmp(szArg, "size"))
+	{
+		flag = SW_SHOWNORMAL;
+		width = atoi(szX);
+		height = atoi(szY);
+	}
+	else if (!_stricmp(szArg, "pos"))
+	{
+		flag = SW_SHOWNORMAL;
+		x = atoi(szX);
+		y = atoi(szY);
+	}
+	else if (!_stricmp(szArg, "all"))
+	{
+		flag = SW_SHOWNORMAL;
+		x = atoi(szX);
+		y = atoi(szY);
+		width = atoi(szWidth);
+		height = atoi(szHeight);
+	}
 	HWND EQhWnd = 0;
 	DWORD lReturn = GetCurrentProcessId();
 	DWORD pid = lReturn;
@@ -5609,7 +5656,7 @@ void ResizeCMD(PSPAWNINFO pChar, PCHAR szLine)
 	BOOL ret = EnumWindows(EnumWindowsProc,(LPARAM)&lReturn);
 	if(lReturn!=pid) {
 		EQhWnd = (HWND)lReturn;
-		SetEqWindowPos(EQhWnd, flag);
+		SetEqWindowPos(EQhWnd, x, y, width, height, flag);
 	}	
 	else
 	{
@@ -5617,7 +5664,7 @@ void ResizeCMD(PSPAWNINFO pChar, PCHAR szLine)
 			EQhWnd = EQW_GetDisplayWindow();
 		else
 			EQhWnd = *(HWND*)EQADDR_HWND;
-		SetEqWindowPos(EQhWnd, flag);
+		SetEqWindowPos(EQhWnd, x, y, width, height, flag);
 	}
 }
 #endif

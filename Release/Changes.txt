@@ -1,3 +1,16 @@
+Jul 22 2021
+- Fixed a crash in _SPELL
+- Added /resize command - Idea cred: MacQ
+- Usage: /resize min
+- Usage: /resize max
+- Usage: /resize restore
+- Usage: /resize pos 100 100
+	Will move the window to x 100 and y 100
+- Usage: /resize size 800 640
+	Will resize it to 800x640
+- Usage: /resize all 100 100 800 640
+	will move window to x 100 and y 100 and size it to 800x640
+-
 Jul 21 2021
 - Updated for LIVE
 -
