@@ -5548,7 +5548,31 @@ void SetEqWindowPos(HWND hWnd, int x, int y, int width, int height, DWORD flag)
 			keybd_event(VK_MENU, 0, KEYEVENTF_EXTENDEDKEY | 0, 0);
 		}
 	}
-	if (flag == SW_SHOWNORMAL)
+	//work in progress.
+	if (flag == SW_SHOWMAXIMIZED)
+	{
+		LONG lStyle = GetWindowLong(hWnd, GWL_STYLE);
+		if (lStyle & WS_CAPTION)
+		{
+			lStyle &= ~(WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU);
+			SetWindowLong(hWnd, GWL_STYLE, lStyle);
+
+			LONG lExStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
+			lExStyle &= ~(WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE);
+			SetWindowLong(hWnd, GWL_EXSTYLE, lExStyle);
+		}
+		else
+		{
+			lStyle &= WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU;
+			SetWindowLong(hWnd, GWL_STYLE, lStyle);
+
+			LONG lExStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
+			lExStyle &= WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE;
+			SetWindowLong(hWnd, GWL_EXSTYLE, lExStyle);
+		}
+		SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER);
+	}
+	else if (flag == SW_SHOWNORMAL)
 	{
 		if ((x == -1 || y == -1) && width && height)
 		{
@@ -5629,6 +5653,10 @@ void ResizeCMD(PSPAWNINFO pChar, PCHAR szLine)
 	{
 		flag = SW_RESTORE;
 	}
+	//else if (!_stricmp(szArg, "borderless"))
+	//{
+	//	flag = SW_SHOWMAXIMIZED;
+	//}
 	else if (!_stricmp(szArg, "size"))
 	{
 		flag = SW_SHOWNORMAL;

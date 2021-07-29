@@ -1,3 +1,6 @@
+Jul 29 2021
+- Updated for TEST
+-
 Jul 22 2021
 - Fixed a crash in _SPELL
 - Added /resize command - Idea cred: MacQ
