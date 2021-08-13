@@ -450,6 +450,7 @@ DETOUR_TRAMPOLINE_EMPTY(int memcheck4_tramp(unsigned char *buffer, int count, st
 
 VOID HookInlineChecks(BOOL Patch)
 {
+#if !defined(TEST)
 	int i;
 #ifndef ISXEQ
 	DWORD oldperm, tmp;
@@ -458,12 +459,8 @@ VOID HookInlineChecks(BOOL Patch)
 
 	DWORD cmps[] = { __AC1 + 6 };
 
-	DWORD cmps2[] = { __AC2,
-		__AC3,
-		__AC4,
-		__AC5,
-		__AC6,
-		__AC7 };
+	DWORD cmps2[] = { __AC2, __AC3, __AC4, __AC5, __AC6, __AC7 };
+
 
 	int len2[] = { 6, 6, 6, 6, 6, 6 };
 
@@ -526,6 +523,7 @@ VOID HookInlineChecks(BOOL Patch)
 #endif
 		}
 	}
+#endif
 }
 
 #ifndef ISXEQ
@@ -749,7 +747,7 @@ int __cdecl memcheck1(unsigned char *buffer, int count, struct mckey key)
 	//                or      edi, 0FFFFFFFFh
 	//                cmp     [ebp+arg_8], 0
 	int creset = memcheck5(count);
-	if (key.x != 0 && creset==__EncryptPad5_x) {
+	if (key.x != 0 && (creset ==__EncryptPad4_x || creset==0)) {
 		//                mov     esi, 0FFh
 		//                mov     ecx, 0FFFFFFh
 		//                jz      short loc_4C3978

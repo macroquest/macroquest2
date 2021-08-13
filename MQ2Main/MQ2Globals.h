@@ -826,6 +826,7 @@ namespace MQ2Globals
 	EQLIB_VAR DWORD __EncryptPad2;
 	EQLIB_VAR DWORD __EncryptPad3;
 	EQLIB_VAR DWORD __EncryptPad4;
+	#if !defined(TEST)
 	EQLIB_VAR DWORD __EncryptPad5;
 	EQLIB_VAR DWORD __AC1;
 	EQLIB_VAR DWORD __AC2;
@@ -834,6 +835,7 @@ namespace MQ2Globals
 	EQLIB_VAR DWORD __AC5;
 	EQLIB_VAR DWORD __AC6;
 	EQLIB_VAR DWORD __AC7;
+	#endif
 	EQLIB_VAR DWORD __EP1_Data;
 	EQLIB_VAR DWORD DI8__Main;
 	EQLIB_VAR DWORD DI8__Keyboard;

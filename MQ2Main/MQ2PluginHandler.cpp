@@ -533,26 +533,26 @@ VOID PluginsSetGameState(DWORD GameState)
             AutoExec=true;
             LoadCfgFile("AutoExec",false);
         }
-        if (CharSelect)
-        {
-            CharSelect=false;
-            CHAR szBuffer[MAX_STRING]={0};
+		if (CharSelect)
+		{
+			CharSelect = false;
+			CHAR szBuffer[MAX_STRING] = { 0 };
 
-DebugSpew("PluginsSetGameState( %s server)",EQADDR_SERVERNAME);
-            if (PCHARINFO pCharInfo=GetCharInfo())
-            {
-DebugSpew("PluginsSetGameState( %s name)",pCharInfo->Name);
-                sprintf_s(szBuffer,"%s_%s",EQADDR_SERVERNAME,pCharInfo->Name);
-                LoadCfgFile(szBuffer,false);
-            }
-            if (PCHARINFO2 pCharInfo2=GetCharInfo2())
-            {
-DebugSpew("PluginsSetGameState( %d class)",pCharInfo2->Class);
-                sprintf_s(szBuffer,"%s",GetClassDesc(pCharInfo2->Class));
-                LoadCfgFile(szBuffer,false);
+			DebugSpew("PluginsSetGameState( %s server)", EQADDR_SERVERNAME);
+			if (PCHARINFO pCharInfo = GetCharInfo())
+			{
+				DebugSpew("PluginsSetGameState( %s name)", pCharInfo->Name);
+				sprintf_s(szBuffer, "%s_%s", EQADDR_SERVERNAME, pCharInfo->Name);
+				LoadCfgFile(szBuffer, false);
+			}
+			if (PCHARINFO2 pCharInfo2 = GetCharInfo2())
+			{
+				DebugSpew("PluginsSetGameState( %d class)", pCharInfo2->Class);
+				sprintf_s(szBuffer, "%s", GetClassDesc(pCharInfo2->Class));
+				LoadCfgFile(szBuffer, false);
 				IC_ClassLvl(pCharInfo2->Class, pCharInfo2->Level, GetCurrentProcessId());
-            }
-        }
+			}
+		}
     }
     else if (GameState==GAMESTATE_CHARSELECT)
     {
