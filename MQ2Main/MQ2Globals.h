@@ -826,7 +826,7 @@ namespace MQ2Globals
 	EQLIB_VAR DWORD __EncryptPad2;
 	EQLIB_VAR DWORD __EncryptPad3;
 	EQLIB_VAR DWORD __EncryptPad4;
-	#if !defined(TEST)
+	#if defined(ROF2EMU) || defined(UFEMU)
 	EQLIB_VAR DWORD __EncryptPad5;
 	EQLIB_VAR DWORD __AC1;
 	EQLIB_VAR DWORD __AC2;

@@ -71,7 +71,7 @@ std::vector<std::string> XmlFiles;
 int WinCount = 0;
 const int FINDWINDOW_CHECKBOXCOLUMN = 6;
 
-PCHAR szClickNotification[] = { 
+PCHAR szClickNotification[] = {
 	"leftmouse",        // 0
 	"leftmouseup",      // 1
 	"leftmouseheld",    // 2
@@ -335,7 +335,7 @@ public:
 												{
 													int sellprice = ((EQ_Item*)ptr.pObject)->ValueSellMerchant((float)1.05, 1);
 													FormatMoneyString(szTemp3, MAX_STRING, sellprice);
-													
+
 													/*DWORD cp = sellprice;
 													DWORD sp = cp / 10; cp = cp % 10;
 													DWORD gp = sp / 10; sp = sp % 10;
@@ -641,7 +641,7 @@ public:
 								if (pItem->Cost > 0)
 								{
 									int sellprice = ((EQ_Item*)pCont)->ValueSellMerchant((float)1.05, 1);
-									FormatMoneyString(szTemp3, MAX_STRING, sellprice,GetMoneyFromStringFormat::Short);		
+									FormatMoneyString(szTemp3, MAX_STRING, sellprice,GetMoneyFromStringFormat::Short);
 								}
 								else
 								{
@@ -723,7 +723,7 @@ public:
 							pNLMarkedButton->SetVisible(false);
 					if (pCountLabel)
 							pCountLabel->SetVisible(false);
-					
+
 					if (CListWnd* list = (CListWnd*)((CXWnd*)this)->GetChildItem("FIW_ItemList"))
 					{
 						list->Selected = 0xFF004040;
@@ -738,7 +738,7 @@ public:
 							pNLMarkedButton->SetVisible(true);
 					if (pCountLabel)
 							pCountLabel->SetVisible(true);
-					
+
 					if (CListWnd* list = (CListWnd*)((CXWnd*)this)->GetChildItem("FIW_ItemList"))
 					{
 						if (list->Columns.Count > FINDWINDOW_CHECKBOXCOLUMN)
@@ -773,7 +773,7 @@ public:
 			}
 		}
 		else if (uiMessage == XWM_RCLICK)
-		{	
+		{
 			if (CButtonWnd* FIW_DestroyItem = (CButtonWnd*)((CXWnd*)this)->GetChildItem("FIW_DestroyItem"))
 			{
 				if ((CButtonWnd*)pWnd == FIW_DestroyItem || (CButtonWnd*)pWnd == pNLMarkedButton || (CLabelWnd*)pWnd == pCountLabel)
@@ -1427,7 +1427,7 @@ void ReloadUI(PSPAWNINFO pChar, PCHAR szLine);
 int ListWindows(int argc, char *argv[]);
 int WndNotify(int argc, char *argv[]);
 int ItemNotify(int argc, char *argv[]);
-int ListItemSlots(int argc, char *argv[]); 
+int ListItemSlots(int argc, char *argv[]);
 #endif
 
 #ifndef ISXEQ_LEGACY
@@ -1566,7 +1566,7 @@ void AddAutoBankMenu()
 						pCountLabel->SetLeftAnchoredToLeft(false);
 						pCountLabel->SetRightAnchoredToLeft(false);
 						pCountLabel->SetTopAnchoredToTop(false);
-						
+
 						pCountLabel->SetTopOffset(20);
 						pCountLabel->SetBottomOffset(0);
 						pCountLabel->SetLeftOffset(220);
@@ -1780,9 +1780,9 @@ void InitializeMQ2Windows()
 	AddSlotArray(bazaar, 80, 7000);
 	AddSlotArray(inspect, 31, 8000);
 #undef AddSlotArray
-	
+
 	EzDetourwName(CBankWnd__WndNotification, &CSidlInitHook::CBankWnd__WndNotification_Detour, &CSidlInitHook::CBankWnd__WndNotification_Tramp, "CBankWnd__WndNotification");
-	
+
 #if !defined(ROF2EMU) && !defined(UFEMU)
 	EzDetourwName(CBarterSearchWnd__WndNotification, &CSidlInitHook::CBarterSearchWnd__WndNotification_Detour, &CSidlInitHook::CBarterSearchWnd__WndNotification_Tramp, "CBarterSearchWnd__WndNotification");
 	EzDetourwName(CBarterSearchWnd__UpdateInventoryList, &CSidlInitHook::CBarterSearchWnd__UpdateInventoryList_Detour, &CSidlInitHook::CBarterSearchWnd__UpdateInventoryList_Tramp, "CBarterSearchWnd__UpdateInventoryList");
@@ -1790,7 +1790,7 @@ void InitializeMQ2Windows()
 	EzDetourwName(CFindItemWnd__WndNotification, &CSidlInitHook::CFindItemWnd__WndNotification_Detour, &CSidlInitHook::CFindItemWnd__WndNotification_Tramp, "CFindItemWnd__WndNotification");
 	EzDetourwName(CFindItemWnd__Update, &CSidlInitHook::CFindItemWnd__Update_Detour, &CSidlInitHook::CFindItemWnd__Update_Tramp, "CFindItemWnd__Update");
 #endif
-	
+
 	EzDetourwName(CXMLSOMDocumentBase__XMLRead, &CXMLSOMDocumentBaseHook::XMLRead, &CXMLSOMDocumentBaseHook::XMLRead_Trampoline, "CXMLSOMDocumentBase__XMLRead");
 	EzDetourwName(CSidlScreenWnd__Init1, &CSidlInitHook::Init_Detour, &CSidlInitHook::Init_Trampoline, "CSidlScreenWnd__Init1");
 	EzDetourwName(CTargetWnd__WndNotification, &CSidlInitHook::CTargetWnd__WndNotification_Detour, &CSidlInitHook::CTargetWnd__WndNotification_Tramp, "CTargetWnd__WndNotification");
@@ -1816,7 +1816,7 @@ void InitializeMQ2Windows()
 	pISInterface->AddCommand("EQNotify", WndNotify);
 	pISInterface->AddCommand("EQItemNotify", ItemNotify);
 	pISInterface->AddCommand("EQItemSlots", ListItemSlots);
-#endif 
+#endif
 
 	if (pWndMgr)
 	{
@@ -1871,8 +1871,8 @@ void ShutdownMQ2Windows()
     pISInterface->RemoveCommand("EQNotify");
     pISInterface->RemoveCommand("EQItemNotify");
     pISInterface->RemoveCommand("EQItemSlots");
-#endif 
-	
+#endif
+
 #if !defined(ROF2EMU) && !defined(UFEMU)
     RemoveDetour(CFindItemWnd__WndNotification);
     RemoveDetour(CFindItemWnd__Update);
@@ -1891,7 +1891,7 @@ void ShutdownMQ2Windows()
 	RemoveDetour(__DoesFileExist);
 	RemoveDetour(CMemoryMappedFile__SetFile);
 	RemoveDetour(__eqgraphics_fopen);
-	
+
 	// for testing notifications, only for debugging
 	// dont leave active for release
 	//RemoveDetour(CChatWindow__WndNotification);
@@ -2430,9 +2430,9 @@ bool SendListSelect(PCHAR WindowName, PCHAR ScreenID, DWORD Value)
 	{
 		//							 Parent      TabWindow        PageTemplate
 		pWnd = (CXWnd*)FindMQ2Window(WindowName)->GetFirstChildWnd()->GetFirstChildWnd();
-		while (pWnd) 
+		while (pWnd)
 		{
-			if (((PCSIDLWND)pWnd)->IsVisible()) 
+			if (((PCSIDLWND)pWnd)->IsVisible())
 			{
 				break;
 			}
@@ -2458,7 +2458,7 @@ bool SendListSelect(PCHAR WindowName, PCHAR ScreenID, DWORD Value)
 		if (pList->GetType() == UI_Listbox)
         {
 			((CListWnd*)pList)->SetCurSel(Value);
-			int index = ((CListWnd*)pList)->GetCurSel();		
+			int index = ((CListWnd*)pList)->GetCurSel();
 			((CListWnd*)pList)->EnsureVisible(index);
 			CXRect rect = ((CListWnd*)pList)->GetItemRect(index, 0);
             CXPoint pt = rect.CenterPoint();
@@ -2922,7 +2922,7 @@ int ListWindows(int argc, char *argv[])
     RETURN(0);
 }
 
-PCHAR szWndNotification[] = { 
+PCHAR szWndNotification[] = {
 	0,                        // 0
 	"leftmouse",              // 1
 	"leftmouseup",            // 2
@@ -2953,7 +2953,7 @@ PCHAR szWndNotification[] = {
 	"link",                   // 27
 	0,                        // 28
 	"resetdefaultposition",   // 29
-}; 
+};
 
 #ifndef ISXEQ
 void WndNotify(PSPAWNINFO pChar, PCHAR szLine)
@@ -2964,7 +2964,7 @@ int WndNotify(int argc, char* argv[])
     PSPAWNINFO pChar = (PSPAWNINFO)pLocalPlayer;
 #endif
 	unsigned long Data = 0;
-#ifndef ISXEQ 
+#ifndef ISXEQ
 	CHAR szArg1[MAX_STRING] = { 0 };
 	CHAR szArg2[MAX_STRING] = { 0 };
 	CHAR szArg3[MAX_STRING] = { 0 };
@@ -2996,7 +2996,7 @@ int WndNotify(int argc, char* argv[])
 	char* szArg2 = argv[2];
 	char* szArg3 = argv[3];
 	char* szArg4 = argv[4];
-#endif 
+#endif
 
 	if (!_stricmp(szArg2, "menuselect"))
 	{
@@ -3094,7 +3094,7 @@ int WndNotify(int argc, char* argv[])
 
 		SendTabSelect(szArg1, szArg2, Data - 1);
         RETURN(0);
-    } 
+    }
 
 	if (Data == 0 && SendWndClick(szArg1, szArg2, szArg3))
 	{
@@ -3175,7 +3175,7 @@ VOID ItemNotify(PSPAWNINFO pChar, PCHAR szLine)
     GetArg(szArg1, szLine, 1);
     GetArg(szArg2, szLine, 2);
     GetArg(szArg3, szLine, 3);
-    GetArg(szArg4, szLine, 4); 
+    GetArg(szArg4, szLine, 4);
 
     if (!szArg2[0])
     {
@@ -3217,7 +3217,7 @@ int ItemNotify(int argc, char *argv[])
     ItemContainerInstance type = eItemContainerInvalid;
 
 	if (!_stricmp(szArg1, "in"))
-    { 
+    {
         if (!szArg4[0])
         {
             WriteChatColor("Syntax: /itemnotify in <bag slot> <slot # in bag> <notification>");
@@ -3559,7 +3559,11 @@ type = eItemContainerSharedBank;
 				}
 			}
 			if(type!=eItemContainerInvalid)
-				pSlot = (EQINVSLOT*)pInvSlotMgr->FindInvSlot(invslot,-1, type, false);
+#if defined(ROF2EMU) || defined(UFEMU)
+				pSlot = (EQINVSLOT*)pInvSlotMgr->FindInvSlot(invslot);
+#else
+				pSlot = (EQINVSLOT*)pInvSlotMgr->FindInvSlot(invslot, -1, type, false);
+#endif
         }
     }
 	if (szArg1[0] == '0')
@@ -4053,7 +4057,7 @@ void AutoBankPulse()
 		bAutoInventoryInProgress = false;
 		gStartAutoBanking = false;
 		WriteChatf("\ay[Autoinventory Finished.]\ax");
-	}	
+	}
 	else if (bAutoBankInProgress)
 	{
 		if (gAutoBankButton && gAutoBankButton->Checked)
@@ -4062,5 +4066,5 @@ void AutoBankPulse()
 		bAutoBankInProgress = false;
 		gStartAutoBanking = false;
 		WriteChatf("\ay[AutoBank Finished.]\ax");
-	}	
+	}
 }

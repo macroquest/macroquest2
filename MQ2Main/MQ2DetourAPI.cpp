@@ -450,7 +450,7 @@ DETOUR_TRAMPOLINE_EMPTY(int memcheck4_tramp(unsigned char *buffer, int count, st
 
 VOID HookInlineChecks(BOOL Patch)
 {
-#if !defined(TEST)
+#if defined(ROF2EMU) || defined(UFEMU)
 	int i;
 #ifndef ISXEQ
 	DWORD oldperm, tmp;
