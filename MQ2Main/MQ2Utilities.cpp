@@ -9985,7 +9985,7 @@ BOOL PickupItem(ItemContainerInstance type, PCONTENTS pItem)
 
 			ItemGlobalIndex To;
 			To.Location = eItemContainerPossessions;
-			To.Index.Slot1 = eItemContainerCursor;
+			To.Index.Slot1 = IS_HELD;
 			To.Index.Slot2 = -1;
 			To.Index.Slot3 = -1;
 			pInvSlotMgr->MoveItem(&From, &To, true, true, false, false);
@@ -10067,7 +10067,7 @@ BOOL PickupItem(ItemContainerInstance type, PCONTENTS pItem)
 
 				ItemGlobalIndex To;
 				To.Location = eItemContainerPossessions;
-				To.Index.Slot1 = eItemContainerCursor;
+				To.Index.Slot1 = IS_HELD;
 				To.Index.Slot2 = -1;
 				To.Index.Slot3 = -1;
 				PCHARINFO2 pChar2 = GetCharInfo2();
@@ -10132,7 +10132,7 @@ BOOL DropItem(ItemContainerInstance type, short ToInvSlot, short ToBagSlot)
 			//just move it from cursor to the slot
 			ItemGlobalIndex From;
 			From.Location = eItemContainerPossessions;
-			From.Index.Slot1 = eItemContainerCursor;
+			From.Index.Slot1 = IS_HELD;
 			From.Index.Slot2 = -1;
 			From.Index.Slot3 = -1;
 
@@ -10174,7 +10174,7 @@ BOOL DropItem(ItemContainerInstance type, short ToInvSlot, short ToBagSlot)
 			//ok so its a slot inside a bag
 			ItemGlobalIndex From;
 			From.Location = eItemContainerPossessions;
-			From.Index.Slot1 = eItemContainerCursor;
+			From.Index.Slot1 = IS_HELD;
 			From.Index.Slot2 = -1;
 			From.Index.Slot3 = -1;
 

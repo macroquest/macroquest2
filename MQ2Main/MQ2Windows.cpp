@@ -134,7 +134,11 @@ bool PickupItemNew(PCONTENTS pCont)
 							{
 								if (CharacterBase* cbase = (CharacterBase*)&pCharInfo->CharacterBase_vftable)
 								{
-									if (pInvSlotMgr->MoveItem(&cbase->CreateItemGlobalIndex(slot1, slot2), &cbase->CreateItemGlobalIndex(eItemContainerCursor/*HELD*/), false, false))
+#if defined(LIVE)
+									if (pInvSlotMgr->MoveItem(&cbase->CreateItemGlobalIndex(slot1, slot2), &cbase->CreateItemGlobalIndex(33/*HELD*/), false, false))
+#else
+									if (pInvSlotMgr->MoveItem(&cbase->CreateItemGlobalIndex(slot1, slot2), &cbase->CreateItemGlobalIndex(34/*HELD*/), false, false))
+#endif
 									{
 										pCursorAttachment->Deactivate();
 										pCursorAttachment->AttachToCursor(NULL, NULL, 2/*ITEM*/, -1, NULL, NULL);

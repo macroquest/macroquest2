@@ -991,9 +991,11 @@ enum ItemContainerInstance
 	eItemContainerViewModIllusionKeyRingItems,//30
 	eItemContainerFamiliarKeyRingItems,
 	eItemContainerViewModFamiliarKeyRingItems,
-	eItemContainerSomethingnew,//33
-	eItemContainerCursor,//34
+	eItemContainerOverflow,//33
+	eItemContainerDragonHoard,//34 see .text:004C7517                 cmp     eax, 34 in ee dated 2019-03-12 live -eqmule
 };
+
+#define IS_HELD 34
 class ItemIndex
 {
 public:
