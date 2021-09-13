@@ -4748,7 +4748,7 @@ bool MQ2CharacterType::GETMEMBER()
 					{
 						if (GetItemFromContents(pItem)->Type == ITEMTYPE_PACK && GetItemFromContents(pItem)->SizeCapacity>Dest.DWord)
 						{
-							for (DWORD pslot = 0; pslot < (GetItemFromContents(pItem)->Slots); pslot++)
+							for (DWORD pslot = 0; pslot < (pItem->Contents.ContainedItems.Size); pslot++)
 							{
 								if (!pItem->Contents.ContainedItems.pItems || !pItem->GetContent(pslot))
 								{
@@ -8341,7 +8341,7 @@ bool MQ2ItemType::GETMEMBER()
 		Dest.Type = pIntType;
 		if (GetItemFromContents(pItem)->Type == ITEMTYPE_PACK)
 		{
-			Dest.DWord = GetItemFromContents(pItem)->Slots;
+			Dest.DWord = pItem->Contents.ContainedItems.Size;
 		}
 		return true;
 	case Open:
@@ -8358,7 +8358,7 @@ bool MQ2ItemType::GETMEMBER()
 		if (GetItemFromContents(pItem)->Type == ITEMTYPE_PACK)
 		{
 			if (pItem->Contents.ContainedItems.pItems) {
-				for (unsigned long N = 0; N < GetItemFromContents(pItem)->Slots; N++) {
+				for (unsigned long N = 0; N < pItem->Contents.ContainedItems.Size; N++) {
 					if (pItem->GetContent(N))
 						Dest.DWord++;
 				}
@@ -8412,7 +8412,7 @@ bool MQ2ItemType::GETMEMBER()
 		{
 			unsigned long N = GETNUMBER();
 			N--;
-			if (N < GetItemFromContents(pItem)->Slots)
+			if (N < pItem->Contents.ContainedItems.Size)
 			{
 				if (pItem->Contents.ContainedItems.pItems)
 					if (Dest.Ptr = pItem->GetContent(N))
@@ -11947,7 +11947,7 @@ bool MQ2CorpseType::GETMEMBER()
 		Dest.DWord = 0;
 		Dest.Type = pIntType;
 		if (pLoot->pInventoryArray)
-			for (unsigned long N = 0; N < 31; N++)
+			for (unsigned long N = 0; N < NUM_INV_SLOTS; N++)
 			{
 				if (pLoot->pInventoryArray->InventoryArray[N])
 					Dest.DWord++;
@@ -12955,7 +12955,7 @@ bool MQ2InvSlotType::GETMEMBER()
 							unsigned long nPack = (nInvSlot - 262) / 10;
 							unsigned long nSlot = (nInvSlot - 262) % 10;
 							if (PCONTENTS pPack = pChar2->pInventoryArray->Inventory.Pack[nPack])
-								if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && nSlot < GetItemFromContents(pPack)->Slots)
+								if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && nSlot < pPack->Contents.ContainedItems.Size)
 								{
 									if (pPack->Contents.ContainedItems.pItems)
 										if (Dest.Ptr = pPack->Contents.ContainedItems.pItems->Item[nSlot])
@@ -12972,7 +12972,7 @@ bool MQ2InvSlotType::GETMEMBER()
 							if (pCharInfo && pCharInfo->BankItems.Items.Size > nPack)
 								pPack = pCharInfo->BankItems.Items[nPack].pObject;
 							if (pPack)
-								if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && nSlot < GetItemFromContents(pPack)->Slots)
+								if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && nSlot < pPack->Contents.ContainedItems.Size)
 								{
 									if (pPack->Contents.ContainedItems.pItems)
 										if (Dest.Ptr = pPack->Contents.ContainedItems.pItems->Item[nSlot])
@@ -12989,7 +12989,7 @@ bool MQ2InvSlotType::GETMEMBER()
 							if (pCharInfo && pCharInfo->BankItems.Items.Size > nPack)
 								pPack = pCharInfo->BankItems.Items[nPack].pObject;
 							if (pPack)
-								if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && nSlot < GetItemFromContents(pPack)->Slots)
+								if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && nSlot < pPack->Contents.ContainedItems.Size)
 								{
 									if (pPack->Contents.ContainedItems.pItems)
 										if (Dest.Ptr = pPack->Contents.ContainedItems.pItems->Item[nSlot])

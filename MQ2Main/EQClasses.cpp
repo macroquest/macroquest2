@@ -109,9 +109,9 @@ class CScreenPieceTemplate *  CSidlManager::FindScreenPieceTemplate(char *str)
 {
     return FindScreenPieceTemplate(&CXStr(str));
 }
-void  CComboWnd::InsertChoice(char *str)
+int CComboWnd::InsertChoice(char *str)
 {
-    InsertChoice(&CXStr(str),0);
+    return InsertChoice(&CXStr(str),0);
 }
 #if !defined(ROF2EMU) && !defined(UFEMU)
 int  CListWnd::AddString(const char *Str, COLORREF Color, uint64_t Data, const CTextureAnimation *pTa, const char* TooltipStr)
@@ -4587,10 +4587,18 @@ FUNCTION_AT_ADDRESS(void  EQ_Character::DoPassageOfTime(void),EQ_Character__DoPa
 FUNCTION_AT_ADDRESS(unsigned char  EQ_Character::FindItemByClass(int,int *,int *),EQ_Character__FindItemByClass);
 #endif
 #ifdef CharacterZoneClient__FindItemByGuid_x
+#if defined(TEST)
+FUNCTION_AT_ADDRESS(VePointer<CONTENTS> CharacterZoneClient::FindItemByGuid(const EqItemGuid ItemGuid, bool bArg1, bool bArg2),CharacterZoneClient__FindItemByGuid);
+#else
 FUNCTION_AT_ADDRESS(bool CharacterZoneClient::FindItemByGuid(const EqItemGuid& ItemGuid, int *pos_slot, int *con_slot),CharacterZoneClient__FindItemByGuid);
 #endif
+#endif
 #ifdef CharacterZoneClient__FindItemByRecord_x
+#if defined(ROF2EMU) || defined(UFEMU) || defined(LIVE)
 FUNCTION_AT_ADDRESS(BYTE CharacterZoneClient::FindItemByRecord(int ItemNumber /*recordnum*/, int *pos_slot, int *con_slot, bool bReverseLookup),CharacterZoneClient__FindItemByRecord);
+#else
+FUNCTION_AT_ADDRESS(BYTE CharacterZoneClient::FindItemByRecord(int ItemNumber /*recordnum*/, int *pos_slot, int *con_slot, bool bReverseLookup, bool bArg),CharacterZoneClient__FindItemByRecord);
+#endif
 #endif
 FUNCTION_AT_VIRTUAL_ADDRESS(int CharacterZoneClient::CalculateInvisLevel(InvisibleTypes, bool bIncludeSos),0x20);
 #ifdef EQ_Character__FindItemQty_x
@@ -4696,7 +4704,11 @@ FUNCTION_AT_ADDRESS(int CharacterZoneClient::CalcAffectChange(const EQ_Spell *sp
 FUNCTION_AT_ADDRESS(int CharacterZoneClient::CalcAffectChangeGeneric(const EQ_Spell *spell, BYTE, BYTE, const EQ_Affect *, int, bool),CharacterZoneClient__CalcAffectChangeGeneric);
 #endif
 #ifdef CharacterZoneClient__GetFocusReuseMod_x
+#if defined(ROF2EMU) || defined(UFEMU) || defined(LIVE)
 FUNCTION_AT_ADDRESS(const int CharacterZoneClient::GetFocusReuseMod(const EQ_Spell *pSpell, VePointer<CONTENTS>&pOutItem),CharacterZoneClient__GetFocusReuseMod);
+#else
+FUNCTION_AT_ADDRESS(const int CharacterZoneClient::GetFocusReuseMod(const EQ_Spell *pSpell, VePointer<CONTENTS>&pOutItem, bool bArg),CharacterZoneClient__GetFocusReuseMod);
+#endif
 #endif
 #ifdef EQ_Character__GetPCSpellAffect_x
 FUNCTION_AT_ADDRESS(class EQ_Affect * EQ_Character::GetPCSpellAffect(int theaffect,int *slotnum,int *spaslot) const,EQ_Character__GetPCSpellAffect);
@@ -8289,6 +8301,9 @@ FUNCTION_AT_ADDRESS( SListWndCellEditUpdate::~SListWndCellEditUpdate(void),SList
 #ifdef CListWnd__SetColumnLabel_x
 FUNCTION_AT_ADDRESS(void CListWnd::SetColumnLabel(int Column, const CXStr &LabelStr),CListWnd__SetColumnLabel);
 #endif
+#ifdef CListWnd__SetItemOnlyDrawTexture_x
+FUNCTION_AT_ADDRESS(void CListWnd::SetItemOnlyDrawTexture(int Index, int SubIndex, bool bOnlyDrawTexture),CListWnd__SetItemOnlyDrawTexture);
+#endif
 #ifdef CXRect__CXRect1_x
 FUNCTION_AT_ADDRESS( CXRect::CXRect(void),CXRect__CXRect1);
 #endif
@@ -9060,7 +9075,7 @@ FUNCTION_AT_ADDRESS(class CXRect  CComboWnd::GetListRect(void)const ,CComboWnd__
 FUNCTION_AT_ADDRESS(void  CComboWnd::SetColors(unsigned long,unsigned long,unsigned long),CComboWnd__SetColors);
 #endif
 #ifdef CComboWnd__InsertChoice_x
-FUNCTION_AT_ADDRESS(void  CComboWnd::InsertChoice(class CXStr *, unsigned long),CComboWnd__InsertChoice);
+FUNCTION_AT_ADDRESS(int CComboWnd::InsertChoice(class CXStr *, unsigned long),CComboWnd__InsertChoice);
 #endif
 #ifdef CComboWnd__SetChoice_x
 FUNCTION_AT_ADDRESS(void  CComboWnd::SetChoice(int),CComboWnd__SetChoice);
@@ -10350,7 +10365,11 @@ FUNCTION_AT_ADDRESS(void  CharacterZoneClient::MakeMeVisible(int,bool),Character
 FUNCTION_AT_ADDRESS(int CharacterZoneClient::GetItemCountWorn(int),CharacterZoneClient__GetItemCountWorn);
 #endif
 #ifdef CharacterZoneClient__GetItemCountInInventory_x
-FUNCTION_AT_ADDRESS(int CharacterZoneClient::GetItemCountInInventory(int),CharacterZoneClient__GetItemCountInInventory);
+#if defined(ROF2EMU) || defined(UFEMU) || defined(LIVE)
+FUNCTION_AT_ADDRESS(int CharacterZoneClient::GetItemCountInInventory(int ItemID),CharacterZoneClient__GetItemCountInInventory);
+#else
+FUNCTION_AT_ADDRESS(int CharacterZoneClient::GetItemCountInInventory(int ItemID, bool bArg),CharacterZoneClient__GetItemCountInInventory);
+#endif
 #endif
 #ifdef CharacterZoneClient__GetCursorItemCount_x
 FUNCTION_AT_ADDRESS(int CharacterZoneClient::GetCursorItemCount(int),CharacterZoneClient__GetCursorItemCount);
@@ -10375,7 +10394,11 @@ FUNCTION_AT_ADDRESS(bool PcZoneClient::HasAlternateAbility(int aaindex, int *, b
 #endif
 #endif
 #ifdef PcZoneClient__GetItemByID_x
+#if defined(ROF2EMU) || defined(UFEMU) || defined(LIVE)
 FUNCTION_AT_ADDRESS(PCONTENTS * PcZoneClient::GetItemByID(PCONTENTS *contOut, int itemid, ItemIndex */*out*/), PcZoneClient__GetItemByID);
+#else
+FUNCTION_AT_ADDRESS(PCONTENTS * PcZoneClient::GetItemByID(PCONTENTS *contOut, int itemid, ItemIndex */*out*/, bool bArg), PcZoneClient__GetItemByID);
+#endif
 #endif
 #ifdef PcZoneClient__GetItemByItemClass_x
 FUNCTION_AT_ADDRESS(PCONTENTS * PcZoneClient::GetItemByItemClass(PCONTENTS *contOut, int itemclass, ItemIndex */*out*/), PcZoneClient__GetItemByItemClass);

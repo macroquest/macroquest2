@@ -7564,7 +7564,7 @@ PCONTENTS GetItemContentsByName(CHAR *ItemName)
 			for (unsigned long nPack = 0; nPack < NUM_BAG_SLOTS; nPack++) {
 				if (PCONTENTS pPack = pChar2->pInventoryArray->Inventory.Pack[nPack]) {
 					if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && pPack->Contents.ContainedItems.pItems) {
-						for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+						for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 							if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 								if (!_stricmp(ItemName, GetItemFromContents(pItem)->Name)) {
 									return pItem;
@@ -8248,7 +8248,7 @@ PCONTENTS FindItemBySlot(short InvSlot, short BagSlot, ItemContainerInstance loc
 			for (unsigned long nPack = 0; nPack < NUM_BAG_SLOTS; nPack++) {
 				if (PCONTENTS pPack = pChar2->pInventoryArray->Inventory.Pack[nPack]) {
 					if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && pPack->Contents.ContainedItems.pItems) {
-						for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+						for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 							if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 								if (pItem->GetGlobalIndex().Index.Slot1 == InvSlot && pItem->GetGlobalIndex().Index.Slot2 == BagSlot) {
 									return pItem;
@@ -8277,7 +8277,7 @@ PCONTENTS FindItemBySlot(short InvSlot, short BagSlot, ItemContainerInstance loc
 			for (unsigned long nPack = 0; nPack < pChar->BankItems.Items.Size; nPack++) {
 				if (PCONTENTS pPack = pChar->BankItems.Items[nPack].pObject) {
 					if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && pPack->Contents.ContainedItems.pItems) {
-						for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+						for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 							if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 								if (pItem->GetGlobalIndex().Index.Slot1 == InvSlot && pItem->GetGlobalIndex().Index.Slot2 == BagSlot) {
 									return pItem;
@@ -8306,7 +8306,7 @@ PCONTENTS FindItemBySlot(short InvSlot, short BagSlot, ItemContainerInstance loc
 			for (unsigned long nPack = 0; nPack < pChar->SharedBankItems.Items.Size; nPack++) {
 				if (PCONTENTS pPack = pChar->SharedBankItems.Items[nPack].pObject) {
 					if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && pPack->Contents.ContainedItems.pItems) {
-						for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+						for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 							if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 								if (pItem->GetGlobalIndex().Index.Slot1 == InvSlot && pItem->GetGlobalIndex().Index.Slot2 == BagSlot) {
 									return pItem;
@@ -8367,7 +8367,7 @@ PCONTENTS FindItemByName(PCHAR pName, BOOL bExact)
 			}
 			else if (pItem->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
 				PCONTENTS pPack = pItem;
-				for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+				for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 					if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 						if (bExact) {
 							if (!_stricmp(Name, GetItemFromContents(pItem)->Name)) {
@@ -8457,7 +8457,7 @@ PCONTENTS FindItemByName(PCHAR pName, BOOL bExact)
 		for (unsigned long nPack = 0; nPack < NUM_BAG_SLOTS; nPack++) {
 			if (PCONTENTS pPack = pChar2->pInventoryArray->Inventory.Pack[nPack]) {
 				if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && pPack->Contents.ContainedItems.pItems) {
-					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+					for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 							if (bExact) {
 								if (!_stricmp(Name, GetItemFromContents(pItem)->Name)) {
@@ -8586,7 +8586,7 @@ PCONTENTS FindItemByID(int ItemID)
 			}
 			else if (pItem->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
 				PCONTENTS pPack = pItem;
-				for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+				for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 					if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 						if (ItemID == GetItemFromContents(pItem)->ItemNumber) {
 							return pItem;
@@ -8633,7 +8633,7 @@ PCONTENTS FindItemByID(int ItemID)
 		for (unsigned long nPack = 0; nPack < NUM_BAG_SLOTS; nPack++) {
 			if (PCONTENTS pPack = pChar2->pInventoryArray->Inventory.Pack[nPack]) {
 				if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && pPack->Contents.ContainedItems.pItems) {
-					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+					for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 							if (ItemID == GetItemFromContents(pItem)->ItemNumber) {
 								return pItem;
@@ -8750,7 +8750,7 @@ DWORD FindItemCountByName(PCHAR pName, BOOL bExact)
 			}
 			else if (pItem->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
 				PCONTENTS pPack = pItem;
-				for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+				for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 					if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 						if (bExact) {
 							if (!_stricmp(Name, GetItemFromContents(pItem)->Name)) {
@@ -8858,7 +8858,7 @@ DWORD FindItemCountByName(PCHAR pName, BOOL bExact)
 		for (unsigned long nPack = 0; nPack < NUM_BAG_SLOTS; nPack++) {
 			if (PCONTENTS pPack = pChar2->pInventoryArray->Inventory.Pack[nPack]) {
 				if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && pPack->Contents.ContainedItems.pItems) {
-					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+					for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 							if (bExact) {
 								if (!_stricmp(Name, GetItemFromContents(pItem)->Name)) {
@@ -9038,7 +9038,7 @@ DWORD FindItemCountByID(int ItemID)
 			}
 			else if (pItem->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
 				PCONTENTS pPack = pItem;
-				for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+				for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 					if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 						if (ItemID == pItem->ID) {
 							if ((GetItemFromContents(pItem)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pItem)->IsStackable() != 1)) {
@@ -9100,7 +9100,7 @@ DWORD FindItemCountByID(int ItemID)
 		for (unsigned long nPack = 0; nPack < NUM_BAG_SLOTS; nPack++) {
 			if (PCONTENTS pPack = pChar2->pInventoryArray->Inventory.Pack[nPack]) {
 				if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && pPack->Contents.ContainedItems.pItems) {
-					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+					for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 							if (ItemID == pItem->ID) {
 								if ((GetItemFromContents(pItem)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pItem)->IsStackable() != 1)) {
@@ -9228,7 +9228,7 @@ PCONTENTS FindBankItemByName(char *pName,BOOL bExact)
 					}
 				}
 				else if (pPack->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
-					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+					for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 							if (bExact) {
 								if (!_stricmp(Name, GetItemFromContents(pItem)->Name)) {
@@ -9309,7 +9309,7 @@ PCONTENTS FindBankItemByName(char *pName,BOOL bExact)
 					}
 				}
 				else if (pPack->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
-					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+					for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 							if (bExact) {
 								if (!_stricmp(Name, GetItemFromContents(pItem)->Name)) {
@@ -9377,7 +9377,7 @@ PCONTENTS FindBankItemByID(int ItemID)
 					}
 				}
 				else if (pPack->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
-					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+					for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 							if (ItemID == GetItemFromContents(pItem)->ItemNumber) {
 								return pItem;
@@ -9422,7 +9422,7 @@ PCONTENTS FindBankItemByID(int ItemID)
 					}
 				}
 				else if (pPack->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
-					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+					for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 							if (ItemID == GetItemFromContents(pPack)->ItemNumber) {
 								return pPack;
@@ -9505,7 +9505,7 @@ DWORD FindBankItemCountByName(char *pName, BOOL bExact)
 					}
 				}
 				else if (pPack->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
-					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+					for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 							if (bExact) {
 								if (!_stricmp(Name, GetItemFromContents(pItem)->Name)) {
@@ -9606,7 +9606,7 @@ DWORD FindBankItemCountByName(char *pName, BOOL bExact)
 					}
 				}
 				else if (pPack->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
-					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+					for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 							if (bExact) {
 								if (!_stricmp(Name, GetItemFromContents(pItem)->Name)) {
@@ -9692,7 +9692,7 @@ DWORD FindBankItemCountByID(int ItemID)
 					}
 				}
 				else if (pPack->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
-					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+					for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 							if (ItemID == pItem->ID) {
 								if ((GetItemFromContents(pItem)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pItem)->IsStackable() != 1)) {
@@ -9747,7 +9747,7 @@ DWORD FindBankItemCountByID(int ItemID)
 					}
 				}
 				else if (pPack->Contents.ContainedItems.pItems) { // Ok it was a pack, if it has items in it lets check them
-					for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++) {
+					for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++) {
 						if (PCONTENTS pItem = pPack->GetContent(nItem)) {
 							if (ItemID == pItem->ID) {
 								if ((GetItemFromContents(pItem)->Type != ITEMTYPE_NORMAL) || (((EQ_Item*)pItem)->IsStackable() != 1)) {
@@ -11458,10 +11458,10 @@ int GetFreeInventory(int nSize)
 					if (PCONTENTS pItem = pChar2->pInventoryArray->InventoryArray[slot]) {
 						if (GetItemFromContents(pItem)->Type == ITEMTYPE_PACK && GetItemFromContents(pItem)->SizeCapacity >= nSize) {
 							if (!pItem->Contents.ContainedItems.pItems) {
-								freeslots += GetItemFromContents(pItem)->Slots;
+								freeslots += pItem->Contents.ContainedItems.Size;
 							}
 							else {
-								for (DWORD pslot = 0; pslot < (GetItemFromContents(pItem)->Slots); pslot++) {
+								for (DWORD pslot = 0; pslot < (pItem->Contents.ContainedItems.Size); pslot++) {
 									if (!pItem->GetContent(pslot)) {
 										freeslots++;
 									}
@@ -11487,10 +11487,10 @@ int GetFreeInventory(int nSize)
 					if (PCONTENTS pItem = pChar2->pInventoryArray->InventoryArray[slot]) {
 						if (GetItemFromContents(pItem)->Type == ITEMTYPE_PACK) {
 							if (!pItem->Contents.ContainedItems.pItems) {
-								freeslots += GetItemFromContents(pItem)->Slots;
+								freeslots += pItem->Contents.ContainedItems.Size;
 							}
 							else {
-								for (DWORD pslot = 0; pslot < (GetItemFromContents(pItem)->Slots); pslot++) {
+								for (DWORD pslot = 0; pslot < (pItem->Contents.ContainedItems.Size); pslot++) {
 									if (!pItem->GetContent(pslot)) {
 										freeslots++;
 									}

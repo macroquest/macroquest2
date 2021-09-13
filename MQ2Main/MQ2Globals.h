@@ -1412,6 +1412,7 @@ namespace MQ2Globals
 	EQLIB_VAR DWORD CListWnd__SetColors;
 	EQLIB_VAR DWORD CListWnd__SetColumnJustification;
 	EQLIB_VAR DWORD CListWnd__SetColumnLabel;
+	EQLIB_VAR DWORD CListWnd__SetItemOnlyDrawTexture;
 	EQLIB_VAR DWORD CListWnd__SetColumnWidth;
 	EQLIB_VAR DWORD CListWnd__SetCurSel;
 	EQLIB_VAR DWORD CListWnd__SetItemColor;

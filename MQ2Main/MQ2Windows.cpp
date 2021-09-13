@@ -114,22 +114,27 @@ bool PickupItemNew(PCONTENTS pCont)
 				{
 					int slot1 = -1;
 					int slot2 = -1;
-					bool bFound = czc->FindItemByGuid(pCont->ItemGUID, &slot1, &slot2);
-					if (bFound && slot1 > -1)
+#if defined(TEST)
+					VePointer<CONTENTS>pFound = ((CharacterZoneClient*)pPCData)->FindItemByGuid(pCont->ItemGUID);
+					if (pFound.pObject)
 					{
-						if (pCharInfo->CharacterBase_vftable)
+						slot1 = pFound.pObject->GetGlobalIndex().Index.Slot1;
+						slot2 = pFound.pObject->GetGlobalIndex().Index.Slot2;
+					}
+					if (pFound.pObject != nullptr)
+					{
+#else
+					bool bFound = czc->FindItemByGuid(pCont->ItemGUID, &slot1, &slot2);
+					if (bFound)
+					{
+#endif
+						if (slot1 > -1)
 						{
-							if (CharacterBase* cbase = (CharacterBase*)&pCharInfo->CharacterBase_vftable)
+							if (pCharInfo->CharacterBase_vftable)
 							{
-								ItemGlobalIndex IGIndex = cbase->CreateItemGlobalIndex(slot1, slot2);
-								ItemIndex IIndex;
-								IIndex.Slot1 = IGIndex.Index.Slot1;
-								IIndex.Slot2 = IGIndex.Index.Slot2;
-								IIndex.Slot3 = IGIndex.Index.Slot3;
-								VePointer<CONTENTS> Cont = ((CharacterBase*)cbase)->GetItemPossession(IIndex);
-								if (Cont.pObject != nullptr)
+								if (CharacterBase* cbase = (CharacterBase*)&pCharInfo->CharacterBase_vftable)
 								{
-								if (pInvSlotMgr->MoveItem(&cbase->CreateItemGlobalIndex(slot1, slot2), &cbase->CreateItemGlobalIndex(33/*HELD*/), false, false))
+									if (pInvSlotMgr->MoveItem(&cbase->CreateItemGlobalIndex(slot1, slot2), &cbase->CreateItemGlobalIndex(eItemContainerCursor/*HELD*/), false, false))
 									{
 										pCursorAttachment->Deactivate();
 										pCursorAttachment->AttachToCursor(NULL, NULL, 2/*ITEM*/, -1, NULL, NULL);
@@ -152,7 +157,44 @@ bool PickupItemNew(PCONTENTS pCont)
 
 int lastsel = -1;
 CCheckBoxWnd* pCheck = nullptr;
-
+class CFindItemWnd2 : public CSidlScreenWnd//, public WndEventHandler but we just add the member LastCheckTime
+{
+public:
+	/*0x230*/ UINT LastCheckTime;//from WndEventHandler
+	/*0x234*/ CComboWnd *SearchCombo0;
+	/*0x238*/ CComboWnd *SearchCombo1;
+	/*0x23c*/ int SelIndex;
+	/*0x23c*/ int SelIndex2;
+	/*0x240*/ VeArray<ItemGlobalIndex*>gi;
+	/*0x24c*/ int Unknown0x24c;
+	/*0x250*/ int Unknown0x250;
+	/*0x254*/ int Unknown0x254;
+	/*0x258*/ int Unknown0x258;
+	/*0x25c*/ int Unknown0x25c;
+	/*0x260*/ int FIW_ClassAnim;
+	/*0x264*/ CSidlScreenWnd *FIW_CharacterView;
+	/*0x268*/ CListWnd *FIW_ItemList;
+	/*0x26c*/ CButtonWnd * FIW_QueryButton;
+	/*0x270*/ CButtonWnd * FIW_RequestItemButton;
+	/*0x274*/ CButtonWnd * FIW_RequestPreviewButton;
+	/*0x278*/ CButtonWnd * FIW_Default;
+	/*0x27c*/ CButtonWnd * FIW_GrabButton;
+	/*0x280*/ CButtonWnd * FIW_HighlightButton;
+	/*0x284*/ CButtonWnd * FIW_DestroyItem;
+	/*0x288*/ CComboWnd * FIW_ItemLocationCombobox;
+	/*0x28c*/ CComboWnd * FIW_ItemSlotCombobox;
+	/*0x290*/ CComboWnd * FIW_StatSlotCombobox;
+	/*0x294*/ CComboWnd * FIW_RaceSlotCombobox;
+	/*0x298*/ CComboWnd * FIW_ClassSlotCombobox;
+	/*0x29c*/ CComboWnd * FIW_ItemTypeCombobox;
+	/*0x2a0*/ CComboWnd * FIW_ItemPrestigeCombobox;
+	/*0x2a4*/ CComboWnd * FIW_ItemAugmentCombobox;
+	/*0x2a8*/ CEditWnd * FIW_ItemNameInput;
+	/*0x2ac*/ CEditWnd * FIW_MaxLevelInput;
+	/*0x2b0*/ CEditWnd * FIW_MinLevelInput;
+	/*0x2b4*/ CEditWnd * Unknown0x2b4;
+	/*0x2B8*/
+};
 class CSidlInitHook
 {
 public:
@@ -225,6 +267,7 @@ public:
 	void CFindItemWnd__Update_Detour()
 	{
 		CFindItemWnd* pFIWnd = (CFindItemWnd*)this;
+		CFindItemWnd2* pFIWnd2 = (CFindItemWnd2*)this;
 		CFindItemWnd__Update_Tramp();
 
 		CListWnd* list = (CListWnd*)pFIWnd->GetChildItem("FIW_ItemList");
@@ -3850,7 +3893,7 @@ void AutoBankPulse()
 					{
 						if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && pPack->Contents.ContainedItems.pItems)
 						{
-							for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++)
+							for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++)
 							{
 								if (PCONTENTS pCont = pPack->GetContent(nItem))
 								{
@@ -3938,7 +3981,7 @@ void AutoBankPulse()
 					{
 						if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && pPack->Contents.ContainedItems.pItems)
 						{
-							for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++)
+							for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++)
 							{
 								if (PCONTENTS pCont = pPack->GetContent(nItem))
 								{

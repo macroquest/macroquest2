@@ -32,6 +32,7 @@ CHAR ConvertFrom[2048] = { 0 };
 CHAR ConvertTo[2048] = { 0 };
 bool bDisabledComparetip = false;
 bool gCompareTip = false;
+bool gDetourTooltip = false;
 bool gLootButton = true;
 bool gLucyButton = true;
 typedef struct _ButtonInfo
@@ -1782,33 +1783,61 @@ public:
 		return AboutToShow_Trampoline();
 	}
 
-	int CInvSlotWnd_DrawTooltipTramp(const CXWnd *pwnd) const;
-	int CInvSlotWnd_DrawTooltipDetour(const CXWnd *pwnd) const
+	int CXWnd_DrawTooltipTramp(const CXWnd *pwnd) const;
+	int CXWnd_DrawTooltipDetour(const CXWnd *pwnd) const
 	{
-		if (gCompareTip)
+		//PSPELLMGR djd = (PSPELLMGR)pSpellMgr;
+		//ClientSpellManager *pss = (ClientSpellManager*)pSpellMgr;
+		//PCXSTR str = ((CXWnd *)pwnd)->CGetWindowText();
+		EQUIStructs::UIType type = ((CXWnd *)pwnd)->GetType();
+		PEQLOOTWINDOW pl = (PEQLOOTWINDOW)pLootWnd;
+		
+		//WriteChatf("%x - %x type = %d", pInventoryWnd, ((PCSIDLWND)pwnd)->GetParentWindow(), type);
+		if (gCompareTip && type==UI_InvSlot)
 		{
 			if (CInvSlotWnd*wnd = (CInvSlotWnd*)this)
 			{
-				PCONTENTS pCont = 0;
-
-				if (wnd->pEQInvSlot)
+				type = ((CXWnd*)wnd)->GetType();
+				if (type == UI_InvSlot)
 				{
-					wnd->pEQInvSlot->GetItemBase(&pCont);
-				}
+					PCONTENTS pCont = 0;
 
-				if (pCont && pCont != pOldCont)
-				{
-					pOldCont = pCont;
-
-					if (PITEMINFO pItem = GetItemFromContents(pCont))
+					if (wnd->pEQInvSlot && wnd->pEQInvSlot->pInvSlotWnd)
 					{
-						if (pCompareTipWnd && pCompareTipWnd->Display)
+						/*ItemGlobalIndex gi;
+						gi.Location = wnd->pEQInvSlot->pInvSlotWnd->ICLocation;
+						gi.Index.Slot1 = wnd->pEQInvSlot->pInvSlotWnd->iIndex.Slot1;
+						gi.Index.Slot2 = wnd->pEQInvSlot->pInvSlotWnd->iIndex.Slot2;
+						gi.Index.Slot3 = wnd->pEQInvSlot->pInvSlotWnd->iIndex.Slot3;
+						if (PCHARINFO pCharInfo = GetCharInfo())
 						{
-							if (PCONTENTS pEquipped = GetEquippedSlot(pCont))
+							if (CharacterBase* cb = (CharacterBase*)& pCharInfo->CharacterBase_vftable)
 							{
-								if (pCont != pEquipped)
+								VePointer<CONTENTS> ptr = cb->GetItemByGlobalIndex(gi);
+								if (ptr.pObject)
 								{
-									UpdateCompareWindow(pCont, pEquipped);
+									Sleep(0);
+									pCont = ptr.pObject;
+								}
+							}
+						}*/
+						wnd->pEQInvSlot->GetItemBase(&pCont);
+					}
+					
+					if (pCont && pCont != pOldCont)
+					{
+						pOldCont = pCont;
+
+						if (PITEMINFO pItem = GetItemFromContents(pCont))
+						{
+							if (pCompareTipWnd && pCompareTipWnd->Display)
+							{
+								if (PCONTENTS pEquipped = GetEquippedSlot(pCont))
+								{
+									if (pCont != pEquipped)
+									{
+										UpdateCompareWindow(pCont, pEquipped);
+									}
 								}
 							}
 						}
@@ -1816,14 +1845,14 @@ public:
 				}
 			}
 		}
-		return CInvSlotWnd_DrawTooltipTramp(pwnd);
+		return CXWnd_DrawTooltipTramp(pwnd);
 	}
 };
 
 ItemDisplayHook::SEffectType ItemDisplayHook::eEffectType = None;
 bool ItemDisplayHook::bNoSpellTramp = false;
 
-DETOUR_TRAMPOLINE_EMPTY(int ItemDisplayHook::CInvSlotWnd_DrawTooltipTramp(const CXWnd *pwnd) const);
+DETOUR_TRAMPOLINE_EMPTY(int ItemDisplayHook::CXWnd_DrawTooltipTramp(const CXWnd *pwnd) const);
 DETOUR_TRAMPOLINE_EMPTY(int ItemDisplayHook::WndNotification_Trampoline(CXWnd*, unsigned __int32, void*));
 DETOUR_TRAMPOLINE_EMPTY(bool ItemDisplayHook::AboutToShow_Trampoline(void));
 #if defined(ROF2EMU) || defined(UFEMU)
@@ -2641,7 +2670,9 @@ void RemoveAug(PSPAWNINFO pChar, PCHAR szLine)
 								pContsolv = ((PcZoneClient*)pPCData)->GetItemByID(&contout, ptheAug->SolventItemID, &ii);
 							#endif
 							if (!contout) {
+#if defined(LIVE)
 								pContsolv = ((PcZoneClient*)pPCData)->GetItemByItemClass(&contout, 64/*Universal Augment Solvent... aka perfect distiller...*/, &ii);
+#endif
 							}
 							if (contout) {
 								//we shouldnt do the solvent thing for removals, people who macro this can click the ok button on the confirmation window...
@@ -3309,7 +3340,7 @@ int DoIHave(PITEMINFO Item)
 				{
 					if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && pPack->Contents.ContainedItems.pItems)
 					{
-						for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++)
+						for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++)
 						{
 							if (PCONTENTS pItem = pPack->Contents.ContainedItems.pItems->Item[nItem])
 							{
@@ -3362,7 +3393,7 @@ int DoIHave(PITEMINFO Item)
 					}
 					if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && pPack->Contents.ContainedItems.pItems)
 					{
-						for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++)
+						for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++)
 						{
 							if (PCONTENTS pItem = pPack->Contents.ContainedItems.pItems->Item[nItem])
 							{
@@ -3398,7 +3429,7 @@ int DoIHave(PITEMINFO Item)
 					}
 					if (GetItemFromContents(pPack)->Type == ITEMTYPE_PACK && pPack->Contents.ContainedItems.pItems)
 					{
-						for (unsigned long nItem = 0; nItem < GetItemFromContents(pPack)->Slots; nItem++)
+						for (unsigned long nItem = 0; nItem < pPack->Contents.ContainedItems.Size; nItem++)
 						{
 							if (PCONTENTS pItem = pPack->Contents.ContainedItems.pItems->Item[nItem])
 							{
@@ -3666,8 +3697,11 @@ PLUGIN_API VOID InitializePlugin(VOID)
 	}
 
 	AddXMLFile("MQUI_CompareTipWnd.xml");
-	EzDetourwName(CInvSlotWnd__DrawTooltip, &ItemDisplayHook::CInvSlotWnd_DrawTooltipDetour, &ItemDisplayHook::CInvSlotWnd_DrawTooltipTramp,"CInvSlotWnd__DrawTooltip");
-
+	if (gCompareTip && !gDetourTooltip)
+	{
+		gDetourTooltip = true;
+		EzDetourwName(CXWnd__DrawTooltip, &ItemDisplayHook::CXWnd_DrawTooltipDetour, &ItemDisplayHook::CXWnd_DrawTooltipTramp, "CXWnd__DrawTooltip");
+	}
 	if (gGameState == GAMESTATE_INGAME)
 	{
 		ReadProfile(GetCharInfo()->Name, FALSE);
@@ -3689,7 +3723,8 @@ PLUGIN_API VOID ShutdownPlugin(VOID)
 	RemoveXMLFile("MQUI_CompareTipWnd.xml");
 
     // Remove commands, macro parameters, hooks, etc.
-	RemoveDetour(CInvSlotWnd__DrawTooltip);
+	if(gDetourTooltip)
+		RemoveDetour(CXWnd__DrawTooltip);
     RemoveDetour(CItemDisplayWnd__SetSpell);
     RemoveDetour(CItemDisplayWnd__UpdateStrings);
 	RemoveDetour(CItemDisplayWnd__AboutToShow);
@@ -3790,6 +3825,17 @@ PLUGIN_API VOID OnPulse(VOID)
 	if (GetGameState() == GAMESTATE_INGAME)
 	{
 		CreateCompareTipWnd();
+
+	}
+	if (!gCompareTip && gDetourTooltip)
+	{
+		gDetourTooltip = false;
+		RemoveDetour(CXWnd__DrawTooltip);
+	}
+	if (gCompareTip && !gDetourTooltip)
+	{
+		gDetourTooltip = true;
+		EzDetourwName(CXWnd__DrawTooltip, &ItemDisplayHook::CXWnd_DrawTooltipDetour, &ItemDisplayHook::CXWnd_DrawTooltipTramp, "CXWnd__DrawTooltip");
 	}
 }
 PLUGIN_API VOID OnBeginZone(VOID)

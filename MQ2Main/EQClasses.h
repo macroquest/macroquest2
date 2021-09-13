@@ -1823,8 +1823,8 @@ EQLIB_OBJECT class CXStr CComboWnd::GetCurChoiceText(void)const;
 EQLIB_OBJECT int CComboWnd::GetCurChoice(void)const;
 EQLIB_OBJECT int CComboWnd::GetItemCount(void);
 EQLIB_OBJECT void CComboWnd::DeleteAll(void);
-EQLIB_OBJECT void CComboWnd::InsertChoice(class CXStr *,unsigned long);
-EQLIB_OBJECT void CComboWnd::InsertChoice(char *);
+EQLIB_OBJECT int CComboWnd::InsertChoice(class CXStr *,unsigned long data);
+EQLIB_OBJECT int CComboWnd::InsertChoice(char *);
 EQLIB_OBJECT void CComboWnd::SetChoice(int);
 EQLIB_OBJECT void CComboWnd::SetColors(unsigned long,unsigned long,unsigned long);
 // virtual
@@ -2933,6 +2933,9 @@ public:
 	/*0x234*/ CComboWnd *SearchCombo0;
 	/*0x238*/ CComboWnd *SearchCombo1;
 	/*0x23c*/ int SelIndex;
+#if defined(TEST)
+	/*0x240*/ int Unknown0x240;
+#endif
 	/*0x240*/ VeArray<ItemGlobalIndex*>gi;
 	/*0x24c*/ int Unknown0x24c;
 	/*0x250*/ int Unknown0x250;
@@ -2961,7 +2964,7 @@ public:
 	/*0x2ac*/ CEditWnd * FIW_MaxLevelInput;
 	/*0x2b0*/ CEditWnd * FIW_MinLevelInput;
 	/*0x2b4*/ CEditWnd * Unknown0x2b4;
-	/*0x2B8*/
+	/*0x2C8*///test sep 7 2021
 	#if !defined(ROF2EMU) && !defined(UFEMU)
 	EQLIB_OBJECT CFindItemWnd::CFindItemWnd(CXWnd *);
 	EQLIB_OBJECT void CFindItemWnd::Update();
@@ -4695,6 +4698,7 @@ EQLIB_OBJECT void CListWnd::RemoveLine(int);
 EQLIB_OBJECT void CListWnd::RemoveString(int);
 EQLIB_OBJECT void CListWnd::SetColors(unsigned long,unsigned long,unsigned long);
 EQLIB_OBJECT void CListWnd::SetColumnJustification(int,int);
+EQLIB_OBJECT void CListWnd::SetItemOnlyDrawTexture(int Index, int SubIndex, bool bOnlyDrawTexture);
 EQLIB_OBJECT void CListWnd::SetColumnLabel(int Column, const CXStr &LabelStr);
 EQLIB_OBJECT void CListWnd::SetColumnWidth(int,int);
 EQLIB_OBJECT void CListWnd::SetCurSel(int);
@@ -9639,7 +9643,6 @@ EQLIB_OBJECT int CharacterZoneClient::CalcAffectChange(const EQ_Spell *spell, BY
 EQLIB_OBJECT int CharacterZoneClient::CalcAffectChangeGeneric(const EQ_Spell *spell, BYTE casterLevel, BYTE affextIndex, const EQ_Affect *theAffect, int EffectIndex, bool bCap = true);
 EQLIB_OBJECT void CharacterZoneClient::MakeMeVisible(int,bool);
 EQLIB_OBJECT int CharacterZoneClient::GetItemCountWorn(int);
-EQLIB_OBJECT int CharacterZoneClient::GetItemCountInInventory(int);
 EQLIB_OBJECT int CharacterZoneClient::GetCursorItemCount(int);
 EQLIB_OBJECT bool CharacterZoneClient::HasSkill(int);
 EQLIB_OBJECT EQ_Affect *CharacterZoneClient::FindAffectSlot(int SpellID, PSPAWNINFO Caster, int *slindex, bool bJustTest, int CasterLevel = -1, EQ_Affect* BuffArray = NULL, int BuffArraySize = 0);
@@ -9649,15 +9652,30 @@ EQLIB_OBJECT bool CharacterZoneClient::IsStackBlocked(const EQ_Spell *pSpell, PS
 #else
 EQLIB_OBJECT bool CharacterZoneClient::IsStackBlocked(const EQ_Spell *pSpell, PSPAWNINFO pCaster, EQ_Affect* pEffecs = NULL, int EffectsSize = 0);
 #endif
+#if defined(ROF2EMU) || defined(UFEMU) || defined(LIVE)
+EQLIB_OBJECT int CharacterZoneClient::GetItemCountInInventory(int ItemID);
+#else
+EQLIB_OBJECT int CharacterZoneClient::GetItemCountInInventory(int ItemID, bool bArg = false);
+#endif
 EQLIB_OBJECT int CharacterZoneClient::BardCastBard(const EQ_Spell* pSpell, signed int caster_class) const;
 EQLIB_OBJECT unsigned char CharacterZoneClient::GetMaxEffects(void)const;
 EQLIB_OBJECT EQ_Affect & CharacterZoneClient::GetEffect(int)const;
 EQLIB_OBJECT int CharacterZoneClient::GetOpenEffectSlot(bool bIsShortBuff, bool bIsMeleeSkill, int Index = -1);
 EQLIB_OBJECT int CharacterZoneClient::GetFirstEffectSlot(bool bIsShortBuff, bool bIsMeleeSkill);
 EQLIB_OBJECT int CharacterZoneClient::GetLastEffectSlot(bool bIsShortBuff, bool bIsMeleeSkill, bool bIsDisplay = false);
-EQLIB_OBJECT const int CharacterZoneClient::GetFocusReuseMod(const EQ_Spell *pSpell, VePointer<CONTENTS>&pOutItem);
-EQLIB_OBJECT bool CharacterZoneClient::FindItemByGuid(const EqItemGuid& ItemGuid, int *pos_slot, int *con_slot);
+#if defined(ROF2EMU) || defined(UFEMU) || defined(LIVE)
 EQLIB_OBJECT BYTE CharacterZoneClient::FindItemByRecord(int ItemNumber /*recordnum*/, int *pos_slot, int *con_slot, bool bReverseLookup);
+EQLIB_OBJECT const int CharacterZoneClient::GetFocusReuseMod(const EQ_Spell *pSpell, VePointer<CONTENTS>&pOutItem);
+#else
+EQLIB_OBJECT BYTE CharacterZoneClient::FindItemByRecord(int ItemNumber /*recordnum*/, int *pos_slot, int *con_slot, bool bReverseLookup, bool bArg = false);
+EQLIB_OBJECT const int CharacterZoneClient::GetFocusReuseMod(const EQ_Spell *pSpell, VePointer<CONTENTS>&pOutItem, bool bArg = true);
+#endif
+//FindItemByGuid is in pPCData now...maybe move it later Sep 07 2021 test exe -eqmule
+#if defined(TEST)
+EQLIB_OBJECT VePointer<CONTENTS> CharacterZoneClient::FindItemByGuid(const EqItemGuid ItemGuid, bool bArg1 = true, bool bArg2 = false);
+#else
+EQLIB_OBJECT bool CharacterZoneClient::FindItemByGuid(const EqItemGuid& ItemGuid, int *pos_slot, int *con_slot);
+#endif
 EQLIB_OBJECT int CharacterZoneClient::CalculateInvisLevel(InvisibleTypes Type, bool bIncludeSos = true);
 };
 
@@ -9913,8 +9931,12 @@ EQLIB_OBJECT int PcZoneClient::GetModCap(int index, bool bToggle=false);
 #else
 EQLIB_OBJECT int PcZoneClient::GetModCap(int index);
 #endif
-EQLIB_OBJECT void PcZoneClient::RemoveBuffEffect(int Index, int SpawnID);
+#if defined(ROF2EMU) || defined(UFEMU) || defined(LIVE)
 EQLIB_OBJECT PCONTENTS * PcZoneClient::GetItemByID(PCONTENTS *contOut, int itemid, ItemIndex *itemindex/*out*/);
+#else
+EQLIB_OBJECT PCONTENTS * PcZoneClient::GetItemByID(PCONTENTS *contOut, int itemid, ItemIndex *itemindex/*out*/, bool bArg = true);
+#endif
+EQLIB_OBJECT void PcZoneClient::RemoveBuffEffect(int Index, int SpawnID);
 EQLIB_OBJECT PCONTENTS * PcZoneClient::GetItemByItemClass(PCONTENTS *contOut, int itemclass, ItemIndex *itemindex/*out*/);
 EQLIB_OBJECT void PcZoneClient::BandolierSwap(int index);
 EQLIB_OBJECT UINT PcZoneClient::GetLinkedSpellReuseTimer(int index);

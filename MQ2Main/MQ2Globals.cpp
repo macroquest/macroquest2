@@ -1919,7 +1919,9 @@ namespace MQ2Globals
 	INITIALIZE_EQGAME_OFFSET(CInvSlot__GetItemBase);
 	INITIALIZE_EQGAME_OFFSET(CInvSlot__UpdateItem);
 
+#if defined(CInvSlotWnd__DrawTooltip_x)
 	INITIALIZE_EQGAME_OFFSET(CInvSlotWnd__DrawTooltip);
+#endif
 	INITIALIZE_EQGAME_OFFSET(CInvSlotWnd__CInvSlotWnd);
 	INITIALIZE_EQGAME_OFFSET(CInvSlotWnd__HandleLButtonUp);
 
@@ -1978,6 +1980,7 @@ namespace MQ2Globals
 	INITIALIZE_EQGAME_OFFSET(CListWnd__SetColors);
 	INITIALIZE_EQGAME_OFFSET(CListWnd__SetColumnJustification);
 	INITIALIZE_EQGAME_OFFSET(CListWnd__SetColumnLabel);
+	INITIALIZE_EQGAME_OFFSET(CListWnd__SetItemOnlyDrawTexture);
 	INITIALIZE_EQGAME_OFFSET(CListWnd__SetColumnWidth);
 	INITIALIZE_EQGAME_OFFSET(CListWnd__SetCurSel);
 	INITIALIZE_EQGAME_OFFSET(CListWnd__SetItemColor);
@@ -2338,7 +2341,9 @@ namespace MQ2Globals
 #endif
 	INITIALIZE_EQGAME_OFFSET(PcZoneClient__GetModCap);
 	INITIALIZE_EQGAME_OFFSET(PcZoneClient__GetItemByID);
+#if defined(PcZoneClient__GetItemByItemClass_x)
 	INITIALIZE_EQGAME_OFFSET(PcZoneClient__GetItemByItemClass);
+#endif
 	INITIALIZE_EQGAME_OFFSET(PcZoneClient__RemoveBuffEffect);
 	INITIALIZE_EQGAME_OFFSET(PcZoneClient__BandolierSwap);
 	INITIALIZE_EQGAME_OFFSET(PcZoneClient__GetLinkedSpellReuseTimer);
