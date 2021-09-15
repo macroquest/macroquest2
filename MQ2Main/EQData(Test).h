@@ -561,7 +561,7 @@ enum MOUSE_DATA_TYPES {
 #define NUM_RACES                       17
 #define NUM_SLOTDATA                    0x6
 #define NUM_BLOCKED_BUFFS               40
-#define NUM_BAG_SLOTS					10
+#define NUM_BAG_SLOTS					12
 
 #define EQ_EXPANSION(x)                 (1 << (x - 1))
 #define EXPANSION_RoK                   EQ_EXPANSION(1)
@@ -995,7 +995,7 @@ enum ItemContainerInstance
 	eItemContainerDragonHoard,//34 see .text:004C7517                 cmp     eax, 34 in ee dated 2019-03-12 live -eqmule
 };
 
-#define IS_HELD 34
+#define IS_HELD 35
 class ItemIndex
 {
 public:
@@ -1189,7 +1189,6 @@ typedef struct _INVENTORY {
 /*0x54*/  struct    _CONTENTS* PowerSource;
 /*0x58*/  struct    _CONTENTS* Ammo;
 /*0x5c*/  struct    _CONTENTS* Pack[NUM_BAG_SLOTS];
-/*0x84*/  struct    _CONTENTS* UnknownSlot;
 /*0x88*/  struct    _CONTENTS* Cursor;
 } INVENTORY, *PINVENTORY;
 
@@ -1211,7 +1210,7 @@ typedef struct _AALIST {
 /*0x0c*/
 } AALIST, *PAALIST;
 
-#define NUM_INV_SLOTS                   0x22
+#define NUM_INV_SLOTS                   0x24
 #define NUM_BANK_SLOTS                  0x18
 #define NUM_SHAREDBANK_SLOTS            0x06
 

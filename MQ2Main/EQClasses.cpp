@@ -4587,14 +4587,14 @@ FUNCTION_AT_ADDRESS(void  EQ_Character::DoPassageOfTime(void),EQ_Character__DoPa
 FUNCTION_AT_ADDRESS(unsigned char  EQ_Character::FindItemByClass(int,int *,int *),EQ_Character__FindItemByClass);
 #endif
 #ifdef CharacterZoneClient__FindItemByGuid_x
-#if defined(TEST)
+#if !defined(ROF2EMU) && !defined(UFEMU)
 FUNCTION_AT_ADDRESS(VePointer<CONTENTS> CharacterZoneClient::FindItemByGuid(const EqItemGuid ItemGuid, bool bArg1, bool bArg2),CharacterZoneClient__FindItemByGuid);
 #else
 FUNCTION_AT_ADDRESS(bool CharacterZoneClient::FindItemByGuid(const EqItemGuid& ItemGuid, int *pos_slot, int *con_slot),CharacterZoneClient__FindItemByGuid);
 #endif
 #endif
 #ifdef CharacterZoneClient__FindItemByRecord_x
-#if defined(ROF2EMU) || defined(UFEMU) || defined(LIVE)
+#if defined(ROF2EMU) || defined(UFEMU)
 FUNCTION_AT_ADDRESS(BYTE CharacterZoneClient::FindItemByRecord(int ItemNumber /*recordnum*/, int *pos_slot, int *con_slot, bool bReverseLookup),CharacterZoneClient__FindItemByRecord);
 #else
 FUNCTION_AT_ADDRESS(BYTE CharacterZoneClient::FindItemByRecord(int ItemNumber /*recordnum*/, int *pos_slot, int *con_slot, bool bReverseLookup, bool bArg),CharacterZoneClient__FindItemByRecord);
@@ -4704,7 +4704,7 @@ FUNCTION_AT_ADDRESS(int CharacterZoneClient::CalcAffectChange(const EQ_Spell *sp
 FUNCTION_AT_ADDRESS(int CharacterZoneClient::CalcAffectChangeGeneric(const EQ_Spell *spell, BYTE, BYTE, const EQ_Affect *, int, bool),CharacterZoneClient__CalcAffectChangeGeneric);
 #endif
 #ifdef CharacterZoneClient__GetFocusReuseMod_x
-#if defined(ROF2EMU) || defined(UFEMU) || defined(LIVE)
+#if defined(ROF2EMU) || defined(UFEMU)
 FUNCTION_AT_ADDRESS(const int CharacterZoneClient::GetFocusReuseMod(const EQ_Spell *pSpell, VePointer<CONTENTS>&pOutItem),CharacterZoneClient__GetFocusReuseMod);
 #else
 FUNCTION_AT_ADDRESS(const int CharacterZoneClient::GetFocusReuseMod(const EQ_Spell *pSpell, VePointer<CONTENTS>&pOutItem, bool bArg),CharacterZoneClient__GetFocusReuseMod);
@@ -10365,7 +10365,7 @@ FUNCTION_AT_ADDRESS(void  CharacterZoneClient::MakeMeVisible(int,bool),Character
 FUNCTION_AT_ADDRESS(int CharacterZoneClient::GetItemCountWorn(int),CharacterZoneClient__GetItemCountWorn);
 #endif
 #ifdef CharacterZoneClient__GetItemCountInInventory_x
-#if defined(ROF2EMU) || defined(UFEMU) || defined(LIVE)
+#if defined(ROF2EMU) || defined(UFEMU)
 FUNCTION_AT_ADDRESS(int CharacterZoneClient::GetItemCountInInventory(int ItemID),CharacterZoneClient__GetItemCountInInventory);
 #else
 FUNCTION_AT_ADDRESS(int CharacterZoneClient::GetItemCountInInventory(int ItemID, bool bArg),CharacterZoneClient__GetItemCountInInventory);
@@ -10394,7 +10394,7 @@ FUNCTION_AT_ADDRESS(bool PcZoneClient::HasAlternateAbility(int aaindex, int *, b
 #endif
 #endif
 #ifdef PcZoneClient__GetItemByID_x
-#if defined(ROF2EMU) || defined(UFEMU) || defined(LIVE)
+#if defined(ROF2EMU) || defined(UFEMU)
 FUNCTION_AT_ADDRESS(PCONTENTS * PcZoneClient::GetItemByID(PCONTENTS *contOut, int itemid, ItemIndex */*out*/), PcZoneClient__GetItemByID);
 #else
 FUNCTION_AT_ADDRESS(PCONTENTS * PcZoneClient::GetItemByID(PCONTENTS *contOut, int itemid, ItemIndex */*out*/, bool bArg), PcZoneClient__GetItemByID);

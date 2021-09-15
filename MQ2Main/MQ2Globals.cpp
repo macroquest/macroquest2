@@ -957,8 +957,10 @@ namespace MQ2Globals
 		"pack8",        // 30
 		"pack9",
 		"pack10",
+		"pack11",
+		"pack12",
 		"cursor",
-		NULL            // 31
+		NULL            // 36
 	};
 
 	PCHAR szExpansions[] = {

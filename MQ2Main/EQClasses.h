@@ -2929,20 +2929,19 @@ EQLIB_OBJECT void CPlayerCustomizationWnd::ShowButtonGroup(int,bool);
 class CFindItemWnd : public CSidlScreenWnd//, public WndEventHandler but we just add the member LastCheckTime
 {
 public:
-	/*0x230*/ UINT LastCheckTime;//from WndEventHandler
-	/*0x234*/ CComboWnd *SearchCombo0;
-	/*0x238*/ CComboWnd *SearchCombo1;
-	/*0x23c*/ int SelIndex;
-#if defined(TEST)
-	/*0x240*/ int Unknown0x240;
-#endif
-	/*0x240*/ VeArray<ItemGlobalIndex*>gi;
-	/*0x24c*/ int Unknown0x24c;
-	/*0x250*/ int Unknown0x250;
-	/*0x254*/ int Unknown0x254;
-	/*0x258*/ int Unknown0x258;
-	/*0x25c*/ int Unknown0x25c;
-	/*0x260*/ int FIW_ClassAnim;
+	/*0x248*/ UINT LastCheckTime;//from WndEventHandler
+	/*0x24c*/ CComboWnd *SearchCombo0;
+	/*0x250*/ CComboWnd *SearchCombo1;
+	/*0x254*/ int SelIndex;
+	/*0x258*/ int Unknown0x240;
+	union
+	{
+		/*0x25c*/ VeArray<ItemGlobalIndex*>gi;
+		/*0x25c*/ HashTable<ItemGlobalIndex, int>gi2;//size 0x10
+	};
+	/*0x26c*/ int Unknown0x24c[4];
+	/*0x27c*/ int FIW_ClassAnim;
+	//todo align
 	/*0x264*/ CSidlScreenWnd *FIW_CharacterView;
 	/*0x268*/ CListWnd *FIW_ItemList;
 	/*0x26c*/ CButtonWnd * FIW_QueryButton;
@@ -9652,7 +9651,7 @@ EQLIB_OBJECT bool CharacterZoneClient::IsStackBlocked(const EQ_Spell *pSpell, PS
 #else
 EQLIB_OBJECT bool CharacterZoneClient::IsStackBlocked(const EQ_Spell *pSpell, PSPAWNINFO pCaster, EQ_Affect* pEffecs = NULL, int EffectsSize = 0);
 #endif
-#if defined(ROF2EMU) || defined(UFEMU) || defined(LIVE)
+#if defined(ROF2EMU) || defined(UFEMU)
 EQLIB_OBJECT int CharacterZoneClient::GetItemCountInInventory(int ItemID);
 #else
 EQLIB_OBJECT int CharacterZoneClient::GetItemCountInInventory(int ItemID, bool bArg = false);
@@ -9663,7 +9662,7 @@ EQLIB_OBJECT EQ_Affect & CharacterZoneClient::GetEffect(int)const;
 EQLIB_OBJECT int CharacterZoneClient::GetOpenEffectSlot(bool bIsShortBuff, bool bIsMeleeSkill, int Index = -1);
 EQLIB_OBJECT int CharacterZoneClient::GetFirstEffectSlot(bool bIsShortBuff, bool bIsMeleeSkill);
 EQLIB_OBJECT int CharacterZoneClient::GetLastEffectSlot(bool bIsShortBuff, bool bIsMeleeSkill, bool bIsDisplay = false);
-#if defined(ROF2EMU) || defined(UFEMU) || defined(LIVE)
+#if defined(ROF2EMU) || defined(UFEMU)
 EQLIB_OBJECT BYTE CharacterZoneClient::FindItemByRecord(int ItemNumber /*recordnum*/, int *pos_slot, int *con_slot, bool bReverseLookup);
 EQLIB_OBJECT const int CharacterZoneClient::GetFocusReuseMod(const EQ_Spell *pSpell, VePointer<CONTENTS>&pOutItem);
 #else
@@ -9671,7 +9670,7 @@ EQLIB_OBJECT BYTE CharacterZoneClient::FindItemByRecord(int ItemNumber /*recordn
 EQLIB_OBJECT const int CharacterZoneClient::GetFocusReuseMod(const EQ_Spell *pSpell, VePointer<CONTENTS>&pOutItem, bool bArg = true);
 #endif
 //FindItemByGuid is in pPCData now...maybe move it later Sep 07 2021 test exe -eqmule
-#if defined(TEST)
+#if !defined(ROF2EMU) && !defined(UFEMU)
 EQLIB_OBJECT VePointer<CONTENTS> CharacterZoneClient::FindItemByGuid(const EqItemGuid ItemGuid, bool bArg1 = true, bool bArg2 = false);
 #else
 EQLIB_OBJECT bool CharacterZoneClient::FindItemByGuid(const EqItemGuid& ItemGuid, int *pos_slot, int *con_slot);
@@ -9931,7 +9930,7 @@ EQLIB_OBJECT int PcZoneClient::GetModCap(int index, bool bToggle=false);
 #else
 EQLIB_OBJECT int PcZoneClient::GetModCap(int index);
 #endif
-#if defined(ROF2EMU) || defined(UFEMU) || defined(LIVE)
+#if defined(ROF2EMU) || defined(UFEMU)
 EQLIB_OBJECT PCONTENTS * PcZoneClient::GetItemByID(PCONTENTS *contOut, int itemid, ItemIndex *itemindex/*out*/);
 #else
 EQLIB_OBJECT PCONTENTS * PcZoneClient::GetItemByID(PCONTENTS *contOut, int itemid, ItemIndex *itemindex/*out*/, bool bArg = true);

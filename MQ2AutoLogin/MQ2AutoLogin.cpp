@@ -1004,11 +1004,11 @@ bool GetAllOffsets(DWORD dweqmain)
 	}
 	else
 	{
-		#if defined(TEST) || defined(LIVE)
+		#if !defined(ROF2EMU) && !defined(UFEMU)
 		int dwGetXMLDataAddr1 = _GetDWordAt(dwGetXMLDataAddr, 1);
 		dwGetXMLDataAddr = dwGetXMLDataAddr + dwGetXMLDataAddr1 + 5;
 		#endif
-		Sleep(0);
+		//Sleep(0);
 	}
 
     if(!(dwSendLMouseClickAddr = _FindPattern(dweqmain, 0x100000, lmousePattern, lmouseMask)))
@@ -1017,11 +1017,11 @@ bool GetAllOffsets(DWORD dweqmain)
         return false;
 	}
 	else {
-		#if defined(TEST) || defined(LIVE)
+		#if !defined(ROF2EMU) && !defined(UFEMU)
 		int dwSendLMouseClickAddr1 = _GetDWordAt(dwSendLMouseClickAddr, 1);
 		dwSendLMouseClickAddr = dwSendLMouseClickAddr + dwSendLMouseClickAddr1 + 5;
 		#endif
-		Sleep(0);
+		//Sleep(0);
 	}
 
     if(dwSidlMgr = _FindPattern(dweqmain, 0x100000, swmPattern, swmMask))

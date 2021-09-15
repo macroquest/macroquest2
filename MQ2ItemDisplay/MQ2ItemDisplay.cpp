@@ -2670,7 +2670,7 @@ void RemoveAug(PSPAWNINFO pChar, PCHAR szLine)
 								pContsolv = ((PcZoneClient*)pPCData)->GetItemByID(&contout, ptheAug->SolventItemID, &ii);
 							#endif
 							if (!contout) {
-#if defined(LIVE)
+#if defined(ROF2EMU) || defined(UFEMU)
 								pContsolv = ((PcZoneClient*)pPCData)->GetItemByItemClass(&contout, 64/*Universal Augment Solvent... aka perfect distiller...*/, &ii);
 #endif
 							}

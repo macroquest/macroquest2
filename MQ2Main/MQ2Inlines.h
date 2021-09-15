@@ -1035,7 +1035,7 @@ static inline unsigned long GetDWordAt(unsigned long address, unsigned long numB
 
 static inline int GetHighestAvailableBagSlot()
 {
-	return HasExpansion(EXPANSION_HoT) ? NUM_BAG_SLOTS : (NUM_BAG_SLOTS - 2);
+	return HasExpansion(EXPANSION_HoT) ? NUM_BAG_SLOTS : (NUM_BAG_SLOTS - 4);
 }
 
 static inline int GetAvailableBankSlots()
