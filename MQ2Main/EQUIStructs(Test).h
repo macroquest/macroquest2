@@ -1971,29 +1971,29 @@ typedef struct _EQITEMWINDOW {
 
 //CLootWnd__CLootWnd aLootwnd
 // CLootWnd_size: 0x3a8 (see 56D1BA) in Sep  7 2021 Test - eqmule
+// CLootWnd_size: 0x3c0 (see 56D17A) in Sep 13 2021 Live - eqmule
 typedef struct _EQLOOTWINDOW {
 /*0x0000*/ struct _CSIDLWND     Wnd;
-/*0x0238*/ void*				vftable; // for CLootWnd::DialogResponse handler
-/*0x023c*/ BYTE					Unknown0x023c[0x9C];
-/*0x02d8*/ DWORD				NumOfSlots;
-/*0x02dc*/ BYTE					Unknown0x02d8[0x4];
-/*0x02e0*/ struct _INVENTORYARRAY*      pInventoryArray;
-/*0x02e4*/ DWORD				Size;
-/*0x02e8*/ DWORD				NumOfSlots3;
-/*0x02ec*/ BYTE					Unknown0x02e8[0x8];
-/*0x02f5*/ BYTE					Unknown0x02f0;
-/*0x02f6*/ BYTE					Unknown0x02f1;
-/*0x02f7*/ BYTE					Unknown0x02f2;
-/*0x02f8*/ BYTE					Unknown0x02f3;
-/*0x02f8*/ struct _CSIDLWND*	LootInvWnd;
-/*0x02fc*/ struct _CSILDWND*	LootSlotWnd[0x22];
-/*0x0384*/ int					Unknown0x0384;
-/*0x0388*/ struct _CSIDLWND*	LW_CorpseName;
-/*0x038c*/ struct _CSIDLWND*	DoneButton;
-/*0x0390*/ struct _CSIDLWND*	BroadcastButton;
-/*0x0394*/ struct _CSIDLWND*	LootAllButton;
-/*0x0398*/ BYTE         Unknown0x0390[0x10];
-/*0x03a8*/
+/*0x0248*/ void*        vftable; // for CLootWnd::DialogResponse handler
+/*0x024c*/ BYTE         Unknown0x024c[0xa0];
+/*0x02e8*/ DWORD        NumOfSlots;
+/*0x02ec*/ BYTE         Unknown0x02e8[0x4];
+/*0x02f0*/ struct _INVENTORYARRAY*      pInventoryArray;
+/*0x02f4*/ DWORD        Size;
+/*0x02f8*/ DWORD        NumOfSlots3;
+/*0x02fc*/ BYTE         Unknown0x02f8[0x8];
+/*0x0304*/ BYTE         Unknown0x0300;
+/*0x0305*/ BYTE         Unknown0x0301;
+/*0x0306*/ BYTE         Unknown0x0302;
+/*0x0307*/ BYTE         Unknown0x0303;
+/*0x0308*/ struct _CSIDLWND *   LootInvWnd;
+/*0x030c*/ struct _CSILDWND *   LootSlotWnd[0x22];
+/*0x0394*/ struct _CSIDLWND *   LW_CorpseName;
+/*0x0398*/ struct _CSIDLWND *   DoneButton;
+/*0x039c*/ struct _CSIDLWND *   BroadcastButton;
+/*0x03a0*/ struct _CSIDLWND *   LootAllButton;
+/*0x03a4*/ BYTE         Unknown0x03a4[0x1C];
+/*0x03c0*/
 } EQLOOTWINDOW, *PEQLOOTWINDOW;
 
 // pLines address = 0x254 + 0x035c = 0x05b0 (address of pMapViewMapVfTable)

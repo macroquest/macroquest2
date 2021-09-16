@@ -11892,7 +11892,7 @@ bool MQ2CorpseType::GETMEMBER()
 				int nIndex = GETNUMBER() - 1;
 				if (nIndex < 0)
 					return false;
-				if (nIndex<33 && pLoot->pInventoryArray)
+				if (nIndex < 34 && pLoot->pInventoryArray)
 				{
 					if (Dest.Ptr = pLoot->pInventoryArray->InventoryArray[nIndex])
 					{
@@ -11944,10 +11944,11 @@ bool MQ2CorpseType::GETMEMBER()
 		}
 		return false;
 	case Items:
+		//PEQLOOTWINDOW peqLoot = (PEQLOOTWINDOW)pLootWnd;
 		Dest.DWord = 0;
 		Dest.Type = pIntType;
 		if (pLoot->pInventoryArray)
-			for (unsigned long N = 0; N < NUM_INV_SLOTS; N++)
+			for (unsigned long N = 0; N < 34; N++)
 			{
 				if (pLoot->pInventoryArray->InventoryArray[N])
 					Dest.DWord++;
