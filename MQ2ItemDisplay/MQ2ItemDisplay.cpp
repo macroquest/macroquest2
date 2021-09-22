@@ -771,6 +771,18 @@ public:
                 cColour = "9F9F9F";
                 cName = "Scroll";
                 break;
+			case Mount:
+				cColour = "00FF00";
+				cName = "Mount";
+				break;
+			case Illusion:
+				cColour = "00FF00";
+				cName = "Illusion";
+				break;
+			case Familiar:
+				cColour = "00FF00";
+				cName = "Familiar";
+				break;
             }
 
 			CHAR aliased[MAX_STRING] = {0};
@@ -1565,10 +1577,21 @@ public:
 		}
 #if !defined(ROF2EMU) && !defined(UFEMU)
 		if (Item->Mount.SpellID > 0 && Item->Mount.SpellID != -1) {
-			eEffectType = Mount;
+			switch (Item->Mount.EffectType)
+			{
+			case 9:
+				eEffectType = Mount;// (ItemDisplayHook::SEffectType)Item->Mount.EffectType;
+				break;
+			case 10:
+				eEffectType = Illusion;// (ItemDisplayHook::SEffectType)Item->Mount.EffectType;
+				break;
+			case 11:
+				eEffectType = Familiar;// (ItemDisplayHook::SEffectType)Item->Mount.EffectType;
+				break;
+			}
 			ItemSetSpell_Detour(Item->Mount);
 		}
-		if (Item->Illusion.SpellID > 0 && Item->Illusion.SpellID != -1) {
+		/*if (Item->Illusion.SpellID > 0 && Item->Illusion.SpellID != -1) {
 			eEffectType = Illusion;
 			ItemSetSpell_Detour(Item->Illusion);
 		}
@@ -1576,7 +1599,7 @@ public:
 			eEffectType = Familiar;
 			ItemSetSpell_Detour(Item->Familiar);
 
-		}
+		}*/
 #endif
 		bNoSpellTramp = false;
 		eEffectType = None;

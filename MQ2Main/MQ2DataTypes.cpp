@@ -11866,7 +11866,7 @@ bool MQ2CorpseType::GETMEMBER()
 {
 	if (!pActiveCorpse || !pLootWnd)
 		return false;
-#define pLoot ((PEQLOOTWINDOW)pLootWnd)
+	PEQLOOTWINDOW pLoot = (PEQLOOTWINDOW)pLootWnd;
 	PMQ2TYPEMEMBER pMember = MQ2CorpseType::FindMember(Member);
 	if (!pMember)
 	{
@@ -11892,9 +11892,9 @@ bool MQ2CorpseType::GETMEMBER()
 				int nIndex = GETNUMBER() - 1;
 				if (nIndex < 0)
 					return false;
-				if (nIndex < 34 && pLoot->pInventoryArray)
+				if (nIndex < (int)pLoot->lootItems.Items.Size)
 				{
-					if (Dest.Ptr = pLoot->pInventoryArray->InventoryArray[nIndex])
+					if (Dest.Ptr = pLoot->lootItems.Items[nIndex].pObject)
 					{
 						return true;
 					}
@@ -11914,49 +11914,44 @@ bool MQ2CorpseType::GETMEMBER()
 				strcpy_s(szNameTemp, pName1);
 				_strlwr_s(szNameTemp);
 				CHAR Temp[MAX_STRING] = { 0 };
-				if (pLoot->pInventoryArray)
-					for (unsigned long nIndex = 0; nIndex < 34; nIndex++)
+				for (unsigned long nIndex = 0; nIndex < pLoot->lootItems.Items.Size; nIndex++)
+				{
+					if (PCONTENTS pContents = pLoot->lootItems.Items[nIndex].pObject)
 					{
-						if (PCONTENTS pContents = pLoot->pInventoryArray->InventoryArray[nIndex])
+						if (bExact)
 						{
-							if (bExact)
+							if (!_stricmp(szNameTemp, GetItemFromContents(pContents)->Name))
 							{
-								if (!_stricmp(szNameTemp, GetItemFromContents(pContents)->Name))
-								{
-									Dest.Ptr = pContents;
-									return true;
-								}
+								Dest.Ptr = pContents;
+								return true;
 							}
-							else
+						}
+						else
+						{
+							strcpy_s(Temp, GetItemFromContents(pContents)->Name);
+							_strlwr_s(Temp);
+							if (strstr(Temp, szNameTemp))
 							{
-								strcpy_s(Temp, GetItemFromContents(pContents)->Name);
-								_strlwr_s(Temp);
-								if (strstr(Temp, szNameTemp))
-								{
-									Dest.Ptr = pContents;
-									return true;
-								}
+								Dest.Ptr = pContents;
+								return true;
 							}
 						}
 					}
-
+				}
 			}
 		}
 		return false;
 	case Items:
-		//PEQLOOTWINDOW peqLoot = (PEQLOOTWINDOW)pLootWnd;
 		Dest.DWord = 0;
 		Dest.Type = pIntType;
-		if (pLoot->pInventoryArray)
-			for (unsigned long N = 0; N < 34; N++)
-			{
-				if (pLoot->pInventoryArray->InventoryArray[N])
-					Dest.DWord++;
-			}
+		for (unsigned long N = 0; N < pLoot->lootItems.Items.Size; N++)
+		{
+			if (pLoot->lootItems.Items[N].pObject)
+				Dest.DWord++;
+		}
 		return true;
 	}
 	return false;
-#undef pLoot
 }
 
 bool MQ2MerchantType::GETMEMBER()
