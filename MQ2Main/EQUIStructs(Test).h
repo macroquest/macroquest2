@@ -2012,7 +2012,7 @@ typedef struct _EQLOOTWINDOW {
 	/*0x03a8*/
 } EQLOOTWINDOW, *PEQLOOTWINDOW;
 
-// pLines address = 0x270 + 0x0360 (address of pMapViewMapVfTable) = 0x5d0
+// pLines address = 0x260 + 0x0370 (address of pMapViewMapVfTable) = 0x5d0
 // CMapViewWnd__CMapViewWnd_x
 // CMapViewWnd_size: 0x650 (see 56D700) in Oct 12 2021 Test - eqmule
 typedef struct _EQMAPWINDOW {
@@ -2023,7 +2023,7 @@ typedef struct _EQMAPWINDOW {
 	/*0x0330*/ struct _CXWND*      wnd;           // its the MVW_MapRenderArea window... found at aMvw_maprendera
 	/*0x0334*/ BYTE         Unknown0x0334[0x3c];
 	/*0x0370*/ struct _CSIDLWNDVFTABLE*    pMapViewMapVfTable; // found at aMapviewmap
-	/*0x0374*/ BYTE         Unknown0x0374[0x260];
+	/*0x0374*/ BYTE         Unknown0x0374[0x25C];
 	/*0x05d0*/ PMAPLINE     pLines;     //0x260 + 0x0370 = 0x5d0 (address of pMapViewMapVfTable)
 	/*0x05d4*/ PMAPLABEL    pLabels;    //0x264
 	/*0x05d8*/ BYTE         Unknown0x05d8[0x78];

@@ -2011,26 +2011,26 @@ EQLIB_OBJECT void CContainerWnd::Init(void);
 /*0x64*/ 
 };
 
-
-
+//Actual Size: 0x1248 see 56BB0C in Oct 13 2021 beta -eqmule
 class CContextMenuManager : public CXWnd
 {
 public:
-	CXWnd *pParentMenuWnd;
-    CContextMenu *pCurrMenus[8];
-    int		NumVisibleMenus;
-    int		CurrMenu;
-    CContextMenu	*pMenus[0x400];
-    int		NumMenus;
-    CXWnd*	pHandlerWnd;
-    int		HandlerCmd;
-    int		DefaultMenuIndex;
-	int		DefaultHelpItem;
-    int		DefaultBGItem;
-    int		DefaultMinItem;
-    int		DefaultCloseItem;
-    int		DefaultLockItem;
-	int		DefaultEscapeItem;
+/*0x01E8*/ CXWnd			*pParentMenuWnd;
+/*0x01EC*/	CContextMenu	*pCurrMenus[8];
+/*0x020C*/	int				NumVisibleMenus;
+/*0x0210*/	int				CurrMenu;
+/*0x0214*/	CContextMenu	*pMenus[0x400];
+/*0x1214*/	int				NumMenus;
+/*0x1218*/	CXWnd			*pHandlerWnd;
+/*0x121C*/	int				HandlerCmd;
+/*0x1220*/	int				DefaultMenuIndex;
+/*0x0224*/	int				DefaultHelpItem;
+/*0x1228*/	int				DefaultBGItem;
+/*0x122C*/	int				DefaultMinItem;
+/*0x1230*/	int				DefaultCloseItem;
+/*0x1234*/	int				DefaultLockItem;
+/*0x1238*/	int				DefaultEscapeItem;
+/*0x1248*/
 EQLIB_OBJECT CContextMenuManager::CContextMenuManager(class CXWnd *,unsigned __int32,class CXRect);
 EQLIB_OBJECT int CContextMenuManager::AddMenu(class CContextMenu *);
 EQLIB_OBJECT int GetDefaultMenuIndex() { return DefaultMenuIndex; }
@@ -4796,7 +4796,11 @@ public:
 EQLIB_OBJECT int CContextMenu::InsertMenuItemA(CXStr *str,unsigned int position, unsigned int ItemID, bool bChecked, COLORREF Color, bool bEnable);
 EQLIB_OBJECT CContextMenu::CContextMenu(CXWnd *pParent, unsigned __int32 MenuID, const CXRect& rect);
 EQLIB_OBJECT CContextMenu::CContextMenu(CXWnd *,unsigned __int32,tagRECT *);
+#if defined(EQBETA)
+EQLIB_OBJECT int CContextMenu::AddMenuItem(CXStr const &str, unsigned __int64 MenuID/*Set HighPart as the ID for submenus and LowPart is then the subindex*/, bool bChecked = false, COLORREF Color = 0xFFFFFFFF, bool bEnable = true);
+#else
 EQLIB_OBJECT int CContextMenu::AddMenuItem(CXStr const &str,unsigned int MenuID/*Set HighPart as the ID for submenus and LowPart is then the subindex*/,bool bChecked = false,COLORREF Color = 0xFFFFFFFF,bool bEnable = true);
+#endif
 EQLIB_OBJECT int CContextMenu::AddSeparator(void);
 EQLIB_OBJECT void CContextMenu::Activate(class CXPoint,int,int);
 EQLIB_OBJECT void CContextMenu::CheckMenuItem(int ID, bool bVal = true, bool bUncheckAll = false);

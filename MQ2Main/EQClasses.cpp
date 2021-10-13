@@ -1260,7 +1260,11 @@ FUNCTION_AT_ADDRESS( CContextMenu::CContextMenu(CXWnd *pParent, unsigned __int32
 FUNCTION_AT_ADDRESS( CContextMenu::~CContextMenu(void),CContextMenu__dCContextMenu);
 #endif
 #ifdef CContextMenu__AddMenuItem_x
+#if defined(EQBETA)
+FUNCTION_AT_ADDRESS(int  CContextMenu::AddMenuItem(CXStr const &, unsigned __int64, bool, COLORREF, bool), CContextMenu__AddMenuItem);
+#else
 FUNCTION_AT_ADDRESS(int  CContextMenu::AddMenuItem(CXStr const &,unsigned int,bool,COLORREF,bool),CContextMenu__AddMenuItem);
+#endif
 #endif
 #ifdef CContextMenu__AddSeparator_x
 FUNCTION_AT_ADDRESS(int CContextMenu::AddSeparator(void),CContextMenu__AddSeparator);
