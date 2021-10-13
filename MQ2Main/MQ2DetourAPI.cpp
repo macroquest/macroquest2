@@ -308,7 +308,7 @@ int CPacketScrambler::ntoh_detour(int nopcode)
 	int hopcode = ntoh_tramp(nopcode);
 	if (hopcode == EQ_ASSIST_COMPLETE) {
 		DWORD calc = 0;
-#if defined(TEST) || defined (LIVE)
+#if defined(TEST) || defined (LIVE) || defined(EQBETA)
 		__asm {
 			push eax;
 			push ecx;

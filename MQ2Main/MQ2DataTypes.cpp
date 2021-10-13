@@ -3126,14 +3126,14 @@ bool MQ2CharacterType::GETMEMBER()
 		return true;
 	}
 	case AAVitality:
-		Dest.Int = pChar->AAVitality;
-		Dest.Type = pIntType;
+		Dest.Int64 = pChar->AAVitality;
+		Dest.Type = pInt64Type;
 		return true;
 	case PctAAVitality:
 	{
 		Dest.Float = 0;
 		Dest.Type = pFloatType;
-		int aavitality = pChar->AAVitality;
+		__int64 aavitality = pChar->AAVitality;
 		int aacap = pInventoryWnd->AAVitalityCap;
 		if (aavitality > aacap)
 			aavitality = aacap;
