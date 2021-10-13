@@ -11351,13 +11351,14 @@ bool MQ2CharSelectListType::GETMEMBER()
 	PMQ2TYPEMEMBER pMember = MQ2CharSelectListType::FindMember(Member);
 	if (!pMember)
 		return false;
+	PEVERQUEST pEQ = (PEVERQUEST)pEverQuest;
 	switch ((CharSelectListMembers)pMember->ID)
 	{
 		case Name:
 			Dest.Type = pStringType;
-			if (pEverQuest && ((PEVERQUEST)pEverQuest)->pCharSelectPlayerArray.Count) {
-				if (VarPtr.Int < ((PEVERQUEST)pEverQuest)->pCharSelectPlayerArray.Count) {
-					strcpy_s(DataTypeTemp, ((PEVERQUEST)pEverQuest)->pCharSelectPlayerArray[VarPtr.Int].Name);
+			if (pEQ && pEQ->pCharSelectPlayerArray.Count) {
+				if (VarPtr.Int < pEQ->pCharSelectPlayerArray.Count) {
+					strcpy_s(DataTypeTemp, pEQ->pCharSelectPlayerArray[VarPtr.Int].Name);
 					Dest.Ptr = &DataTypeTemp[0];
 					return true;
 				}
