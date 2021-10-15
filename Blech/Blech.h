@@ -137,7 +137,7 @@ typedef struct _BLECHLISTNODE {
 } BLECHLISTNODE, *PBLECHLISTNODE;
 
 
-typedef unsigned int   (__stdcall *fBlechVariableValue)(char *VarName, char *Value, size_t Valuelen);
+typedef size_t (__stdcall *fBlechVariableValue)(char *VarName, char *Value, size_t Valuelen);
 typedef void (__stdcall *fBlechCallback)(unsigned int ID, void * pData, PBLECHVALUE pValues);
 
 typedef struct _BLECHEVENT {
@@ -393,7 +393,7 @@ public:
     eBlechStringType StringType;
     char *pString;
 	size_t pStringLen;
-    unsigned int Length;
+	size_t Length;
     BlechNode *pParent;
     BlechNode **ppRoot;
     BlechNode *pChildren;
@@ -795,7 +795,7 @@ private:
 		{
 			BlechDebugFull("No variable nodes");
 			// if there's no variable nodes, just make sure the lengths match
-			unsigned int TestLength = 0;
+			size_t TestLength = 0;
 			pCurrent = pNode;
 			while (pCurrent)
 			{
@@ -857,7 +857,7 @@ private:
 							PBLECHVALUE pNewValue = new BLECHVALUE;
 							pNewValue->Name = _strdup(pCurrentScanVar->pString);
 
-							unsigned int Length = End - Pos;
+							size_t Length = End - Pos;
 							pNewValue->Value = (char*)malloc(Length + 1);
 							memcpy(pNewValue->Value, Pos, Length);
 							pNewValue->Value[Length] = 0;
@@ -902,7 +902,7 @@ private:
 				}
 				else
 				{
-					unsigned int NonVariableLength = strlen(NonVariable);
+					size_t NonVariableLength = strlen(NonVariable);
 					if (STRNCMP(NonVariable, Pos, NonVariableLength))
 					{
 						// not a real match. goodbye!
@@ -927,7 +927,7 @@ private:
 			if (NonVariable[0])
 			{
 				const char *End = &Input[InputLength] - strlen(NonVariable);
-				unsigned int Length = End - Pos;
+				size_t Length = End - Pos;
 				if (STRCMP(&Pos[Length], NonVariable))
 				{
 					goto queueeventscleanup;

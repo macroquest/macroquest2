@@ -159,7 +159,7 @@ FUNCTION_AT_ADDRESS(struct  _CONTENTS* CMyInventory::GetSlot(int), CMyInventory_
 
 #ifdef EQ_Item__CreateItemTagString_x
 #if !defined(ROF2EMU) && !defined(UFEMU)
-FUNCTION_AT_ADDRESS(char * EQ_Item::CreateItemTagString(char *, int, bool), EQ_Item__CreateItemTagString); // SwiftyMUSE 11-09-2018
+FUNCTION_AT_ADDRESS(char * EQ_Item::CreateItemTagString(char *, DWORD_PTR, bool), EQ_Item__CreateItemTagString); // SwiftyMUSE 11-09-2018
 #else
 FUNCTION_AT_ADDRESS(char * EQ_Item::CreateItemTagString(char *, int), EQ_Item__CreateItemTagString); // Lax 11-14-2003
 #endif

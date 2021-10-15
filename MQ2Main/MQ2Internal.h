@@ -810,7 +810,7 @@ namespace MQ2Internal {
     class MQ2Type
     {
     public:
-		int  GetMemberMapSize()
+		size_t GetMemberMapSize()
 		{
 			lockit lk(ghMemberMapLock, __FUNCTION__);
 			return MemberMap.size();

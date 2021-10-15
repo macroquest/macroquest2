@@ -2017,9 +2017,9 @@ typedef struct _EQLOOTWINDOW {
 // CMapViewWnd_size: 0x650 (see 56D700) in Oct 12 2021 Test - eqmule
 typedef struct _EQMAPWINDOW {
 	/*0x0000*/ struct _CSIDLWND Wnd;
-	/*0x0230*/ BYTE         Unknown0x0230[0x40];
-	/*0x0270*/ CHAR         shortzonename[0x80];
-	/*0x02f0*/ BYTE         Unknown0x02f0[0x40];
+	/*0x0230*/ BYTE         Unknown0x0230[0x44];
+	/*0x0274*/ CHAR         shortzonename[0x80];
+	/*0x02f4*/ BYTE         Unknown0x02f4[0x3c];
 	/*0x0330*/ struct _CXWND*      wnd;           // its the MVW_MapRenderArea window... found at aMvw_maprendera
 	/*0x0334*/ BYTE         Unknown0x0334[0x3c];
 	/*0x0370*/ struct _CSIDLWNDVFTABLE*    pMapViewMapVfTable; // found at aMapviewmap

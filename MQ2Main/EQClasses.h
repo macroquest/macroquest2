@@ -1064,7 +1064,7 @@ public:
 class EQGroundItemListManager
 {
 public:
-	static EQGroundItemListManager &EQGroundItemListManager::Instance();
+EQLIB_OBJECT static EQGroundItemListManager &EQGroundItemListManager::Instance();
 	EQGroundItem *Top;
 };
 class CBroadcast//well we call this CTextOverlay but whatever should probably rename at some point... -eqmule
@@ -7890,7 +7890,7 @@ EQLIB_OBJECT int CXMLSOMElementType::GetItemIdx(class CXStr);
 class CXMLSOMNode
 {
 public:
-EQLIB_OBJECT static void * __cdecl CXMLSOMNode::operator new(unsigned int);
+EQLIB_OBJECT static void * __cdecl CXMLSOMNode::operator new(size_t);
 EQLIB_OBJECT static void __cdecl CXMLSOMNode::FreeAllAllocs(void);
 EQLIB_OBJECT static void __cdecl CXMLSOMNode::operator delete(void *);
 // protected
@@ -8384,7 +8384,7 @@ EQLIB_OBJECT int EQ_Item::Silver(void);
 EQLIB_OBJECT long EQ_Item::ValueSellMerchant(float,long)const;
 EQLIB_OBJECT bool EQ_Item::IsStackable(void); // Valerian 12-20-2004 
 #if !defined(ROF2EMU) && !defined(UFEMU)
-EQLIB_OBJECT char * EQ_Item::CreateItemTagString(char *, int, bool bFlag = true); // SwiftyMUSE 11-09-2018
+EQLIB_OBJECT char * EQ_Item::CreateItemTagString(char *, DWORD_PTR, bool bFlag = true); // SwiftyMUSE 11-09-2018
 #else
 EQLIB_OBJECT char * EQ_Item::CreateItemTagString(char *, int); // Lax 11-14-2003
 #endif

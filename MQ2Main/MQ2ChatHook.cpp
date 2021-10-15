@@ -25,10 +25,10 @@ DWORD __stdcall BeepOnTellThread(PVOID pData)
 	Beep(750, 200);
 	return 0;
 }
-DWORD __stdcall FlashOnTellThread(PVOID pData)
+DWORD_PTR __stdcall FlashOnTellThread(PVOID pData)
 {
-	DWORD lReturn = GetCurrentProcessId();
-	DWORD pid = lReturn;
+	DWORD_PTR lReturn = GetCurrentProcessId();
+	DWORD pid = (DWORD)lReturn;
 	AllowSetForegroundWindow(pid);
 	BOOL ret = EnumWindows(EnumWindowsProc, (LPARAM)&lReturn);
 	if (lReturn != pid) {
@@ -107,7 +107,7 @@ public:
 				{
 					char *szAnonMsg = new char[MAX_STRING];
 					strcpy_s(szAnonMsg,MAX_STRING, szMsg);
-					int len = strlen(szAnonMsg);
+					size_t len = strlen(szAnonMsg);
 					//Anonymize my name, and any other PC spawn in the zone.
 					PSPAWNINFO pSpawn = (PSPAWNINFO)pSpawnList;
 					char *word = new char[MAX_STRING];
@@ -168,10 +168,10 @@ public:
 					case 343://Color: 343 - corpse emote
 					case 345://Color: 345 - Guild plants banner
 						if (char* pDest = strchr(szAnonMsg, ' ')) {
-							int len = strlen(szAnonMsg) - strlen(pDest);
+							size_t len = strlen(szAnonMsg) - strlen(pDest);
 							if (len >= 2) {
 								if (szAnonMsg[0] == 0x12) {
-									for (int i = 3; i < len - 2; i++) {
+									for (size_t i = 3; i < len - 2; i++) {
 										szAnonMsg[i] = '*';
 									}
 								}
@@ -288,7 +288,7 @@ public:
 	VOID TellWnd_Trampoline(char* message, char*from, char*windowtitle, char*text, int color, bool bLogOk);
 	VOID TellWnd_Detour(char* message, char*from, char*windowtitle, char*text, int color, bool bLogOk)
 	{
-		int len = strlen(message);
+		size_t len = strlen(message);
 		char *szMsg = (char *)LocalAlloc(LPTR, len + 64);
 		BOOL SkipTrampoline = 0;
 		gbInChat = true;
@@ -360,16 +360,24 @@ public:
 	}
 };
 #if !defined(ROF2EMU) && !defined(UFEMU)
+#if _WIN64
+#else
 DETOUR_TRAMPOLINE_EMPTY(VOID CChatHook::Trampoline(const char* szMsg, DWORD dwColor, bool EqLog, bool dopercentsubst, char *SomeStr));
+#endif
 #else
 DETOUR_TRAMPOLINE_EMPTY(VOID CChatHook::Trampoline(const char* szMsg, DWORD dwColor, bool EqLog, bool dopercentsubst));
 #endif
 #if defined(ROF2EMU) || defined(UFEMU)
 DETOUR_TRAMPOLINE_EMPTY(VOID OutputTextToLog_Trampoline(char *));
 #endif
+#if _WIN64
+#else
 DETOUR_TRAMPOLINE_EMPTY(VOID CChatHook::TellWnd_Trampoline(char* message, char*from, char*windowtitle, char*text, int color, bool bLogOk));
+#endif
+#if _WIN64
+#else
 DETOUR_TRAMPOLINE_EMPTY(VOID CChatHook::UPCNotificationFlush_Trampoline());
-
+#endif
 #if !defined(ROF2EMU) && !defined(UFEMU)
 VOID dsp_chat_no_events(const char *Text, int Color, bool EqLog, bool dopercentsubst, char *SomeStr)
 #else
@@ -383,7 +391,7 @@ VOID dsp_chat_no_events(const char *Text, int Color, bool EqLog, bool dopercents
 #endif
 }
 
-unsigned int __stdcall MQ2DataVariableLookup(char * VarName, char * Value, size_t ValueLen)
+size_t __stdcall MQ2DataVariableLookup(char * VarName, char * Value, size_t ValueLen)
 {
 	strcpy_s(Value, ValueLen, VarName);
 	if (PCHARINFO pChar = GetCharInfo()) {

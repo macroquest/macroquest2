@@ -5916,7 +5916,7 @@ public:
 	{
 		std::list<SEARCHSPAWN>ss;
 		if (CAlerts.GetAlert(VarPtr.DWord, ss)) {
-			_itoa_s(ss.size(), Destination, MAX_STRING, 10);
+			_itoa_s((int)ss.size(), Destination, MAX_STRING, 10);
 			return true;
 		}
 		return false;

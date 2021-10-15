@@ -1,3 +1,10 @@
+Oct 15 2021
+- Updated for BETA
+- Fixed another crash in map for the TEST build
+-
+Oct 14 2021
+- Updated for BETA
+-
 Oct 13 2021
 - Updated for BETA
 -

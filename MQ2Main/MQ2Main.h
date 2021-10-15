@@ -186,18 +186,30 @@ extern DWORD CountFrees;
 #endif
 
 #ifndef ISXEQ
+#if _WIN64
+#define FUNCTION_AT_ADDRESS(function,offset) ;
+#else
 #define FUNCTION_AT_ADDRESS(function,offset)  __declspec(naked) function\
 {\
     __asm{mov eax, offset};\
     __asm{jmp eax};\
 }
-
+#endif
+#if _WIN64
+#define FUNCTION_AT_VARIABLE_ADDRESS(function,variable) EQLIB_API function\
+{\
+}
+#else
 #define FUNCTION_AT_VARIABLE_ADDRESS(function,variable) __declspec(naked) function\
 {\
     __asm{mov eax, [variable]};\
     __asm{jmp eax};\
 }
+#endif
+#if _WIN64
+#define FUNCTION_AT_VIRTUAL_ADDRESS(function,virtualoffset) ;
 
+#else
 #define FUNCTION_AT_VIRTUAL_ADDRESS(function,virtualoffset) __declspec(naked) function\
 {\
     __asm{mov eax, [ecx]};\
@@ -205,6 +217,11 @@ extern DWORD CountFrees;
     __asm{mov eax, [eax]};\
     __asm{jmp eax};\
 }
+#endif
+#if _WIN64
+#define FUNCTION_AT_VIRTUAL_TABLE_ADDRESS(function,address,virtualoffset) ;
+
+#else
 #define FUNCTION_AT_VIRTUAL_TABLE_ADDRESS(function,address,virtualoffset) __declspec(naked) function\
 {\
     __asm{mov edx, virtualoffset};\
@@ -213,6 +230,7 @@ extern DWORD CountFrees;
     __asm{mov eax, [eax]};\
     __asm{jmp eax};\
 }
+#endif
 #endif
 
 #define PreserveRegisters(code) \
@@ -242,6 +260,7 @@ extern DWORD CountFrees;
 #define ALT_MEMBER_GETTER(type, orig, name) \
     type& getter_ ## name() { return (type&)orig; } \
     __declspec(property(get=getter_ ## name)) type name;
+#define DETOUR_TRAMPOLINE_EMPTY2(ret, callconv, classname, classfunc,...) ret(callconv classname::*classfunc)(const char *, DWORD, bool, bool, char *) = (ret(callconv classname::*)(const char *, DWORD, bool, bool, char *))&classname::classfunc;
 
 #ifndef ISXEQ
 #ifdef ISXEQ_LEGACY
@@ -590,7 +609,7 @@ EQLIB_API int GetFreeInventory(int nSize);
 EQLIB_API int GetFreeStack(PCONTENTS pCont);
 EQLIB_API int RangeRandom(int min, int max);
 EQLIB_API DWORD __stdcall BeepOnTellThread(PVOID pData);
-EQLIB_API DWORD __stdcall FlashOnTellThread(PVOID pData);
+EQLIB_API DWORD_PTR __stdcall FlashOnTellThread(PVOID pData);
 EQLIB_API CMQ2Alerts CAlerts;
 EQLIB_VAR BOOL bPluginCS;
 typedef struct _krdata

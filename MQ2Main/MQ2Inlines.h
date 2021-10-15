@@ -389,8 +389,8 @@ static inline DWORD GetBodyType(PSPAWNINFO pSpawn)
 static inline bool endsWith(char* base, char* str) {
 	if (!base || !str)
 		return false;
-	int blen = strlen(base);
-	int slen = strlen(str);
+	size_t blen = strlen(base);
+	size_t slen = strlen(str);
 	return (blen >= slen) && (0 == strcmp(base + blen - slen, str));
 }
 
@@ -1015,20 +1015,20 @@ static inline bool DataCompare(const unsigned char *pData, const unsigned char *
 
 static inline unsigned long FindPattern(unsigned long dwAddress,unsigned long dwLen,const unsigned char *bPattern,const char *szMask)
 {
-    for(unsigned long i=0; i < dwLen; i++)
+    for(size_t i=0; i < dwLen; i++)
         if(DataCompare( (unsigned char *)( dwAddress+i ),bPattern,szMask) )
             return (unsigned long)(dwAddress+i);
    
     return 0;
 }
 
-static inline unsigned long GetDWordAt(unsigned long address, unsigned long numBytes)
+static inline size_t GetDWordAt(size_t address, size_t numBytes)
 {
     if(address)
     {
         address += numBytes;
-        if(*(unsigned long*)address)
-            return *(unsigned long*)address;
+        if(*(size_t*)address)
+            return *(size_t*)address;
     }
     return 0;
 }
