@@ -241,3 +241,36 @@ PLUGIN_API VOID ShutdownPlugin(VOID)
     //RemoveDetour(startworlddisplayexceptionhandler);
 	#endif
 }
+PLUGIN_API VOID OnPulse(VOID)
+{
+	if (gGameState == GAMESTATE_INGAME)
+	{
+		// If an ItemLocation is set on the CastingData, a Label might try to
+		// render its name. If the item doesn't exist, it'll crash.
+		if (pLocalPlayer && ((PSPAWNINFO)pLocalPlayer)->CastingData.SpellID != -1)
+		{
+			ItemGlobalIndex location;
+			location.Location = ((PSPAWNINFO)pLocalPlayer)->CastingData.ItemLocation.Location;
+			location.Index.Slot1 = ((PSPAWNINFO)pLocalPlayer)->CastingData.ItemLocation.InvSlot;
+			location.Index.Slot2 = ((PSPAWNINFO)pLocalPlayer)->CastingData.ItemLocation.BagSlot;
+			location.Index.Slot3 = ((PSPAWNINFO)pLocalPlayer)->CastingData.ItemLocation.AugSlot;
+			if (location.IsValidIndex())
+			{
+				if (PCHARINFO pCharInfo = GetCharInfo())
+				{
+					if (CharacterBase* cb = (CharacterBase*)&pCharInfo->CharacterBase_vftable)
+					{
+						VePointer<CONTENTS> ptr = cb->GetItemByGlobalIndex(location);
+						if (ptr.pObject == nullptr)
+						{
+							((PSPAWNINFO)pLocalPlayer)->CastingData.ItemLocation.Location = eItemContainerInvalid;
+							((PSPAWNINFO)pLocalPlayer)->CastingData.ItemLocation.InvSlot = -1;
+							((PSPAWNINFO)pLocalPlayer)->CastingData.ItemLocation.BagSlot = -1;
+							((PSPAWNINFO)pLocalPlayer)->CastingData.ItemLocation.AugSlot = -1;
+						}
+					}
+				}
+			}
+		}
+	}
+}

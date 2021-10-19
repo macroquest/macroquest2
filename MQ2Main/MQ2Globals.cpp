@@ -1775,6 +1775,9 @@ namespace MQ2Globals
 	INITIALIZE_EQGAME_OFFSET(CContextMenu__CContextMenu);
 	INITIALIZE_EQGAME_OFFSET(CContextMenu__dCContextMenu);
 	INITIALIZE_EQGAME_OFFSET(CContextMenu__AddMenuItem);
+	#if defined(EQBETA)
+	INITIALIZE_EQGAME_OFFSET(CContextMenu__AddChildMenuItem);
+	#endif
 	INITIALIZE_EQGAME_OFFSET(CContextMenuManager__AddMenu);
 	INITIALIZE_EQGAME_OFFSET(CContextMenuManager__RemoveMenu);
 	INITIALIZE_EQGAME_OFFSET(CContextMenuManager__PopupMenu);

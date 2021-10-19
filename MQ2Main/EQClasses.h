@@ -4797,6 +4797,14 @@ EQLIB_OBJECT int CContextMenu::InsertMenuItemA(CXStr *str,unsigned int position,
 EQLIB_OBJECT CContextMenu::CContextMenu(CXWnd *pParent, unsigned __int32 MenuID, const CXRect& rect);
 EQLIB_OBJECT CContextMenu::CContextMenu(CXWnd *,unsigned __int32,tagRECT *);
 #if defined(EQBETA)
+EQLIB_OBJECT int CContextMenu::AddChildMenuItem(CXStr const &str, unsigned __int64 MenuID/*Set HighPart as the ID for submenus and LowPart is then the subindex*/, bool bChecked = false, COLORREF Color = 0xFFFFFFFF, bool bEnable = true);
+EQLIB_OBJECT int CContextMenu::AddMyChildMenuItem(CXStr const &str, unsigned __int64 MenuID/*Set HighPart as the ID for submenus and LowPart is then the subindex*/, bool bChecked = false, COLORREF Color = 0xFFFFFFFF, bool bEnable = true)
+{
+	LARGE_INTEGER ul;
+	ul.HighPart = (DWORD)MenuID;
+	ul.LowPart = 0;
+	return AddChildMenuItem(str, ul.QuadPart, bChecked, Color, bEnable);
+}
 EQLIB_OBJECT int CContextMenu::AddMenuItem(CXStr const &str, unsigned __int64 MenuID/*Set HighPart as the ID for submenus and LowPart is then the subindex*/, bool bChecked = false, COLORREF Color = 0xFFFFFFFF, bool bEnable = true);
 #else
 EQLIB_OBJECT int CContextMenu::AddMenuItem(CXStr const &str,unsigned int MenuID/*Set HighPart as the ID for submenus and LowPart is then the subindex*/,bool bChecked = false,COLORREF Color = 0xFFFFFFFF,bool bEnable = true);

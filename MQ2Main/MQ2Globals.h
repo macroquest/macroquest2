@@ -1207,6 +1207,7 @@ namespace MQ2Globals
 	EQLIB_VAR DWORD CContextMenu__CContextMenu;
 	EQLIB_VAR DWORD CContextMenu__dCContextMenu;
 	EQLIB_VAR DWORD CContextMenu__AddMenuItem;
+	EQLIB_VAR DWORD CContextMenu__AddChildMenuItem;
 	EQLIB_VAR DWORD CContextMenuManager__AddMenu;
 	EQLIB_VAR DWORD CContextMenuManager__RemoveMenu;
 	EQLIB_VAR DWORD CContextMenuManager__PopupMenu;
