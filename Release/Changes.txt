@@ -1,12 +1,15 @@
 Oct 22 2021
+- Updated for LIVE #3
+-
+Oct 22 2021
 - Updated for BETA
 - 
 Oct 22 2021
-- Updated for LIVE
+- Updated for LIVE #2
 -
 Oct 20 2021
 - Updated for BETA
-- Updated for LIVE
+- Updated for LIVE #1
 -
 Oct 19 2021
 - Updated for BETA
