@@ -515,7 +515,7 @@ GNU General Public License for more details.
 #define CDisplay__SetViewActor_x                                   0x561520
 #define CDisplay__GetFloorHeight_x                                 0x55E550
 #define CDisplay__SetRenderWindow_x                                0x55CF00
-#define CDisplay__ToggleScreenshotMode_x                           0x560FF1
+#define CDisplay__ToggleScreenshotMode_x                           0x560FF0
 
 // CEditBaseWnd 
 #define CEditBaseWnd__SetSel_x                                     0x9637B0
