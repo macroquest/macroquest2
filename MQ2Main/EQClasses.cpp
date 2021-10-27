@@ -1261,8 +1261,8 @@ FUNCTION_AT_ADDRESS( CContextMenu::~CContextMenu(void),CContextMenu__dCContextMe
 #endif
 #ifdef CContextMenu__AddMenuItem_x
 #if defined(EQBETA)
-FUNCTION_AT_ADDRESS(int CContextMenu::AddChildMenuItem(CXStr const &, unsigned __int64, bool, COLORREF, bool), CContextMenu__AddMenuItem);
-FUNCTION_AT_ADDRESS(int CContextMenu::AddMenuItem(CXStr const &, unsigned __int64, bool, COLORREF, bool), CContextMenu__AddMenuItem);
+FUNCTION_AT_ADDRESS(int CContextMenu::AddChildMenuItem(CXStr const &, unsigned __int64, bool, COLORREF, bool), CContextMenu__AddChildMenuItem);
+FUNCTION_AT_ADDRESS(int CContextMenu::RealAddMenuItem(CXStr const &, unsigned __int64, bool, COLORREF, bool), CContextMenu__AddMenuItem);
 #else
 FUNCTION_AT_ADDRESS(int  CContextMenu::AddMenuItem(CXStr const &,unsigned int,bool,COLORREF,bool),CContextMenu__AddMenuItem);
 #endif
