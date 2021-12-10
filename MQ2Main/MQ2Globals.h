@@ -391,6 +391,7 @@ namespace MQ2Globals
 	EQLIB_VAR fLoaderClearLoaded	IC_LoaderClearLoaded;
 	EQLIB_VAR fMQ2Unload            IC_MQ2Unload;
 	EQLIB_VAR fClassLvl				IC_ClassLvl;
+	EQLIB_VAR fEQPerkFeatureID		IC_EQPerkFeatureID;
 
 	EQLIB_VAR fEQW_GetDisplayWindow EQW_GetDisplayWindow;
 

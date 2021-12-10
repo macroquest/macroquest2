@@ -8199,12 +8199,9 @@ void UseAbility(char *sAbility) {
 // Pass exansion macros from EQData.h to it -- e.g. HasExpansion(EXPANSION_RoF)
 bool HasExpansion(DWORD nExpansion)
 {
-	if (PCHARINFO pChar = GetCharInfo())
-	{
-		return (bool)((pChar->ExpansionFlags & nExpansion) != 0);
-	}
-	return true;
+	return pPCData && (((PCHARINFO)pPCData)->ExpansionFlags & nExpansion) != 0;
 }
+
 //Just a Function that needs more work
 //I use this to test merc aa struct -eqmule
 #if !defined(ROF2EMU) && !defined(UFEMU)
@@ -10890,6 +10887,8 @@ DWORD __stdcall RefreshKeyRingThread(PVOID pData)
 			int mountcount = GetMountCount();
 			int illusioncount = GetIllusionCount();
 			int familiarcount = GetFamiliarCount();
+			int herosforgecount = GetHerosForgeCount();
+			int teleportationitemcount = GetTeleportationItemCount();
 			if (CTabWnd *pTab = (CTabWnd*)((CSidlScreenWnd*)(krwnd))->GetChildItem(KeyRingTab)) {
 				if (mountcount) {
 					pTab->SetPage(0, true);//tab 0 is the mount key ring page...
@@ -10925,6 +10924,32 @@ DWORD __stdcall RefreshKeyRingThread(PVOID pData)
 							Sleep(10);
 							if (now + 5000 < MQGetTickCount64()) {
 								WriteChatColor("Timed out waiting for familiar keyring refresh", CONCOLOR_YELLOW);
+								break;
+							}
+						}
+					}
+				}
+				if (herosforgecount) {
+					pTab->SetPage(3, true);//tab 3 is the heros forge key ring page...
+					if (clist = (CListWnd*)krwnd->GetChildItem(HeroForgeWindowList)) {
+						ULONGLONG now = MQGetTickCount64();
+						while (!clist->ItemsArray.Count) {
+							Sleep(10);
+							if (now + 5000 < MQGetTickCount64()) {
+								WriteChatColor("Timed out waiting for heros forge keyring refresh", CONCOLOR_YELLOW);
+								break;
+							}
+						}
+					}
+				}
+				if (teleportationitemcount) {
+					pTab->SetPage(4, true);//tab 4 is the teleportation item key ring page...
+					if (clist = (CListWnd*)krwnd->GetChildItem(TeleportationItemWindowList)) {
+						ULONGLONG now = MQGetTickCount64();
+						while (!clist->ItemsArray.Count) {
+							Sleep(10);
+							if (now + 5000 < MQGetTickCount64()) {
+								WriteChatColor("Timed out waiting for teleportation items keyring refresh", CONCOLOR_YELLOW);
 								break;
 							}
 						}
@@ -10979,6 +11004,24 @@ int GetFamiliarCount()
 	}
 	return Count;
 }
+int GetHerosForgeCount()
+{
+	int Count = 0;
+	if (PCHARINFO pChar = GetCharInfo())
+	{
+		return pChar->HeroForgeKeyRingItems.Items.Size;
+	}
+	return Count;
+}
+int GetTeleportationItemCount()
+{
+	int Count = 0;
+	if (PCHARINFO pChar = GetCharInfo())
+	{
+		return pChar->TeleportationKeyRingItems.Items.Size;
+	}
+	return Count;
+}
 #endif
 #if defined(ROF2EMU) || defined(UFEMU)
 DWORD GetKeyRingIndex(DWORD KeyRing, PCHAR szItemName,SIZE_T BuffLen, bool bExact, bool usecmd)
@@ -10991,7 +11034,11 @@ DWORD GetKeyRingIndex(DWORD KeyRing, PCHAR szItemName, SIZE_T BuffLen, bool bExa
 	DWORD index = 0;
 	if (CXWnd *krwnd = FindMQ2Window(KeyRingWindowParent)) {
 		CListWnd *clist = 0;
-		if (KeyRing == 2)
+		if (KeyRing == 4)
+			clist = (CListWnd*)krwnd->GetChildItem(TeleportationItemWindowList);
+		else if (KeyRing == 3)
+			clist = (CListWnd*)krwnd->GetChildItem(HeroForgeWindowList);
+		else if (KeyRing == 2)
 			clist = (CListWnd*)krwnd->GetChildItem(FamiliarWindowList);
 		else if (KeyRing == 1)
 			clist = (CListWnd*)krwnd->GetChildItem(IllusionWindowList);
@@ -11063,6 +11110,8 @@ void InitKeyRings()
 		int mountcount = GetMountCount();
 		int illusioncount = GetIllusionCount();
 		int familiarcount = GetFamiliarCount();
+		int herosforgecount = GetHerosForgeCount();
+		int teleportationitemcount = GetTeleportationItemCount();
 		if (mountcount) {
 			if (clist = (CListWnd*)krwnd->GetChildItem(MountWindowList)) {
 				if (!clist->ItemsArray.Count) {
@@ -11079,6 +11128,20 @@ void InitKeyRings()
 		}
 		if (familiarcount) {
 			if (clist = (CListWnd*)krwnd->GetChildItem(FamiliarWindowList)) {
+				if (!clist->ItemsArray.Count) {
+					bRefresh = true;
+				}
+			}
+		}
+		if (herosforgecount) {
+			if (clist = (CListWnd*)krwnd->GetChildItem(HeroForgeWindowList)) {
+				if (!clist->ItemsArray.Count) {
+					bRefresh = true;
+				}
+			}
+		}
+		if (teleportationitemcount) {
+			if (clist = (CListWnd*)krwnd->GetChildItem(TeleportationItemWindowList)) {
 				if (!clist->ItemsArray.Count) {
 					bRefresh = true;
 				}

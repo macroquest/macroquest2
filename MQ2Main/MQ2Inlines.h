@@ -1035,7 +1035,26 @@ static inline size_t GetDWordAt(size_t address, size_t numBytes)
 
 static inline int GetHighestAvailableBagSlot()
 {
-	return HasExpansion(EXPANSION_HoT) ? NUM_BAG_SLOTS : (NUM_BAG_SLOTS - 4);
+	// If no char info, return smallest number available.
+	if (!pPCData)
+		return INVSLOT_BAG8;
+
+	int highestInvSlot = INVSLOT_BAG12;
+
+	// If no HoT, subtract two slots.
+	if (!HasExpansion(EXPANSION_HoT))
+		highestInvSlot -= 2;
+	
+	// If no merchant perk, subtract two more bag slots.
+	if (!((PCHARINFO)pPCData)->ConsumableFeatures.CanClaimFeature(IC_EQPerkFeatureID(2)))
+		highestInvSlot -= 2;
+
+	return highestInvSlot;
+}
+
+static inline int GetAvailableBagSlots()
+{
+	return GetHighestAvailableBagSlot() - INVSLOT_BAG1 + 1;
 }
 
 static inline int GetAvailableBankSlots()
@@ -1052,7 +1071,7 @@ static inline int GetCurrentInvSlots()
 {
 	int invslots = NUM_INV_SLOTS;
 	if (PCHARINFO pChar = GetCharInfo()) {
-		invslots = BAG_SLOT_START + GetHighestAvailableBagSlot();
+		invslots = BAG_SLOT_START + GetAvailableBagSlots();
 	}
 	return invslots;
 }

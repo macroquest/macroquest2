@@ -315,6 +315,7 @@ VOID InitializeMQ2IcExports()
 	IC_LoaderClearLoaded = (fLoaderClearLoaded)GetProcAddress(ghmq2ic, "IC_LoaderClearLoaded");
 	IC_MQ2Unload = (fMQ2Unload)GetProcAddress(ghmq2ic, "IC_MQ2Unload");
 	IC_ClassLvl = (fClassLvl)GetProcAddress(ghmq2ic, "IC_ClassLvl");
+	IC_EQPerkFeatureID = (fEQPerkFeatureID)GetProcAddress(ghmq2ic, "IC_EQPerkFeatureID");
 }
 VOID DeInitializeMQ2IcExports()
 {
@@ -323,6 +324,7 @@ VOID DeInitializeMQ2IcExports()
 	IC_LoaderSetLoaded = 0;
 	IC_MQ2Unload = 0;
 	IC_ClassLvl = 0;
+	IC_EQPerkFeatureID = 0;
 }
 #ifdef ISXEQ
 void LoadMQ2Plugin(PMQPLUGIN hMQ2icplugin, const PCHAR pszFilename, char *modulepath, size_t bufflen, HMODULE *module)

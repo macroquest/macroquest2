@@ -428,6 +428,8 @@ void InitializeMQ2Data()
 	AddMQ2Data("Mount", dataMount);
 	AddMQ2Data("Illusion", dataIllusion);
 	AddMQ2Data("Familiar", dataFamiliar);
+	AddMQ2Data("HerosForge", dataHerosForge);
+	AddMQ2Data("TeleportationItem", dataTeleportationItem);
 	AddMQ2Data("Alias", dataAlias);
 #if !defined(ROF2EMU) && !defined(UFEMU)
 	AddMQ2Data("AdvLoot", dataAdvLoot);

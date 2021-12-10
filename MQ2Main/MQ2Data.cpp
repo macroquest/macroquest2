@@ -1806,8 +1806,8 @@ TLO(dataFamiliar)
 		if (n <= 0)
 			return false;
 		n--;
-		if (CXWnd *krwnd = FindMQ2Window(KeyRingWindowParent)) {
-			if (CListWnd *clist = (CListWnd*)krwnd->GetChildItem(FamiliarWindowList)) {
+		if (CXWnd* krwnd = FindMQ2Window(KeyRingWindowParent)) {
+			if (CListWnd* clist = (CListWnd*)krwnd->GetChildItem(FamiliarWindowList)) {
 				int numitems = clist->ItemsArray.Count;
 				if (numitems >= n) {
 					CXStr Str;
@@ -1833,6 +1833,90 @@ TLO(dataFamiliar)
 		if (DWORD n = GetKeyRingIndex(2, pName, bExact)) {
 			n--;
 			Ret.DWord = MAKELPARAM(n, 2);
+			Ret.Type = pKeyRingType;
+			return true;
+		}
+	}
+	return false;
+}
+TLO(dataHerosForge)
+{
+	if (!ISINDEX())
+		return false;
+	if (ISNUMBER()) {
+		int n = GETNUMBER();
+		if (n <= 0)
+			return false;
+		n--;
+		if (CXWnd* krwnd = FindMQ2Window(KeyRingWindowParent)) {
+			if (CListWnd* clist = (CListWnd*)krwnd->GetChildItem(HeroForgeWindowList)) {
+				int numitems = clist->ItemsArray.Count;
+				if (numitems >= n) {
+					CXStr Str;
+					clist->GetItemText(&Str, n, 2);
+					CHAR szOut[MAX_STRING] = { 0 };
+					GetCXStr(Str.Ptr, szOut, MAX_STRING);
+					if (szOut[0] != '\0') {
+						Ret.DWord = MAKELPARAM(n, 3);
+						Ret.Type = pKeyRingType;
+						return true;
+					}
+				}
+			}
+		}
+	}
+	else if (PCHAR pName = GETFIRST()) {
+		bool bExact = false;
+		if (*pName == '=')
+		{
+			bExact = true;
+			pName++;
+		}
+		if (DWORD n = GetKeyRingIndex(3, pName, bExact)) {
+			n--;
+			Ret.DWord = MAKELPARAM(n, 3);
+			Ret.Type = pKeyRingType;
+			return true;
+		}
+	}
+	return false;
+}
+TLO(dataTeleportationItem)
+{
+	if (!ISINDEX())
+		return false;
+	if (ISNUMBER()) {
+		int n = GETNUMBER();
+		if (n <= 0)
+			return false;
+		n--;
+		if (CXWnd* krwnd = FindMQ2Window(KeyRingWindowParent)) {
+			if (CListWnd* clist = (CListWnd*)krwnd->GetChildItem(TeleportationItemWindowList)) {
+				int numitems = clist->ItemsArray.Count;
+				if (numitems >= n) {
+					CXStr Str;
+					clist->GetItemText(&Str, n, 2);
+					CHAR szOut[MAX_STRING] = { 0 };
+					GetCXStr(Str.Ptr, szOut, MAX_STRING);
+					if (szOut[0] != '\0') {
+						Ret.DWord = MAKELPARAM(n, 4);
+						Ret.Type = pKeyRingType;
+						return true;
+					}
+				}
+			}
+		}
+	}
+	else if (PCHAR pName = GETFIRST()) {
+		bool bExact = false;
+		if (*pName == '=')
+		{
+			bExact = true;
+			pName++;
+		}
+		if (DWORD n = GetKeyRingIndex(4, pName, bExact)) {
+			n--;
+			Ret.DWord = MAKELPARAM(n, 4);
 			Ret.Type = pKeyRingType;
 			return true;
 		}

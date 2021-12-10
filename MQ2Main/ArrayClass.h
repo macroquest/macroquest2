@@ -578,6 +578,10 @@ public:
 		if (this->m_array)
 			this->m_length = size;
 	}
+	int GetCount() const
+	{
+		return m_length;
+	}
 private:
 	// this function will ensure that there is enough space allocated for the
 	// requested size. the underlying array is one contiguous block of memory.

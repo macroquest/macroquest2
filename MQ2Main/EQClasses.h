@@ -8360,6 +8360,8 @@ enum KeyRingType
 	eMount,
 	eIllusion,
 	eFamiliar,
+	eHerosForge,
+	eTeleportationItem,
 };
 enum eAugFitRet
 {
@@ -11438,7 +11440,7 @@ public:
 //see 7FEC8D in Rof2 -eqmule
 #define ZONE_COUNT 768
 #else
-#define ZONE_COUNT 843
+#define ZONE_COUNT 851
 #endif
 //Size of ZoneGuideManagerClient is 0x9144 see 6B6915 in Dec 05 2020 Live -eqmule
 class ZoneGuideManagerBase

@@ -128,6 +128,7 @@ extern CRITICAL_SECTION gPluginCS;
 #define IllusionWindowList "KRW_Illusions_List"
 #define FamiliarWindowList "KRW_Familiars_list"
 #define HeroForgeWindowList "KRW_HeroForge_List"
+#define TeleportationItemWindowList "KRW_TeleportationItems_List"
 #define KeyRingTab "KRW_Subwindows"
 
 #if defined(ROF2EMU) || defined(UFEMU)
@@ -596,6 +597,8 @@ DWORD GetKeyRingIndex(DWORD KeyRing, PCHAR szItemName, SIZE_T BuffLen, bool bExa
 EQLIB_API int GetMountCount();
 EQLIB_API int GetIllusionCount();
 EQLIB_API int GetFamiliarCount();
+EQLIB_API int GetHerosForgeCount();
+EQLIB_API int GetTeleportationItemCount();
 EQLIB_API void RefreshKeyRings(PVOID kr);
 EQLIB_API void InitKeyRings();
 EQLIB_API BOOL IsActiveAA(PCHAR pSpellName);

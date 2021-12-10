@@ -63,6 +63,7 @@ namespace MQ2Prototypes
 	typedef DWORD(__cdecl *fLoaderClearLoaded)(PCHAR profile, PCHAR stationname, PCHAR servername, PCHAR charactername, DWORD pid);
 	typedef DWORD(__cdecl *fMQ2Unload)(DWORD pid);
 	typedef DWORD(__cdecl *fClassLvl)(DWORD playerClass, DWORD playerLevel, DWORD pid);
+	typedef int(__cdecl *fEQPerkFeatureID)(int);
 	typedef HWND(__stdcall *fEQW_GetDisplayWindow )(VOID);
 };
 using namespace MQ2Prototypes;

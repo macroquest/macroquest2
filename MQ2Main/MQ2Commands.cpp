@@ -3769,6 +3769,8 @@ VOID UseItemCmd(PSPAWNINFO pChar, PCHAR szLine)
 				bool bMount = ((EQ_Item*)pItem)->IsKeyRingItem(eMount);
 				bool bIllusion = ((EQ_Item*)pItem)->IsKeyRingItem(eIllusion);
 				bool bFamiliar = ((EQ_Item*)pItem)->IsKeyRingItem(eFamiliar);
+				bool bHerosForge = ((EQ_Item*)pItem)->IsKeyRingItem(eHerosForge);
+				bool bTeleportationItem = ((EQ_Item*)pItem)->IsKeyRingItem(eTeleportationItem);
 
 				//is it a mount?
 				if (bMount) {
@@ -3803,12 +3805,42 @@ VOID UseItemCmd(PSPAWNINFO pChar, PCHAR szLine)
 				else if (bFamiliar) {
 					//uhm ok, maybe a Familiar then?
 					if (DWORD index = GetKeyRingIndex(2, szCmd, sizeof(szCmd), stripped, true)) {
-						if (CXWnd *krwnd = FindMQ2Window(KeyRingWindowParent)) {
-							if (CListWnd *clist = (CListWnd*)krwnd->GetChildItem(FamiliarWindowList)) {
+						if (CXWnd* krwnd = FindMQ2Window(KeyRingWindowParent)) {
+							if (CListWnd* clist = (CListWnd*)krwnd->GetChildItem(FamiliarWindowList)) {
 								if (DWORD numitems = clist->ItemsArray.Count) {
 									SendListSelect(KeyRingWindowParent, FamiliarWindowList, index - 1);
 									int listdata = (int)clist->GetItemData(index - 1);
 									cmdToggleKeyRingItem(2, &pItem, listdata);
+									Sleep(0);
+								}
+							}
+						}
+					}
+				}
+				else if (bHerosForge) {
+					//uhm ok, maybe a Heros Forge then?
+					if (DWORD index = GetKeyRingIndex(3, szCmd, sizeof(szCmd), stripped, true)) {
+						if (CXWnd* krwnd = FindMQ2Window(KeyRingWindowParent)) {
+							if (CListWnd* clist = (CListWnd*)krwnd->GetChildItem(HeroForgeWindowList)) {
+								if (DWORD numitems = clist->ItemsArray.Count) {
+									SendListSelect(KeyRingWindowParent, HeroForgeWindowList, index - 1);
+									int listdata = (int)clist->GetItemData(index - 1);
+									cmdToggleKeyRingItem(3, &pItem, listdata);
+									Sleep(0);
+								}
+							}
+						}
+					}
+				}
+				else if (bTeleportationItem) {
+					//uhm ok, maybe a Teleportation Item then?
+					if (DWORD index = GetKeyRingIndex(4, szCmd, sizeof(szCmd), stripped, true)) {
+						if (CXWnd* krwnd = FindMQ2Window(KeyRingWindowParent)) {
+							if (CListWnd* clist = (CListWnd*)krwnd->GetChildItem(TeleportationItemWindowList)) {
+								if (DWORD numitems = clist->ItemsArray.Count) {
+									SendListSelect(KeyRingWindowParent, TeleportationItemWindowList, index - 1);
+									int listdata = (int)clist->GetItemData(index - 1);
+									cmdToggleKeyRingItem(4, &pItem, listdata);
 									Sleep(0);
 								}
 							}

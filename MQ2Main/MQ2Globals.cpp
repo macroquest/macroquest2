@@ -1195,6 +1195,7 @@ namespace MQ2Globals
 	fLoaderClearLoaded				IC_LoaderClearLoaded = 0;
 	fMQ2Unload						IC_MQ2Unload = 0;
 	fClassLvl						IC_ClassLvl = 0;
+	fEQPerkFeatureID				IC_EQPerkFeatureID = 0;
 
 	fEQW_GetDisplayWindow EQW_GetDisplayWindow = 0;
 

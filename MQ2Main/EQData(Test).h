@@ -536,6 +536,57 @@ enum ALT_Currency {
 	ALTCURRENCY_WARFORGEDEMBLEM, // CoV
 };
 
+// Inventory Slots
+enum eInventorySlot
+{
+	INVSLOT_CHARM = 0,
+	INVSLOT_LEFTEAR,
+	INVSLOT_HEAD,
+	INVSLOT_FACE,
+	INVSLOT_RIGHTEAR,
+	INVSLOT_NECK,
+	INVSLOT_SHOULDERS,
+	INVSLOT_ARMS,
+	INVSLOT_BACK,
+	INVSLOT_LEFTWRIST,
+	INVSLOT_RIGHTWRIST,
+	INVSLOT_RANGE,
+	INVSLOT_HANDS,
+	INVSLOT_PRIMARY,
+	INVSLOT_SECONDARY,
+	INVSLOT_LEFTFINGERS,
+	INVSLOT_RIGHTFINGERS,
+	INVSLOT_CHEST,
+	INVSLOT_LEGS,
+	INVSLOT_FEET,
+	INVSLOT_WAIST,
+	INVSLOT_POWERSOURCE,
+	INVSLOT_AMMO,
+	INVSLOT_BAG1,
+	INVSLOT_BAG2,
+	INVSLOT_BAG3,
+	INVSLOT_BAG4,
+	INVSLOT_BAG5,
+	INVSLOT_BAG6,
+	INVSLOT_BAG7,
+	INVSLOT_BAG8,
+	INVSLOT_BAG9,
+	INVSLOT_BAG10,
+	INVSLOT_BAG11,
+	INVSLOT_BAG12,
+	INVSLOT_HELD,		// cursor
+
+	INVSLOT_MAX,
+
+	INVSLOT_FIRSTWORNITEM = INVSLOT_CHARM,
+	INVSLOT_LASTWORNITEM = INVSLOT_AMMO,
+	INVSLOT_FIRSTBAGSLOT = INVSLOT_BAG1,
+	INVSLOT_LASTBAGSLOT = INVSLOT_BAG10,
+	INVSLOT_LASTBONUSBAGSLOT = INVSLOT_BAG12,
+	INVSLOT_CURSOR = INVSLOT_HELD,
+	INVSLOT_NUMINVSLOTS = INVSLOT_HELD,
+};
+
 enum MOUSE_DATA_TYPES {
    MD_Unknown = -1,
    MD_Button0Click=0,
@@ -561,7 +612,27 @@ enum MOUSE_DATA_TYPES {
 #define NUM_RACES                       17
 #define NUM_SLOTDATA                    0x6
 #define NUM_BLOCKED_BUFFS               40
-#define NUM_BAG_SLOTS					12
+
+//#define NUM_INV_SLOTS                   0x24
+#define NUM_INV_SLOTS					INVSLOT_MAX
+//#define BAG_SLOT_START                  23
+#define BAG_SLOT_START					INVSLOT_BAG1
+
+//#define NUM_BAG_SLOTS					12
+#define NUM_BAG_SLOTS					(INVSLOT_LASTBONUSBAGSLOT - INVSLOT_FIRSTBAGSLOT + 1)
+#define NUM_WORN_ITEMS					(INVSLOT_LASTWORNITEM - INVSLOT_FIRSTWORNITEM + 1)
+
+#define NUM_BANK_SLOTS                  0x18
+#define NUM_SHAREDBANK_SLOTS            0x06
+
+//found in CSpellBookWnd__GetBookSlot_x (see 7A7DD7 in Nov 29 2017 Beta) -eqmule
+//Find by searching for A1 ? ? ? ? 53 83 CB FF 85 C0 in IDA
+#define NUM_BOOK_SLOTS                  0x3C0
+#define NUM_COMBAT_ABILITIES            0x12c
+#define ExactLocation                   0
+#define NUM_SKILLS						0x64
+#define CONCURRENT_SKILLS				2
+#define MAX_CLASSES						0x23//35 =GM_Berzerker
 
 #define EQ_EXPANSION(x)                 (1 << (x - 1))
 #define EXPANSION_RoK                   EQ_EXPANSION(1)
@@ -591,7 +662,8 @@ enum MOUSE_DATA_TYPES {
 #define EXPANSION_TBL                   EQ_EXPANSION(25)
 #define EXPANSION_TOV                   EQ_EXPANSION(26)
 #define EXPANSION_CoV					EQ_EXPANSION(27)
-#define NUM_EXPANSIONS                  27
+#define EXPANSION_ToL					EQ_EXPANSION(28)
+#define NUM_EXPANSIONS                  28
 
 #if _MSC_VER < 1600
 #define nullptr                         NULL
@@ -958,41 +1030,45 @@ public:
 enum ItemContainerInstance
 {
 	eItemContainerInvalid = -1,
-	eItemContainerPossessions,//0
-	eItemContainerBank,//1
-	eItemContainerSharedBank,
-	eItemContainerTrade,
-	eItemContainerWorld,
-	eItemContainerLimbo,//5
-	eItemContainerTribute,
-	eItemContainerTrophyTribute,
-	eItemContainerGuildTribute,
-	eItemContainerMerchant,
-	eItemContainerDeleted,//10
-	eItemContainerCorpse,
-	eItemContainerBazaar,
-	eItemContainerInspect,
-	eItemContainerRealEstate,
-	eItemContainerViewModPC,//15
-	eItemContainerViewModBank,
-	eItemContainerViewModSharedBank,
-	eItemContainerViewModLimbo,
-	eItemContainerAltStorage,
-	eItemContainerArchived,//20
-	eItemContainerMail,
-	eItemContainerGuildTrophyTribute,
-	eItemContainerKrono,
-	eItemContainerOther,
-	eItemContainerMercenaryItems,//25
-    eItemContainerViewModMercenaryItems,
-    eItemContainerMountKeyRingItems,
-	eItemContainerViewModMountKeyRingItems,
-	eItemContainerIllusionKeyRingItems,
-	eItemContainerViewModIllusionKeyRingItems,//30
-	eItemContainerFamiliarKeyRingItems,
-	eItemContainerViewModFamiliarKeyRingItems,
-	eItemContainerOverflow,//33
-	eItemContainerDragonHoard,//34 see .text:004C7517                 cmp     eax, 34 in ee dated 2019-03-12 live -eqmule
+	eItemContainerPossessions = 0,
+	eItemContainerBank = 1,
+	eItemContainerSharedBank = 2,
+	eItemContainerTrade = 3,
+	eItemContainerWorld = 4,
+	eItemContainerLimbo = 5,
+	eItemContainerTribute = 6,
+	eItemContainerTrophyTribute = 7,
+	eItemContainerGuildTribute = 8,
+	eItemContainerMerchant = 9,
+	eItemContainerDeleted = 10,
+	eItemContainerCorpse = 11,
+	eItemContainerBazaar = 12,
+	eItemContainerInspect = 13,
+	eItemContainerRealEstate = 14,
+	eItemContainerViewModPC = 15,
+	eItemContainerViewModBank = 16,
+	eItemContainerViewModSharedBank = 17,
+	eItemContainerViewModLimbo = 18,
+	eItemContainerAltStorage = 19,
+	eItemContainerArchived = 20,
+	eItemContainerMail = 21,
+	eItemContainerGuildTrophyTribute = 22,
+	eItemContainerKrono = 23,
+	eItemContainerOther = 24,
+	eItemContainerMercenaryItems = 25,
+	eItemContainerViewModMercenaryItems = 26,
+	eItemContainerMountKeyRingItems = 27,
+	eItemContainerViewModMountKeyRingItems = 28,
+	eItemContainerIllusionKeyRingItems = 29,
+	eItemContainerViewModIllusionKeyRingItems = 30,
+	eItemContainerFamiliarKeyRingItems = 31,
+	eItemContainerViewModFamiliarKeyRingItems = 32,
+	eItemContainerHeroForgeKeyRingItems = 33,
+	eItemContainerViewModHeroForgeKeyRingItems = 34,
+	eItemContainerTeleportationItemsKeyRingItems = 35,
+	eItemContainerViewModTeleportationItemsRingItems = 36,
+	eItemContainerOverflow = 37,
+	eItemContainerDragonHoard = 38,
 };
 
 #define IS_HELD 35
@@ -1209,20 +1285,6 @@ typedef struct _AALIST {
 /*0x08*/ DWORD ChargeSpent;        // charges spent in the last 10 min?
 /*0x0c*/
 } AALIST, *PAALIST;
-
-#define NUM_INV_SLOTS                   0x24
-#define NUM_BANK_SLOTS                  0x18
-#define NUM_SHAREDBANK_SLOTS            0x06
-
-//found in CSpellBookWnd__GetBookSlot_x (see 7A7DD7 in Nov 29 2017 Beta) -eqmule 
-//Find by searching for A1 ? ? ? ? 53 83 CB FF 85 C0 in IDA 
-#define NUM_BOOK_SLOTS                  0x3C0
-#define NUM_COMBAT_ABILITIES            0x12c
-#define BAG_SLOT_START                  23
-#define ExactLocation                   0
-#define NUM_SKILLS						0x64
-#define CONCURRENT_SKILLS				2
-#define MAX_CLASSES						0x23//35 =GM_Berzerker
 
 typedef struct _LEADERABILITIES {
 /*0x00*/ DWORD MarkNPC;
@@ -1918,6 +1980,16 @@ class ClaimDataCollection
 public:
 /*0x00*/	ArrayClass<ClaimData> ClaimData;
 /*0x10*/
+
+	bool CanClaimFeature(int FeatureID)
+	{
+		for (int i = 0; i < ClaimData.GetCount(); ++i)
+		{
+			if (ClaimData[i].FeatureID == FeatureID)
+				return ClaimData[i].Count > 0;
+		}
+		return false;
+	}
 };
 
 class MercenaryAbilityInfo
@@ -2296,12 +2368,12 @@ typedef struct _CHARINFO {
 	/*0x1642*/ bool			bGMStealth;
 	/*0x1644*/ DWORD        AAExp;//Post60Exp
 	/*0x1648*/ BYTE         PercentEXPtoAA;//do_alt_exp
-	/*0x164C*/ int			AirSupply;
-	/*0x1650*/ int			SerialNum;
-	/*0x1654*/ bool			bNewCharacter;
-	/*0x1658*/ int			TasksAssigned;
-	/*0x165C*/ int			TasksCompleted;
-	/*0x1660*/ long			TaskRequestTimer;
+	/*0x164C*/ int          AirSupply;
+	/*0x1650*/ int          SerialNum;
+	/*0x1654*/ bool         bNewCharacter;
+	/*0x1658*/ int          TasksAssigned;
+	/*0x165C*/ int          TasksCompleted;
+	/*0x1660*/ long         TaskRequestTimer;
 	/*0x1664*/ unsigned int UniquePlayerID;
 	/*0x1668*/ WorldLocation        DynamicZoneSafeReturnLocation;//size 0x14
 	/*0x167C*/ DynamicZoneTimerData* pDZTimerRoot;
@@ -2456,14 +2528,14 @@ typedef struct _CHARINFO {
 	/*0x285C*/
 	/*********************** CharacterZoneClient End ***********************/
 	/******************* PcZoneClient Begine ******************/
-	/*0x285C*/ void				*PcZoneClient_vfTable; //see 67FAB1 in Nov 11 2021 beta
+	/*0x285C*/ void                 *PcZoneClient_vfTable; //see 67FAB1 in Nov 11 2021 beta
 	/*0x2860*/ TSafeArrayStatic<unsigned long, 3> Flags;//size 0xc
 	/*0x286C*/ unsigned __int32 TransfersReceived;
-	/*0x2870*/ int				LastLanguageSpoken;
-	/*0x2874*/ int				CurPowerSourceDrain;
+	/*0x2870*/ int                  LastLanguageSpoken;
+	/*0x2874*/ int                  CurPowerSourceDrain;
 	/*0x2878*/ EQList<ALCHEMYBONUSSKILLDATA*> AlchemyBaseSkillBonusList;//SIZE 0X10
-	/*0x2888*/ UINT				MomentumBalance;
-	/*0x288C*/ UINT				LoyaltyRewardBalance;
+	/*0x2888*/ UINT                 MomentumBalance;
+	/*0x288C*/ UINT                 LoyaltyRewardBalance;
 	/*0x2890*/
 	/******************* PcZoneClient End ******************/
 	/******************* PCClient Begin ************************/

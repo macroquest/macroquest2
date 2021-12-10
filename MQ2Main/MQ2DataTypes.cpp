@@ -7023,9 +7023,11 @@ bool MQ2CharacterType::GETMEMBER()
 		#endif
 		Dest.Type = pIntType;
 		return true;
-	}
-
-
+	case NumBagSlots:
+		Dest.Type = pIntType;
+		Dest.DWord = (GetHighestAvailableBagSlot() - INVSLOT_FIRSTBAGSLOT + 1);
+		return true;
+}
 	//end of MQ2CharacterType
 	return false;
 //#undef pChar
@@ -16374,8 +16376,12 @@ bool MQ2KeyRingType::GETMEMBER()
 			CListWnd *clist = 0;
 			DWORD n = LOWORD(VarPtr.DWord);
 			DWORD type = HIWORD(VarPtr.DWord);
-			if (type == 2)
-				clist = (CListWnd *)krwnd->GetChildItem(FamiliarWindowList);
+			if (type == 4)
+				clist = (CListWnd*)krwnd->GetChildItem(TeleportationItemWindowList);
+			else if (type == 3)
+				clist = (CListWnd*)krwnd->GetChildItem(HeroForgeWindowList);
+			else if (type == 2)
+				clist = (CListWnd*)krwnd->GetChildItem(FamiliarWindowList);
 			else if (type == 1)
 				clist = (CListWnd *)krwnd->GetChildItem(IllusionWindowList);
 			else

@@ -1,3 +1,13 @@
+Dec 09 2021
+- Updated for LIVE
+- 
+Dec 07 2021
+- Updated for LIVE
+- Added support for bag slot 11 and 12 from EQ Merchant Perks.
+- Added ${Me.NumBagSlots} which returns the number of bag slots enabled in main inventory.
+- Added ${HerosForge} TLO to access the teleportation item keyring.
+- Added ${TeleportationItem} TLO to access the teleportation item keyring.
+-
 Dec 01 2021
 - Updated for TEST
 -

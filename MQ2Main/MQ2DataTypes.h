@@ -1281,6 +1281,7 @@ public:
 		RestlessMark = 318,
 		LoyaltyTokens = 319,
 		Debuff = 320,
+		NumBagSlots = 321,
 	};
 	enum CharacterMethods
 	{
@@ -1603,6 +1604,7 @@ public:
 		TypeMember(WarforgedEmblem);
 		TypeMember(LoyaltyTokens);
 		TypeMember(Debuff);
+		TypeMember(NumBagSlots);
 
 		TypeMethod(Stand);
 		TypeMethod(Sit);
@@ -5695,8 +5697,12 @@ public:
 			CListWnd *clist = 0;
 			WORD n = LOWORD(VarPtr.DWord);
 			WORD type = HIWORD(VarPtr.DWord);
-			if (type == 2)
-				clist = (CListWnd *)krwnd->GetChildItem(FamiliarWindowList);
+			if (type == 4)
+				clist = (CListWnd*)krwnd->GetChildItem(TeleportationItemWindowList);
+			else if (type == 3)
+				clist = (CListWnd*)krwnd->GetChildItem(HeroForgeWindowList);
+			else if (type == 2)
+				clist = (CListWnd*)krwnd->GetChildItem(FamiliarWindowList);
 			else if (type == 1)
 				clist = (CListWnd *)krwnd->GetChildItem(IllusionWindowList);
 			else
